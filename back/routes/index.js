@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var indexController=require('../controller/voteController.js');
-var usersController=require('../controller/usersController.js');
+var indexController=require('../controllers/voteController.js');
+var usersController=require('../controllers/usersController.js');
 /* GET home page. */
 
 router.get('/',indexController.liste );
