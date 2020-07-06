@@ -9,10 +9,11 @@ const userVoteSchema = mongoose.Schema({
         type: ObjectId,
         required: true
     },
+    
     choix: {
         type: Number,
         required: true
     },
 })
 
-module.exports = mongoose.model('user_vote', userVoteSchema)
+module.exports = mongoose.model('userVote', userVoteSchema)

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const voteSchema = mongoose.Schema({
-    sujet: {
+    subject: {
         type: String,
         required :true
     },
@@ -9,23 +9,23 @@ const voteSchema = mongoose.Schema({
         type: Number,
         required :true
     },
-    choix: {
+    choices: {
         type: Array
     },
     nbVote: {
         type: Number
     },
-    creator: {
-        type: {
-            String
-        }
+    createdBy: {
+        type: String
     },
     participants: {
         type: Array,
     },
-    Status: {
+    status: {
         type: String,
-        required: true
+        required: true,
+        enum: ['created', 'inprogress', 'finished'],
+        default: "created"
     },
 },{collection:"vote"})
 

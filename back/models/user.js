@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const userSchema = mongoose.Schema({
-    pseudo: {
+    login: {
         type: String,
         required: true
     },
