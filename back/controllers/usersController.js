@@ -11,6 +11,14 @@ mongoose.connect(mongoDB, {
 
 var controller = {}
 
+/**
+ * @name login
+ * @verb POST
+ * @param {object} req
+ * @param {string} req.email
+ * @param {string} req.password
+ * @returns {json} 
+ */
 controller.login = (req,res)=>{
   if( !req.body.email || !req.body.password ){
     return res.json({
