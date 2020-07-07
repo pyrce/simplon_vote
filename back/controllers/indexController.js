@@ -87,7 +87,30 @@ controller.add = async (req, res) => {
     })
   }
 }
+controller.visulogin = async (req,res) => {
+  res.render('\connexion.ejs')
+}
+controller.dashboard = async (req,res) => {
+  res.render('\sujet.ejs')
+}
 
+controller.login = async (req,res) => {
+  const {email, password} = req.body
+  if( !email || !password ){
+    res.redirect('\login?message="Donnée manquante"',)
+  } else {
+    try {
+      const user = await User.findOne({ email: email })
+    if (!user || (user.email !== email && user.password !== password) ){
+      res.redirect('\login?message="Mauvais identifiants"',)
+    } else {
+      res.redirect('\dashboard')
+    }
+    } catch (error) {
+      res.redirect('\login?message="Mauvais identifiants"',)
+    }
+  }
+}
 /** show one vote
  * @name show
  * @function
