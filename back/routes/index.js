@@ -72,6 +72,7 @@ router.post('/addUser', indexController.addUser);
 // router.post("/api/login", usersController.login);
 // router.post("/api/signup", usersController.signup);
 
+router.post('/login', indexController.login)
 router.get('/login',indexController.visulogin)
 router.get('/dashboard',indexController.dashboard)
 router.get('/ajout', indexController.ajout);
