@@ -11,6 +11,7 @@ Se placer dans le répertoire 'back'
 1. Copier le fichier **.env.example** et renommer le fichier copié en **.env**
 2. Remplacer le contenu de la variable d'environnement **db_url** avec celui fournis de la base de donnée
 3. Ne pas push l'adresse de la base de donnée dans le fichier **.env.example** 😅
+4. Les informations de la base de donnée sont dans le fichier config/database.js.
 
 ### Lancer le serveur
 **Environnement de developpement**
@@ -18,3 +19,5 @@ Se placer dans le répertoire 'back'
 
 **Environnement de production**
 > npm run prod
+
+
