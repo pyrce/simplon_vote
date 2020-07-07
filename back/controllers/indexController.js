@@ -72,6 +72,14 @@ controller.show = async (req,res) => {
   }
 }
 
+controller.inscription = async (req, res) => {
+  try {
+    res.render("inscription")
+  } catch (error) {
+    res.status(400).json({result: "error"})
+  }
+}
+
 /** updade one vote
  * @name add
  * @function
