@@ -1,4 +1,4 @@
-const mongoose=require("mongoose");
+const mongoose = require("mongoose");
 const User = require("../models/user");
 /*
 //Set up default mongoose connection
@@ -16,12 +16,16 @@ var controller = {}
  * @function
  * @returns {json} users
  */
-controller.list = async (req,res) => {
+controller.list = async (req, res) => {
   const users = await User.find({})
   try {
-    res.status(200).json({users})
+    res.status(200).json({
+      users
+    })
   } catch (error) {
-    res.status(400).json({result: "error"})
+    res.status(400).json({
+      result: "error"
+    })
   }
 }
 
@@ -33,13 +37,25 @@ controller.list = async (req,res) => {
  * @param {string} password
  * @returns {json} user
  */
-controller.add = async (req,res) => {
-  const {login, email, password} = req.body
+controller.add = async (req, res) => {
+  const {
+    login,
+    email,
+    password
+  } = req.body
   try {
-    const user = await User.create({ login, email, password })
-    res.status(201).json({user})
+    const user = await User.create({
+      login,
+      email,
+      password
+    })
+    res.status(201).json({
+      user
+    })
   } catch (error) {
-    res.status(400).json({result:"error"})
+    res.status(400).json({
+      result: "error"
+    })
   }
 }
 
@@ -48,14 +64,24 @@ controller.add = async (req,res) => {
  * @function
  * @returns {json} user
  */
-controller.show = async (req,res) => {
-  const {id} = req.params
+controller.show = async (req, res) => {
+  const {
+    id
+  } = req.params
   try {
     const user = await User.findById(id)
-    if (!user) return res.status(400).json({result: "error", message: "utilisateur non trouvé"})
-    res.status(200).json({user})
+    if (!user) return res.status(400).json({
+      result: "error",
+      message: "utilisateur non trouvé"
+    })
+    res.status(200).json({
+      user
+    })
   } catch (error) {
-    res.status(400).json({result: "error", message: error})
+    res.status(400).json({
+      result: "error",
+      message: error
+    })
   }
 }
 
@@ -67,18 +93,32 @@ controller.show = async (req,res) => {
  * @param {string} password
  * @returns {json} user
  */
-controller.update = async (req,res) => {
-  const { id } = req.params
-  const { login, email, password} = req.body
+controller.update = async (req, res) => {
+  const {
+    id
+  } = req.params
+  const {
+    login,
+    email,
+    password
+  } = req.body
   try {
-    const user = await User.findByIdAndUpdate(id, { login, email, password })
+    const user = await User.findByIdAndUpdate(id, {
+        login,
+        email,
+        password
+      })
       .setOptions({
         new: true, // for get the update user
         omitUndefined: true
       })
-    res.status(200).json({user})
+    res.status(200).json({
+      user
+    })
   } catch (error) {
-    res.status(400).json({result:"error"})
+    res.status(400).json({
+      result: "error"
+    })
   }
 }
 
@@ -88,12 +128,19 @@ controller.update = async (req,res) => {
  */
 controller.delete = async (req, res) => {
   try {
-    const { id } = req.params
+    const {
+      id
+    } = req.params
     await User.findByIdAndRemove(id)
     res.status()
-    res.status(200).json({resut:"success", message: "utilisateur créer"})
+    res.status(200).json({
+      resut: "success",
+      message: "utilisateur supprimé"
+    })
   } catch (error) {
-    res.status(400).json({result:"error"})
+    res.status(400).json({
+      result: "error"
+    })
   }
 }
 
@@ -106,27 +153,32 @@ controller.delete = async (req, res) => {
  * @param {string} req.password
  * @returns {json} 
  */
-controller.login = async (req,res) => {
-  const {email, password} = req.body
-  if( !email || !password ){
+controller.login = async (req, res) => {
+  const {
+    email,
+    password
+  } = req.body
+  if (!email || !password) {
     return res.json({
       result: "error",
       message: "Donnée manquante"
     });
   } else {
     try {
-      const user = await User.findOne({ email: email })
-    if (!user || (user.email !== email && user.password !== password) ){
-      return res.json({
-        result: "error",
-        message: "Mauvais identifiants"
-      });
-    } else {
-      res.json({
-        result:"success",
-        user
-      });
-    }
+      const user = await User.findOne({
+        email: email
+      })
+      if (!user || (user.email !== email && user.password !== password)) {
+        return res.json({
+          result: "error",
+          message: "Mauvais identifiants"
+        });
+      } else {
+        res.json({
+          result: "success",
+          user
+        });
+      }
     } catch (error) {
       return res.json({
         result: "error",
@@ -135,7 +187,7 @@ controller.login = async (req,res) => {
     }
   }
 }
-controller.signup=(req,res)=>{
+controller.signup = (req, res) => {
 
 }
 module.exports = controller;

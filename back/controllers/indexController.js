@@ -1,4 +1,4 @@
-const mongoose=require("mongoose");
+const mongoose = require("mongoose");
 const Vote = require("../models/vote");
 
 //Set up default mongoose connection
@@ -9,7 +9,7 @@ const Vote = require("../models/vote");
 //     useUnifiedTopology: true
 // });
 
-var controller={}
+var controller = {}
 
 /** 
  * List all votes
@@ -17,13 +17,34 @@ var controller={}
  * @function
  * @returns {json} votes
  */
-controller.list = async (req,res) => {
+controller.list = async (req, res) => {
   const votes = await Vote.find({})
   try {
-    res.render("index",{votes:votes,title:"application votes"})
+    res.render("index", {
+      votes: votes,
+      title: "application votes"
+    })
   } catch (error) {
-    res.status(400).json({result: "error"})
+    res.status(400).json({
+      result: "error"
+    })
   }
+}
+
+/** add one user
+ * @name addUser
+ * @fonction
+ * @param {string} pseudo
+ * @param {string} email
+ * @param {string} mot de passe
+ */
+
+controller.addUser = async (req, res) => {
+  User.create({
+    pseudo: validator.escape(req.body.pseudo),
+    email: validator.normalizeEmail(req.body.email_user),
+    password: req.body.password_user
+  }).then(res.redirect('/'))
 }
 
 /** add One vote
@@ -38,8 +59,17 @@ controller.list = async (req,res) => {
  * @param {string} status ['created', 'inprogress', 'finished']
  * @returns {json} vote
  */
-controller.add = async (req,res) => {
-  const {subject, quota, choices, nbVote, createdBy, participants, status} = req.body
+
+controller.add = async (req, res) => {
+  const {
+    subject,
+    quota,
+    choices,
+    nbVote,
+    createdBy,
+    participants,
+    status
+  } = req.body
   try {
     const vote = await Vote.create({
       subject,
@@ -52,7 +82,9 @@ controller.add = async (req,res) => {
     })
     res.redirect("/")
   } catch (error) {
-    res.status(400).json({result:"error"})
+    res.status(400).json({
+      result: "error"
+    })
   }
 }
 
@@ -61,22 +93,34 @@ controller.add = async (req,res) => {
  * @function
  * @returns {json} vote
  */
-controller.show = async (req,res) => {
-  const {id} = req.params
+controller.show = async (req, res) => {
+  const {
+    id
+  } = req.params
   try {
     const vote = await Vote.findById(id)
-    if (!vote) return res.status(400).json({result: "error", message: "vote non trouvé"})
+    if (!vote) return res.status(400).json({
+      result: "error",
+      message: "vote non trouvé"
+    })
     res.render("/detail")
   } catch (error) {
-    res.status(400).json({result: "error", message: error})
+    res.status(400).json({
+      result: "error",
+      message: error
+    })
   }
 }
 
 controller.inscription = async (req, res) => {
   try {
-    res.render("inscription",{title:" inscription"})
+    res.render("inscription", {
+      title: " inscription"
+    })
   } catch (error) {
-    res.status(400).json({result: "error"})
+    res.status(400).json({
+      result: "error"
+    })
   }
 }
 
@@ -92,9 +136,19 @@ controller.inscription = async (req, res) => {
  * @param {string} status ['created', 'inprogress', 'finished']
  * @returns {json} vote
  */
-controller.update = async (req,res) => {
-  const { id } = req.params
-  const {subject, quota, choices, nbVote, createdBy, participants, status} = req.body
+controller.update = async (req, res) => {
+  const {
+    id
+  } = req.params
+  const {
+    subject,
+    quota,
+    choices,
+    nbVote,
+    createdBy,
+    participants,
+    status
+  } = req.body
   try {
     const vote = await Vote.findByIdAndUpdate(id, {
       subject,
@@ -105,12 +159,17 @@ controller.update = async (req,res) => {
       participants,
       status
     }).setOptions({
-        new: true, // for get the updated vote
-        omitUndefined: true
+      new: true, // for get the updated vote
+      omitUndefined: true
     })
-    res.redirect("/").json({resut:"success", message: "vote supprimé"})
+    res.redirect("/").json({
+      resut: "success",
+      message: "vote supprimé"
+    })
   } catch (error) {
-    res.status(400).json({result:"error"})
+    res.status(400).json({
+      result: "error"
+    })
   }
 }
 
@@ -119,12 +178,19 @@ controller.update = async (req,res) => {
  */
 controller.delete = async (req, res) => {
   try {
-    const { id } = req.params
+    const {
+      id
+    } = req.params
     await Vote.findByIdAndRemove(id)
     res.status()
-    resresultjson({resut:"success", message: "vote supprimé"})
+    resresultjson({
+      resut: "success",
+      message: "vote supprimé"
+    })
   } catch (error) {
-    res.status(400).json({result:"error"})
+    res.status(400).json({
+      result: "error"
+    })
   }
 }
 
@@ -138,26 +204,26 @@ controller.delete = async (req, res) => {
 //         votes
 //     })
 // }
- controller.ajout = async (req,res) => {
-   res.status(201).json({
-     user
-   })
- }
+controller.ajout = async (req, res) => {
+  res.status(201).json({
+    user
+  })
+}
 
 // controller.addvote = (req,res)=>{
- 
+
 // }
 // controller.detailvote=(req,res)=>{
- 
+
 // }
-        
+
 
 // controller.updatevote=(req,res)=>{
-       
+
 // }
 
 // controller.deletevote=(req,res)=>{
-       
+
 // }
 
-module.exports =controller;
+module.exports = controller;
