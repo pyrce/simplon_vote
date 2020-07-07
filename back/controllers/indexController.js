@@ -88,26 +88,26 @@ controller.add = async (req, res) => {
   }
 }
 controller.visulogin = async (req,res) => {
-  res.render('\connexion.ejs')
+  res.render('./index.ejs', {title: "login"})
 }
 controller.dashboard = async (req,res) => {
-  res.render('\sujet.ejs')
+  res.render('./sujet.ejs')
 }
 
 controller.login = async (req,res) => {
   const {email, password} = req.body
   if( !email || !password ){
-    res.redirect('\login?message="Donnée manquante"',)
+    res.redirect('/login',)
   } else {
     try {
       const user = await User.findOne({ email: email })
     if (!user || (user.email !== email && user.password !== password) ){
-      res.redirect('\login?message="Mauvais identifiants"',)
+      res.redirect('/login',)
     } else {
-      res.redirect('\dashboard')
+      res.redirect('/dashboard')
     }
     } catch (error) {
-      res.redirect('\login?message="Mauvais identifiants"',)
+      res.redirect('/login',)
     }
   }
 }
