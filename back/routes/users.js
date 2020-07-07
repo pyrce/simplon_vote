@@ -46,10 +46,10 @@ router.get('/:id',userController.show)
  */
 router.put('/:id',userController.update );
 
-module.exports = router;
-
 /**
  * Delete a user by id
  * @route  {DELETE} /users/:id
  */
 router.delete('/:id',userController.delete );
+
+module.exports = router;
