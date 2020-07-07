@@ -26,7 +26,7 @@ controller.list = async (req,res) => {
   }
 }
 
-/** add One vote
+/** Add one vote
  * @name add
  * @function
  * @param {string} subject
@@ -56,7 +56,7 @@ controller.add = async (req,res) => {
   }
 }
 
-/** show one vote
+/** Show one vote
  * @name show
  * @function
  * @returns {json} vote
@@ -72,8 +72,8 @@ controller.show = async (req,res) => {
   }
 }
 
-/** updade one vote
- * @name add
+/** Update one vote
+ * @name update
  * @function
  * @param {string} subject
  * @param {integer} quota

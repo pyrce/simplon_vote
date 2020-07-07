@@ -2,9 +2,14 @@
 const router = require('express').Router();
 const voteController = require('../controllers/voteController.js');
 
+/** Express router providing user related routes
+ * @module routers/votes
+ * @requires express
+ */
+
 /**
  * List all votes
- * @route  {GET} /votes
+ * {GET} /votes
  */
 router.get('/',voteController.list )
 

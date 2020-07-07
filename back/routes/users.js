@@ -11,45 +11,72 @@ const userController = require('../controllers/userController.js');
 
 /**
  * List all users
- * @verb GET
- * @route  {GET} /users
+ * @name List GET
+ * @function
+ * @memberof module:routers/users
+ * @param {string} '/users'
+ * @param {function} userController.list
  */
 router.get('/', userController.list);
 
 /**
  * Add a new user 
- * @route  {POST} /users
+ * @name Add POST
+ * @function
+ * @memberof module:routers/users
+ * @param {string} '/users' - path
+ * @param {function} userController.add
  */
-router.post('/',userController.add )
+router.post('/', userController.add)
 
 /**
  * login a user
- * @route  {POST} /users/login
+ * @name Login POST
+ * @function
+ * @memberof module:routers/users
+ * @param {string} '/users/login' - path
+ * @param {function} userController.login
  */
-router.post('/login',userController.login );
+router.post('/login', userController.login);
 
 /**
- * signup a user
- * @route  {POST} /users/signup
+ * Signup a user
+ * @name Signup POST
+ * @function
+ * @memberof module:routers/users
+ * @param {string} '/users/signup' - path
+ * @param {function} userController.signup
  */
-router.post('/signup',userController.signup );
+router.post('/signup', userController.signup);
 
 /**
- * Show one user by a id
- * @route  {GET} /users/:id
+ * Show a user by its id
+ * @name Show GET
+ * @function
+ * @memberof module:routers/users
+ * @param {string} '/users/:id' - path
+ * @param {function} userController.show
  */
-router.get('/:id',userController.show)
+router.get('/:id', userController.show)
 
 /**
- * Update a user by id 
- * @route  {PUT} /users/:id
+ * Update a user by its id 
+ * @name Update PUT
+ * @function
+ * @memberof module:routers/users
+ * @param {string} '/users/:id' - path
+ * @param {function} userController.update
  */
-router.put('/:id',userController.update );
+router.put('/:id', userController.update);
 
 /**
  * Delete a user by id
- * @route  {DELETE} /users/:id
+ * @name Delete DELETE
+ * @function
+ * @memberof module:routers/users
+ * @param {string} '/users/:id' - path
+ * @param {function} userController.delete
  */
-router.delete('/:id',userController.delete );
+router.delete('/:id', userController.delete);
 
 module.exports = router;
