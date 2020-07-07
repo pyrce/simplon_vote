@@ -3,11 +3,11 @@ const mongoose = require('mongoose')
 const voteSchema = mongoose.Schema({
     subject: {
         type: String,
-        required :true
+        required: true
     },
     quota: {
         type: Number,
-        required :true
+        required: true
     },
     choices: {
         type: Array
