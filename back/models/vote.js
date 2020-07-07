@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
-
+var ObjectId=mongoose.Schema.Types.ObjectId;
 const voteSchema = mongoose.Schema({
+    _id:{ type: ObjectId},
     subject: {
         type: String,
         required :true
@@ -16,7 +17,8 @@ const voteSchema = mongoose.Schema({
         type: Number
     },
     createdBy: {
-        type: String
+        type: ObjectId,
+        ref:"users"
     },
     participants: {
         type: Array,

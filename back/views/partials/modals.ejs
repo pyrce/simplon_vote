@@ -1,0 +1,37 @@
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Créer un sujet</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form action="/votes/add" method="post"> 
+            <div class="modal-body">
+              <input type="text" value="5f03355d220832635062c9ef" name="createdBy" hidden/>  
+                <div class="form-group">
+                        <label for="sujet">Sujet</label>
+                        <input type="text" class="form-control" name="subject" id="sujet" aria-describedby="sujet">
+                    </div>
+                    <div class="form-group">
+                        <label for="sujet">Nombre de participant</label>
+                        <input type="number" name="quota" class="form-control" min="2" value="2">
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1">Choix</label>
+                            <textarea class="form-control" placeholder="entrez les choix séparés par ;" row="10" name="choices"></textarea>
+                          </div>                    
+                    </div>
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Création</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
