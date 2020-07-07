@@ -16,7 +16,7 @@ const voteSchema = mongoose.Schema({
         type: Number
     },
     createdBy: {
-        type: String
+        type: ObjectId
     },
     participants: {
         type: Array,
