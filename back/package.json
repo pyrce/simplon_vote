@@ -6,7 +6,7 @@
     "start": "node ./bin/www",
     "dev": "NODE_ENV=development && nodemon ./bin/www",
     "prod": "NODE_ENV=production && node ./bin/www",
-    "doc" : "./node_modules/.bin/jsdoc -c ./js-doc-conf.json"
+    "doc": "./node_modules/.bin/jsdoc -c ./js-doc-conf.json"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
