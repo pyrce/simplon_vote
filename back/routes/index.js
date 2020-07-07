@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var indexController=require('../controllers/indexController.js');
-var usersController=require('../controllers/usersController.js');
+var usersController=require('../controllers/userController.js');
 /* GET home page. */
 
 router.get('/',indexController.list );
