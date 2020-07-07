@@ -24,6 +24,7 @@ mongoose.connect(configDB.url,
 
 var userRouter = require('./routes/users');
 var voteRouter = require('./routes/votes');
+var indexRouter = require('./routes/index');
 
 var app = express();
 // view engine setup
@@ -36,6 +37,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/', indexRouter);
 app.use('/votes', voteRouter);
 app.use('/users', userRouter);
 
