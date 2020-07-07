@@ -29,11 +29,6 @@ router.get('/inscription', indexController.inscription);
 router.get('/', indexController.list);
 
 /**
- * 
- */
-router.get('/ajout', indexController.ajout);
-
-/**
  * Retourne la vue pour afficher un sujet de vote par rapport à son identifiant
  * @name Show GET
  * @function
@@ -72,6 +67,10 @@ router.delete('/votes/:id', indexController.delete);
  * @param {function} indexController.update
  */
 router.put('/votes/:id', indexController.update);
+
+router.get('/login',indexController.visulogin)
+router.get('/dashboard',indexController.dashboard)
+router.get('/ajout', indexController.ajout);
 
 
 module.exports = router;
