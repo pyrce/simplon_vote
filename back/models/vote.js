@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+var ObjectId = mongoose.Types.ObjectId;
 
 const voteSchema = mongoose.Schema({
     subject: {
@@ -16,7 +17,7 @@ const voteSchema = mongoose.Schema({
         type: Number
     },
     createdBy: {
-        type: String
+        type: ObjectId
     },
     participants: {
         type: Array,
@@ -27,6 +28,6 @@ const voteSchema = mongoose.Schema({
         enum: ['created', 'inprogress', 'finished'],
         default: "created"
     },
-},{collection:"vote"})
+})
 
 module.exports = mongoose.model('vote', voteSchema)

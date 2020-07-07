@@ -38,8 +38,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/votes', voteRouter);
-app.use('/users', userRouter);
+app.use('/api/votes', voteRouter);
+app.use('/api/users', userRouter);
 
 
 // catch 404 and forward to error handler
