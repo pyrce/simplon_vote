@@ -13,6 +13,12 @@ Se placer dans le répertoire 'back'
 3. Ne pas push l'adresse de la base de donnée dans le fichier **.env.example** 😅
 4. Les informations de la base de donnée sont dans le fichier config/database.js.
 
+### Pour windows seulement
+Dans le fichier packages.json 
+ajouter "SET " dans le script dev
+exemple:
+> "dev": "SET NODE_ENV=development && nodemon ./bin/www"
+
 ### Lancer le serveur
 **Environnement de developpement**
 > npm run dev
