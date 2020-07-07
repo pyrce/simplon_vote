@@ -74,7 +74,7 @@ controller.show = async (req,res) => {
 
 controller.inscription = async (req, res) => {
   try {
-    res.render("inscription")
+    res.render("inscription",{title:" inscription"})
   } catch (error) {
     res.status(400).json({result: "error"})
   }

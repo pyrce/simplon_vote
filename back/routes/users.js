@@ -14,7 +14,7 @@ const userController = require('../controllers/userController.js');
  * @name List GET
  * @function
  * @memberof module:routers/users
- * @param {string} '/users'
+ * @param {string} '/api/users'
  * @param {function} userController.list
  */
 router.get('/', userController.list);
@@ -24,7 +24,7 @@ router.get('/', userController.list);
  * @name Add POST
  * @function
  * @memberof module:routers/users
- * @param {string} '/users' - path
+ * @param {string} '/api/users' - path
  * @param {function} userController.add
  */
 router.post('/', userController.add)
@@ -34,7 +34,7 @@ router.post('/', userController.add)
  * @name Login POST
  * @function
  * @memberof module:routers/users
- * @param {string} '/users/login' - path
+ * @param {string} '/api/users/login' - path
  * @param {function} userController.login
  */
 router.post('/login', userController.login);
@@ -44,7 +44,7 @@ router.post('/login', userController.login);
  * @name Signup POST
  * @function
  * @memberof module:routers/users
- * @param {string} '/users/signup' - path
+ * @param {string} '/api/users/signup' - path
  * @param {function} userController.signup
  */
 router.post('/signup', userController.signup);
@@ -54,7 +54,7 @@ router.post('/signup', userController.signup);
  * @name Show GET
  * @function
  * @memberof module:routers/users
- * @param {string} '/users/:id' - path
+ * @param {string} '/api/users/:id' - path
  * @param {function} userController.show
  */
 router.get('/:id', userController.show)
@@ -64,7 +64,7 @@ router.get('/:id', userController.show)
  * @name Update PUT
  * @function
  * @memberof module:routers/users
- * @param {string} '/users/:id' - path
+ * @param {string} '/api/users/:id' - path
  * @param {function} userController.update
  */
 router.put('/:id', userController.update);
@@ -74,7 +74,7 @@ router.put('/:id', userController.update);
  * @name Delete DELETE
  * @function
  * @memberof module:routers/users
- * @param {string} '/users/:id' - path
+ * @param {string} '/api/users/:id' - path
  * @param {function} userController.delete
  */
 router.delete('/:id', userController.delete);

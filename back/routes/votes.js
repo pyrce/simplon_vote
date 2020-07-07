@@ -8,34 +8,54 @@ const voteController = require('../controllers/voteController.js');
  */
 
 /**
- * List all votes
- * {GET} /votes
+ * Renvoie la liste de tout les votes
+ * @name List GET
+ * @function
+ * @memberof module:routers/votes
+ * @param {string} '/api/votes'
+ * @param {function} voteController.list
  */
-router.get('/',voteController.list )
+router.get('/', voteController.list)
 
 /**
- * Add a new vote 
- * @route  {POST} /votes
+ * Ajoute un nouveau sujet de vote
+ * @name Add POST
+ * @function
+ * @memberof module:routers/votes
+ * @param {string} '/api/votes'
+ * @param {function} voteController.add
  */
-// router.post('/',voteController.add )
+router.post('/', voteController.add)
 
 /**
  * Show one vote by a id
- * @route  {GET} /votes/:id
+ * @name Show GET
+ * @function
+ * @memberof module:routers/votes
+ * @param {string} '/api/votes/:id'
+ * @param {function} voteController.show
  */
-// router.get('/:id',voteController.show)
+router.get('/:id', voteController.show)
 
 /**
  * Update a vote by id 
- * @route  {PUT} /votes/:id
+ * @name Update PUT
+ * @function
+ * @memberof module:routers/votes
+ * @param {string} '/api/users/:id'
+ * @param {function} voteController.update
  */
-// router.put('/:id',voteController.update );
+router.put('/:id', voteController.update);
 
 /**
  * Delete a vote by id
- * @route  {DELETE} /votes/:id
+ * @name Delete DELETE
+ * @function
+ * @memberof module:routers/votes
+ * @param {string} '/api/votes/:id'
+ * @param {function} voteController.delete
  */
-// router.delete('/:id',voteController.delete );
+router.delete('/:id', voteController.delete);
 
 
 // router.get('/api/ajout',voteController.ajout );
