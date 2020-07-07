@@ -28,6 +28,6 @@ const voteSchema = mongoose.Schema({
         enum: ['created', 'inprogress', 'finished'],
         default: "created"
     },
-},{collection:"vote"})
+})
 
 module.exports = mongoose.model('vote', voteSchema)
