@@ -30,7 +30,7 @@ router.post('/login',userController.login );
 
 /**
  * signup a user
- * @route  {PST} /users/signup
+ * @route  {POST} /users/signup
  */
 router.post('/signup',userController.signup );
 
