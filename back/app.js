@@ -3,7 +3,9 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const cookieSession = require('cookie-session')
 const dotenv = require('dotenv').config()
+var validator = require('validator');
 // const dotenv = require('dotenv')
 // console.log(dotenv.config())
 
@@ -11,44 +13,83 @@ const dotenv = require('dotenv').config()
 var mongoose = require('mongoose');
 var configDB = require('./config/database.js');
 //configuration ===============================================================
-mongoose.connect(configDB.url,
-    {useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useFindAndModify: false 
-    }).then(() => {
-      //connection established successfully
-      console.log('connection established successfully')
-    }).catch();{
-      //catch any error during the initial connection
-    };
+mongoose.connect(configDB.url, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false
+}).then(() => {
+  //connection established successfully
+  console.log('connection established successfully')
+}).catch(); {
+  //catch any error during the initial connection
+};
 
 var userRouter = require('./routes/users');
 var voteRouter = require('./routes/votes');
 var indexRouter = require('./routes/index');
 
 var app = express();
+
+app.use(
+  cookieSession({
+    name: 'simplonVote',
+    keys: ['asq4b4PR'],
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+  })
+)
+
+/**
+ * @MidleWare
+ * UTILISATEUR CONNECTÉ
+ */
+app.use('/*', function (req, res, next) {
+  // console.log(req.session)
+  res.locals.currentUser = {}
+  if (req.session.user) {
+    res.locals.currentUser.login = req.session.user.login // login de l'utilisateur connecté (dans le menu) accessible pour toutes les vues
+    res.locals.currentUser.id = req.session.user.id
+  }
+  next()
+})
+
+/**
+ * @MidleWare
+ * Flash Messages
+ */
+app.use('/*', function (req, res, next) {
+  res.locals.msgFlash = {}
+  if (req.session.msgFlash) {
+    res.locals.msgFlash = req.session.msgFlash
+    req.session.msgFlash = null
+  }
+  next()
+})
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({
+  extended: false
+}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/votes', voteRouter);
-app.use('/users', userRouter);
+app.use('/api/votes', voteRouter);
+app.use('/api/users', userRouter);
 
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

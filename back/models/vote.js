@@ -1,14 +1,15 @@
 const mongoose = require('mongoose')
-var ObjectId=mongoose.Schema.Types.ObjectId;
+var ObjectId = mongoose.Types.ObjectId;
+
 const voteSchema = mongoose.Schema({
     _id:{ type: ObjectId},
     subject: {
         type: String,
-        required :true
+        required: true
     },
     quota: {
         type: Number,
-        required :true
+        required: true
     },
     choices: {
         type: Array
@@ -29,6 +30,6 @@ const voteSchema = mongoose.Schema({
         enum: ['created', 'inprogress', 'finished'],
         default: "created"
     },
-},{collection:"vote"})
+})
 
 module.exports = mongoose.model('vote', voteSchema)

@@ -4,16 +4,18 @@ const userSchema = mongoose.Schema({
     _id:{ type: ObjectId},
     login: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     password: {
         type: String,
         required: true
     }
-},{collection:"users"})
+})
 
-module.exports = mongoose.model('users', userSchema)
+module.exports = mongoose.model('user', userSchema)
