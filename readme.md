@@ -26,4 +26,8 @@ exemple:
 **Environnement de production**
 > npm run prod
 
+### Documentation
+Pour générer la documentation
+> npm run doc
 
+Pour consulter la documentation : **back/docs/index.html**
