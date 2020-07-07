@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const Vote = require("../models/vote");
+const User = require("../models/user");
+const validator = require('validator');
 
 //Set up default mongoose connection
 // var mongoDB = 'mongodb://localhost:27017/simplon-vote';
@@ -42,8 +44,8 @@ controller.list = async (req, res) => {
 controller.addUser = async (req, res) => {
   User.create({
     pseudo: validator.escape(req.body.pseudo),
-    email: validator.normalizeEmail(req.body.email_user),
-    password: req.body.password_user
+    email: validator.normalizeEmail(req.body.email),
+    password: req.body.password
   }).then(res.redirect('/'))
 }
 

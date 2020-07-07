@@ -1,62 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <% include partials/head %>
+  <% include partials/head %>
 </head>
+
 <body class="container">
 
-<header>
+  <header>
     <% include partials/header %>
-</header>
+  </header>
 
-<main>
+  <main>
     <div class="jumbotron">
-      <form action="/api/signup" class="form" method="POST">
+      <form action="/addUser" class="form" method="POST">
 
         <div class="form-group">
           <label>Pseudo</label>
-          <input type="text" class="form-control">
+          <input name="pseudo" type="text" class="form-control" required>
         </div>
-
-      	<div class="form-group">
-      		<label>Mail</label>
-      		<input type="mail" class="form-control">
-      	</div>
-      
-		
-		    <div class="form-group">
-      		<label>Mot de passe</label>
-      		<input type="password" class="form-control">
-      	</div>
 
         <div class="form-group">
+          <label>E mail</label>
+          <input name="email" type="mail" class="form-control" required>
+        </div>
+
+
+        <div class="form-group">
+          <label>Mot de passe</label>
+          <input name="password" type="password" class="form-control" required>
+        </div>
+
+        <!-- <div class="form-group">
           <label>Confirmation de mot de passe</label>
           <input type="password" class="form-control">
+        </div> -->
+
+
+        <div class="col-sm-12 text-center mt-5">
+          <input type="submit" value="inscrire" class="btn btn-primary">
+
         </div>
-      	
 
-      	<div class="col-sm-12 text-center mt-5">
-      			<input type="submit" value="inscrire" class="btn btn-primary">
 
-      	</div>
-
-      
       </form>
 
       <div class="col-sm-12 text-center mt-5">
-        
-            <a href="/">Se connecter</a>
+
+        <a href="/">Se connecter</a>
       </div>
-  
+
     </div>
-</main>
+  </main>
 
-<footer>
+  <footer>
     <% include partials/footer %>
-</footer>
+  </footer>
 
-<% include partials/modals %>
+  <% include partials/modals %>
 
 
 </body>
+
 </html>

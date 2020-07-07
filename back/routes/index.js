@@ -11,6 +11,7 @@ router.post('/votes', indexController.add);
 router.delete('/votes/:id', indexController.delete);
 router.put('/votes/:id', indexController.update);
 router.get('/inscription', indexController.inscription);
+router.post('/addUser', indexController.addUser);
 // router.post("/api/login", usersController.login);
 // router.post("/api/signup", usersController.signup);
 
