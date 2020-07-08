@@ -82,15 +82,16 @@ router.get('/inscription', indexController.inscription);
 router.post('/addUser', indexController.addUser);
 // router.post("/api/login", usersController.login);
 // router.post("/api/signup", usersController.signup);
-router.get('/logout', indexController.logout);
-router.post('/login', indexController.login);
-router.get('/login',indexController.visulogin);
-router.get('/dashboard/all',indexController.dashboard);
+router.get('/logout', indexController.logout)
+router.post('/login', indexController.login)
+router.get('/login', indexController.visulogin)
+router.get('/dashboard/showall', indexController.showall)
+router.get('/dashboard/showmine', indexController.showmine)
+// router.get('/dashboard/showend', indexController.showend)
+router.get('/dashboard/progress', indexController.showinprogress)
+// router.get('/dashboard/showpart', indexController.showpart)
 router.get('/ajout', indexController.ajout);
-router.get('/dashboard/finished', indexController.showend );
-router.get('/dashboard/inprogress', indexController.showinprogress );
-router.get('/dashboard/created', indexController.showcreated );
-
+router.get('/dashboard/showend', indexController.showend);
 
 
 module.exports = router;
