@@ -76,6 +76,7 @@ router.post('/login', indexController.login)
 router.get('/login',indexController.visulogin)
 router.get('/dashboard',indexController.dashboard)
 router.get('/ajout', indexController.ajout);
+router.get('/showend', indexController.showend );
 
 
 module.exports = router;

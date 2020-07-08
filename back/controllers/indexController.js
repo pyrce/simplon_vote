@@ -107,9 +107,13 @@ controller.add = async (req, res) => {
 controller.visulogin = async (req,res) => {
   res.render('./index.ejs', {title: "login"})
 }
+
 controller.dashboard = async (req,res) => {
-  res.render('./dashboard.ejs' , {
-    title: "sujet"
+  const votes = await Vote.find()
+  console.log(votes)
+    res.render('./dashboard.ejs' , {
+    title: "sujet",
+    votes: votes
   })
 }
 
@@ -266,6 +270,19 @@ controller.delete = async (req, res) => {
 controller.ajout = async (req, res) => {
   res.status(201).json({
     user
+  })
+}
+
+
+
+
+controller.showend = async (req,res) => {
+  const terminer = 'finished' ;
+  const votes = await Vote.find({status: terminer})
+  console.log(votes)
+  res.render('./dashboard' , {
+    title: "sujet",
+    votes: votes
   })
 }
 
