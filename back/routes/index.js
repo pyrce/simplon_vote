@@ -5,7 +5,7 @@ var usersController = require('../controllers/userController.js');
 
 /** Routes des vues
  * @module routers/index
- * @requires express
+ * @requires express express.Router()
  */
 
 /**

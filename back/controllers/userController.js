@@ -1,5 +1,11 @@
 const mongoose = require("mongoose");
 const User = require("../models/user");
+
+/** Controller USER
+ * @module controllers/user
+ * @requires mongoose
+ */
+
 /*
 //Set up default mongoose connection
 var mongoDB = 'mongodb://localhost:27017/simplon-vote';
@@ -13,6 +19,7 @@ var controller = {}
 
 /** List all users
  * @name list
+ * @memberof module:controllers/user
  * @function
  * @returns {json} users
  */
@@ -31,7 +38,7 @@ controller.list = async (req, res) => {
 
 /** Add one user
  * @name add
- * @function
+ * @memberof module:controllers/user
  * @param {string} login
  * @param {string} email
  * @param {string} password
@@ -61,6 +68,7 @@ controller.add = async (req, res) => {
 
 /** Show one user
  * @name show
+ * @memberof module:controllers/user
  * @function
  * @returns {json} user
  */
@@ -87,6 +95,7 @@ controller.show = async (req, res) => {
 
 /** Update one user
  * @name update
+ * @memberof module:controllers/user
  * @function
  * @param {string} login
  * @param {string} email
@@ -124,6 +133,7 @@ controller.update = async (req, res) => {
 
 /** Delete one user
  * @name delete
+ * @memberof module:controllers/user
  * @function
  */
 controller.delete = async (req, res) => {
@@ -134,7 +144,7 @@ controller.delete = async (req, res) => {
     await User.findByIdAndRemove(id)
     res.status()
     res.status(200).json({
-      resut: "success",
+      result: "success",
       message: "utilisateur supprimé"
     })
   } catch (error) {
@@ -147,6 +157,7 @@ controller.delete = async (req, res) => {
 /**
  * @name login
  * @verb POST
+ * @memberof module:controllers/user
  * @function
  * @param {object} req
  * @param {string} req.email
