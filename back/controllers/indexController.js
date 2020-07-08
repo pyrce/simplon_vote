@@ -108,14 +108,16 @@ controller.add = async (req, res) => {
 }
 
 /**
- * 
+ * @name visulogin
+ * @memberof module:controllers/index
  */
 controller.visulogin = async (req,res) => {
   res.render('./index.ejs', {title: "login"})
 }
 
 /**
- * 
+ * @name dashboard
+ * @memberof module:controllers/index
  */
 controller.dashboard = async (req,res) => {
   const votes = await Vote.find().populate('createdBy').exec()
@@ -153,7 +155,8 @@ controller.login = async (req,res) => {
 }
 
 /**
- * 
+ * @name logout
+ * @memberof module:controllers/index
  */
 controller.logout = async (req,res) => {
   req.session = null
@@ -188,7 +191,8 @@ controller.show = async (req, res) => {
 }
 
 /**
- * 
+ * @name inscription
+ * @memberof module:controllers/index
  */
 controller.inscription = async (req, res) => {
   try {
@@ -256,6 +260,7 @@ controller.update = async (req, res) => {
 
 /** 
  * Supprime un sujet de vote
+ * @todo Tester le fonctionnement
  * @name delete
  * @memberof module:controllers/index
  * @throws {JSON} - Renvoie un JSON en cas d'erreur
@@ -288,15 +293,21 @@ controller.delete = async (req, res) => {
 //         votes
 //     })
 // }
+
+/**
+ * @name ajout
+ * @memberof module:controllers/index
+ */
 controller.ajout = async (req, res) => {
   res.status(201).json({
     user
   })
 }
 
-
-
-
+/**
+ * @name showend
+ * @memberof module:controllers/index
+ */
 controller.showend = async (req,res) => {
   const terminer = 'finished' ;
   const votes = await Vote.find({status:  terminer}).populate('createdBy').exec()
