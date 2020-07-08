@@ -19,7 +19,7 @@ const validator = require('validator');
 var controller = {}
 
 /** 
- * List all votes
+ * Liste tout les sujets de vote et retourne un vue
  * @name list
  * @memberof module:controllers/index
  * @function
@@ -40,7 +40,7 @@ controller.list = async (req, res) => {
   }
 }
 
-/** add one user
+/** Ajout un utilisateur et redirige sur '/'
  * @name addUser
  * @memberof module:controllers/index
  * @fonction
@@ -62,7 +62,7 @@ controller.addUser = async (req, res) => {
   }).then(res.redirect('/'))
 }
 
-/** add One vote
+/** Ajoute un sujet de vote et redirige sur '/'
  * @name add
  * @memberof module:controllers/index
  * @function
@@ -104,10 +104,17 @@ controller.add = async (req, res) => {
     })
   }
 }
+
+/**
+ * 
+ */
 controller.visulogin = async (req,res) => {
   res.render('./index.ejs', {title: "login"})
 }
 
+/**
+ * 
+ */
 controller.dashboard = async (req,res) => {
   const votes = await Vote.find()
   console.log(votes)
@@ -117,6 +124,9 @@ controller.dashboard = async (req,res) => {
   })
 }
 
+/**
+ * 
+ */
 controller.login = async (req,res) => {
   const {email, password} = req.body
   if( !email || !password ){
@@ -140,12 +150,15 @@ controller.login = async (req,res) => {
   }
 }
 
+/**
+ * 
+ */
 controller.logout = async (req,res) => {
   req.session = null
   res.redirect('/')
 }
 
-/** show one vote
+/** Affiche le détail d'un sujet de vote
  * @name show
  * @memberof module:controllers/index
  * @function
@@ -171,6 +184,9 @@ controller.show = async (req, res) => {
   }
 }
 
+/**
+ * 
+ */
 controller.inscription = async (req, res) => {
   try {
     res.render("inscription", {
@@ -183,7 +199,7 @@ controller.inscription = async (req, res) => {
   }
 }
 
-/** Update one vote
+/** Modifie un sujet de vote
  * @name update
  * @memberof module:controllers/index
  * @function
@@ -234,7 +250,7 @@ controller.update = async (req, res) => {
   }
 }
 
-/** Delete one vote
+/** Supprime un sujet de vote
  * @name delete
  * @memberof module:controllers/index
  * @throws {JSON} - Renvoie un JSON en cas d'erreur
