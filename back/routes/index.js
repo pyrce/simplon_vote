@@ -71,12 +71,15 @@ router.get('/inscription', indexController.inscription);
 router.post('/addUser', indexController.addUser);
 // router.post("/api/login", usersController.login);
 // router.post("/api/signup", usersController.signup);
-router.get('/logout', indexController.logout)
-router.post('/login', indexController.login)
-router.get('/login',indexController.visulogin)
-router.get('/dashboard',indexController.dashboard)
+router.get('/logout', indexController.logout);
+router.post('/login', indexController.login);
+router.get('/login',indexController.visulogin);
+router.get('/dashboard/all',indexController.dashboard);
 router.get('/ajout', indexController.ajout);
-router.get('/showend', indexController.showend );
+router.get('/dashboard/finished', indexController.showend );
+router.get('/dashboard/inprogress', indexController.showinprogress );
+router.get('/dashboard/created', indexController.showcreated );
+
 
 
 module.exports = router;

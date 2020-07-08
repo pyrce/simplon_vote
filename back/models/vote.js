@@ -17,7 +17,8 @@ const voteSchema = mongoose.Schema({
         type: Number
     },
     createdBy: {
-        type: ObjectId
+        type: ObjectId,
+        ref: 'user'
     },
     participants: {
         type: Array,
@@ -28,6 +29,7 @@ const voteSchema = mongoose.Schema({
         enum: ['created', 'inprogress', 'finished'],
         default: "created"
     },
+    
 })
 
 module.exports = mongoose.model('vote', voteSchema)
