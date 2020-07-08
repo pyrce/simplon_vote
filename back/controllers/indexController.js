@@ -19,7 +19,7 @@ const validator = require('validator');
 var controller = {}
 
 /** 
- * List all votes
+ * Liste tout les sujets de vote et retourne un vue
  * @name list
  * @memberof module:controllers/index
  * @function
@@ -40,7 +40,8 @@ controller.list = async (req, res) => {
   }
 }
 
-/** add one user
+/** 
+ * Ajout un utilisateur et redirige sur '/'
  * @name addUser
  * @memberof module:controllers/index
  * @fonction
@@ -67,7 +68,8 @@ controller.addUser = async (req, res) => {
   )
 }
 
-/** add One vote
+/** 
+ * Ajoute un sujet de vote et redirige sur '/'
  * @name add
  * @memberof module:controllers/index
  * @function
@@ -109,6 +111,22 @@ controller.add = async (req, res) => {
     })
   }
 }
+<<<<<<< HEAD
+
+/**
+ * @name visulogin
+ * @memberof module:controllers/index
+ */
+controller.visulogin = async (req,res) => {
+  res.render('./index.ejs', {title: "login"})
+}
+
+/**
+ * @name dashboard
+ * @memberof module:controllers/index
+ */
+controller.dashboard = async (req,res) => {
+=======
 controller.visulogin = async (req, res) => {
   res.render('./index.ejs', {
     title: "login"
@@ -116,6 +134,7 @@ controller.visulogin = async (req, res) => {
 }
 
 controller.dashboard = async (req, res) => {
+>>>>>>> 3a36f908a66a88bf6b993ed22e28592548467c12
   const votes = await Vote.find().populate('createdBy').exec()
   console.log(votes)
   res.render('./dashboard.ejs', {
@@ -134,6 +153,15 @@ controller.showall = async (req, res) => {
   })
 }
 
+<<<<<<< HEAD
+/**
+ * Connexion
+ */
+controller.login = async (req,res) => {
+  const {email, password} = req.body
+  if( !email || !password ){
+    req.session.msgFlash = {type: "danger", message: "Donnée manquante"}
+=======
 controller.login = async (req, res) => {
   const {
     email,
@@ -144,6 +172,7 @@ controller.login = async (req, res) => {
       type: "danger",
       message: "Donnée manquante"
     }
+>>>>>>> 3a36f908a66a88bf6b993ed22e28592548467c12
     res.redirect('/login')
   } else {
     try {
@@ -175,12 +204,21 @@ controller.login = async (req, res) => {
   }
 }
 
+<<<<<<< HEAD
+/**
+ * @name logout
+ * @memberof module:controllers/index
+ */
+controller.logout = async (req,res) => {
+=======
 controller.logout = async (req, res) => {
+>>>>>>> 3a36f908a66a88bf6b993ed22e28592548467c12
   req.session = null
   res.redirect('/')
 }
 
-/** show one vote
+/** 
+ * Affiche le détail d'un sujet de vote
  * @name show
  * @memberof module:controllers/index
  * @function
@@ -206,6 +244,10 @@ controller.show = async (req, res) => {
   }
 }
 
+/**
+ * @name inscription
+ * @memberof module:controllers/index
+ */
 controller.inscription = async (req, res) => {
   try {
     res.render("inscription", {
@@ -218,7 +260,8 @@ controller.inscription = async (req, res) => {
   }
 }
 
-/** Update one vote
+/** 
+ * Modifie un sujet de vote
  * @name update
  * @memberof module:controllers/index
  * @function
@@ -269,7 +312,9 @@ controller.update = async (req, res) => {
   }
 }
 
-/** Delete one vote
+/** 
+ * Supprime un sujet de vote
+ * @todo Tester le fonctionnement
  * @name delete
  * @memberof module:controllers/index
  * @throws {JSON} - Renvoie un JSON en cas d'erreur
@@ -302,12 +347,26 @@ controller.delete = async (req, res) => {
 //         votes
 //     })
 // }
+
+/**
+ * @name ajout
+ * @memberof module:controllers/index
+ */
 controller.ajout = async (req, res) => {
   res.status(201).json({
     user
   })
 }
 
+<<<<<<< HEAD
+/**
+ * @name showend
+ * @memberof module:controllers/index
+ */
+controller.showend = async (req,res) => {
+  const terminer = 'finished' ;
+  const votes = await Vote.find({status:  terminer}).populate('createdBy').exec()
+=======
 
 
 
@@ -316,6 +375,7 @@ controller.showend = async (req, res) => {
   const votes = await Vote.find({
     status: terminer
   }).populate('createdBy').exec()
+>>>>>>> 3a36f908a66a88bf6b993ed22e28592548467c12
   console.log(votes)
   res.render('./dashboard', {
     title: "sujet",
