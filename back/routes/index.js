@@ -3,7 +3,7 @@ var router = express.Router();
 var indexController = require('../controllers/indexController.js');
 var usersController = require('../controllers/userController.js');
 
-/** Express router providing user related routes
+/** Routes des vues
  * @module routers/index
  * @requires express
  */
@@ -13,7 +13,7 @@ var usersController = require('../controllers/userController.js');
  * @name Inscription GET
  * @function
  * @memberof module:routers/index
- * @param {string} '/inscription'
+ * @param {string} '/inscription' - uri
  * @param {function} indexController.inscription
  */
 router.get('/inscription', indexController.inscription);
@@ -23,7 +23,7 @@ router.get('/inscription', indexController.inscription);
  * @name List GET
  * @function
  * @memberof module:routers/index
- * @param {string} '/'
+ * @param {string} '/' - uri
  * @param {function} indexController.list
  */
 router.get('/', indexController.list);
@@ -33,7 +33,7 @@ router.get('/', indexController.list);
  * @name Show GET
  * @function
  * @memberof module:routers/index
- * @param {string} '/votes/:id'
+ * @param {string} '/votes/:id' - uri
  * @param {function} indexController.show
  */
 router.get('/votes/:id', indexController.show);
@@ -43,7 +43,7 @@ router.get('/votes/:id', indexController.show);
  * @name Add POST
  * @function
  * @memberof module:routers/index
- * @param {string} '/votes'
+ * @param {string} '/votes' - uri
  * @param {function} indexController.add
  */
 router.post('/votes', indexController.add);
@@ -53,17 +53,17 @@ router.post('/votes', indexController.add);
  * @name  Delete DELETE
  * @function
  * @memberof module:routers/index
- * @param {string} '/votes/:id'
+ * @param {string} '/votes/:id' - uri
  * @param {function} indexController.delete
  */
 router.delete('/votes/:id', indexController.delete);
 
 /**
- * List all votes
+ * Modifie un sujet de vote par rapport à son identifiant
  * @name Update PUT
  * @function
  * @memberof module:routers/index
- * @param {string} '/votes/:id'
+ * @param {string} '/votes/:id' - uri
  * @param {function} indexController.update
  */
 router.put('/votes/:id', indexController.update);
@@ -71,7 +71,7 @@ router.get('/inscription', indexController.inscription);
 router.post('/addUser', indexController.addUser);
 // router.post("/api/login", usersController.login);
 // router.post("/api/signup", usersController.signup);
-
+router.get('/logout', indexController.logout)
 router.post('/login', indexController.login)
 router.get('/login',indexController.visulogin)
 router.get('/dashboard',indexController.dashboard)

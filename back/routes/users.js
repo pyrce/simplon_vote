@@ -3,79 +3,86 @@ const router = express.Router();
 const User = require("../models/user");
 const userController = require('../controllers/userController.js');
 
-/** Express router providing user related routes
+/** Routes de l'API pour les utilisateurs
  * @module routers/users
  * @requires express
  */
 
 
 /**
- * List all users
+ * Renvoie la liste de tout les utilisateurs
  * @name List GET
  * @function
  * @memberof module:routers/users
- * @param {string} '/api/users'
+ * @param {string} '/api/users' - uri
  * @param {function} userController.list
+ * @return {JSON}
  */
 router.get('/', userController.list);
 
 /**
- * Add a new user 
+ * Ajoute un nouvel utilisateur 
  * @name Add POST
  * @function
  * @memberof module:routers/users
- * @param {string} '/api/users' - path
+ * @param {string} '/api/users' - uri
  * @param {function} userController.add
+ * @return {JSON}
  */
 router.post('/', userController.add)
 
 /**
- * login a user
+ * Connecte un utilisateur
  * @name Login POST
  * @function
  * @memberof module:routers/users
- * @param {string} '/api/users/login' - path
+ * @param {string} '/api/users/login' - uri
  * @param {function} userController.login
+ * @return {JSON}
  */
 router.post('/login', userController.login);
 
 /**
- * Signup a user
+ * Inscrit un utilisateur
  * @name Signup POST
  * @function
  * @memberof module:routers/users
- * @param {string} '/api/users/signup' - path
+ * @param {string} '/api/users/signup' - uri
  * @param {function} userController.signup
+ * @return {JSON}
  */
 router.post('/signup', userController.signup);
 
 /**
- * Show a user by its id
+ * Renvoie les informations d'un utilisateur par rapport à son identifiant
  * @name Show GET
  * @function
  * @memberof module:routers/users
- * @param {string} '/api/users/:id' - path
+ * @param {string} '/api/users/:id' - uri
  * @param {function} userController.show
+ * @return {JSON}
  */
 router.get('/:id', userController.show)
 
 /**
- * Update a user by its id 
+ * Modifie un utilisateur par rapport à son identifiant
  * @name Update PUT
  * @function
  * @memberof module:routers/users
- * @param {string} '/api/users/:id' - path
+ * @param {string} '/api/users/:id' - uri
  * @param {function} userController.update
+ * @return {JSON}
  */
 router.put('/:id', userController.update);
 
 /**
- * Delete a user by id
+ * Supprime un utilisateur par rapport à son utilisateur
  * @name Delete DELETE
  * @function
  * @memberof module:routers/users
- * @param {string} '/api/users/:id' - path
+ * @param {string} '/api/users/:id' - uri
  * @param {function} userController.delete
+ * @return {JSON}
  */
 router.delete('/:id', userController.delete);
 
