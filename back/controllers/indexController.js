@@ -340,13 +340,9 @@ controller.showmine = async (req, res) => {
   const created = 'created';
   console.log(req.session.user)
   const votes = await Vote.find({
+    createdBy: req.session.user._id,
     status: created
-  }).populate({
-    path: 'createdBy',
-    match: {
-      '_id': req.session.user.id
-    }
-  }).exec()
+  }).populate('createdBy').exec()
   res.render('./dashboard', {
     title: "sujet",
     votes: votes,
