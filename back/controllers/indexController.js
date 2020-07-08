@@ -107,9 +107,13 @@ controller.add = async (req, res) => {
 controller.visulogin = async (req,res) => {
   res.render('./index.ejs', {title: "login"})
 }
+
 controller.dashboard = async (req,res) => {
-  res.render('./dashboard.ejs' , {
-    title: "sujet"
+  const votes = await Vote.find()
+  console.log(votes)
+    res.render('./dashboard.ejs' , {
+    title: "sujet",
+    votes: votes
   })
 }
 
