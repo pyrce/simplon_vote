@@ -118,8 +118,8 @@ controller.visulogin = async (req,res) => {
  * 
  */
 controller.dashboard = async (req,res) => {
-  const votes = await Vote.find()
-  console.log(votes)
+  const votes = await Vote.find().populate('createdBy').exec()
+    console.log(votes)
     res.render('./dashboard.ejs' , {
     title: "sujet",
     votes: votes
@@ -296,7 +296,7 @@ controller.ajout = async (req, res) => {
 
 controller.showend = async (req,res) => {
   const terminer = 'finished' ;
-  const votes = await Vote.find({status: terminer})
+  const votes = await Vote.find({status:  terminer}).populate('createdBy').exec()
   console.log(votes)
   res.render('./dashboard' , {
     title: "sujet",

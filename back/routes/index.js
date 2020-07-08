@@ -74,9 +74,9 @@ router.post('/addUser', indexController.addUser);
 router.get('/logout', indexController.logout)
 router.post('/login', indexController.login)
 router.get('/login',indexController.visulogin)
-router.get('/dashboard',indexController.dashboard)
+router.get('/dashboard/all',indexController.dashboard)
 router.get('/ajout', indexController.ajout);
-router.get('/showend', indexController.showend );
+router.get('/dashboard/showend', indexController.showend );
 
 
 module.exports = router;
