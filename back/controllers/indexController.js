@@ -278,7 +278,7 @@ controller.ajout = async (req, res) => {
 
 controller.showend = async (req,res) => {
   const terminer = 'finished' ;
-  const votes = await Vote.find({status: {enum: terminer}})
+  const votes = await Vote.find({status: terminer})
   console.log(votes)
   res.render('./dashboard' , {
     title: "sujet",
