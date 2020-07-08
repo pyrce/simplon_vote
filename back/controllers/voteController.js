@@ -1,6 +1,11 @@
 const mongoose=require("mongoose");
 const Vote = require("../models/vote");
 
+/** Controller VOTE
+ * @module controllers/vote
+ * @requires mongoose
+ */
+
 //Set up default mongoose connection
 // var mongoDB = 'mongodb://localhost:27017/simplon-vote';
 // var ObjectId=mongoose.Types.ObjectId;
@@ -14,6 +19,7 @@ var controller={}
 /** 
  * List all votes
  * @name list
+ * @memberof module:controllers/vote
  * @function
  * @returns {json} votes
  */
@@ -28,6 +34,7 @@ controller.list = async (req,res) => {
 
 /** Add one vote
  * @name add
+ * @memberof module:controllers/vote
  * @function
  * @param {string} subject
  * @param {integer} quota
@@ -58,6 +65,7 @@ controller.add = async (req,res) => {
 
 /** Show one vote
  * @name show
+ * @memberof module:controllers/vote
  * @function
  * @returns {json} vote
  */
@@ -74,6 +82,7 @@ controller.show = async (req,res) => {
 
 /** Update one vote
  * @name update
+ * @memberof module:controllers/vote
  * @function
  * @param {string} subject
  * @param {integer} quota
@@ -108,6 +117,7 @@ controller.update = async (req,res) => {
 
 /** delete one vote
  * @name delete
+ * @memberof module:controllers/vote
  */
 controller.delete = async (req, res) => {
   try {

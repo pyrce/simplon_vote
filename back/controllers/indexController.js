@@ -3,6 +3,11 @@ const Vote = require("../models/vote");
 const User = require("../models/user");
 const validator = require('validator');
 
+/** Controller INDEX
+ * @module controllers/index
+ * @requires mongoose
+ */
+
 //Set up default mongoose connection
 // var mongoDB = 'mongodb://localhost:27017/simplon-vote';
 // var ObjectId=mongoose.Types.ObjectId;
@@ -16,8 +21,10 @@ var controller = {}
 /** 
  * List all votes
  * @name list
+ * @memberof module:controllers/index
  * @function
- * @returns {json} votes
+ * @returns {VIEW}
+ * @throws {JSON} - Renvoie un JSON en cas d'erreur
  */
 controller.list = async (req, res) => {
   const votes = await Vote.find({})
@@ -35,10 +42,12 @@ controller.list = async (req, res) => {
 
 /** add one user
  * @name addUser
+ * @memberof module:controllers/index
  * @fonction
  * @param {string} pseudo
  * @param {string} email
  * @param {string} mot de passe
+ * @returns {VIEW} redirect to '/'
  */
 
 controller.addUser = async (req, res) => {
@@ -55,6 +64,7 @@ controller.addUser = async (req, res) => {
 
 /** add One vote
  * @name add
+ * @memberof module:controllers/index
  * @function
  * @param {string} subject
  * @param {integer} quota
@@ -63,7 +73,8 @@ controller.addUser = async (req, res) => {
  * @param {OjectId} createdBy
  * @param {array} participants
  * @param {string} status ['created', 'inprogress', 'finished']
- * @returns {json} vote
+ * @returns {VIEW} Redirect to '/'
+ * @throws {JSON} - Renvoie un JSON en cas d'erreur
  */
 
 controller.add = async (req, res) => {
@@ -132,8 +143,10 @@ controller.logout = async (req,res) => {
 
 /** show one vote
  * @name show
+ * @memberof module:controllers/index
  * @function
- * @returns {json} vote
+ * @returns {VIEW} "detail"
+ * @throws {JSON} - Renvoie un JSON en cas d'erreur
  */
 controller.show = async (req, res) => {
   const {
@@ -168,6 +181,7 @@ controller.inscription = async (req, res) => {
 
 /** Update one vote
  * @name update
+ * @memberof module:controllers/index
  * @function
  * @param {string} subject
  * @param {integer} quota
@@ -176,7 +190,8 @@ controller.inscription = async (req, res) => {
  * @param {OjectId} createdBy
  * @param {array} participants
  * @param {string} status ['created', 'inprogress', 'finished']
- * @returns {json} vote
+ * @returns {VIEW} Redirect to '/'
+ * @throws {JSON} - Renvoie un JSON en cas d'erreur
  */
 controller.update = async (req, res) => {
   const {
@@ -217,6 +232,8 @@ controller.update = async (req, res) => {
 
 /** Delete one vote
  * @name delete
+ * @memberof module:controllers/index
+ * @throws {JSON} - Renvoie un JSON en cas d'erreur
  */
 controller.delete = async (req, res) => {
   try {
