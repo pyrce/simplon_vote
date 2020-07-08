@@ -114,7 +114,7 @@ controller.delete = async (req, res) => {
     const { id } = req.params
     await Vote.findByIdAndRemove(id)
     res.status()
-    res.status(200).json({resut:"success", message: "vote supprimé"})
+    res.status(200).json({result:"success", message: "vote supprimé"})
   } catch (error) {
     res.status(400).json({result:"error"})
   }

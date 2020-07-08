@@ -201,7 +201,7 @@ controller.update = async (req, res) => {
       omitUndefined: true
     })
     res.redirect("/").json({
-      resut: "success",
+      result: "success",
       message: "vote supprimé"
     })
   } catch (error) {
@@ -222,7 +222,7 @@ controller.delete = async (req, res) => {
     await Vote.findByIdAndRemove(id)
     res.status()
     resresultjson({
-      resut: "success",
+      result: "success",
       message: "vote supprimé"
     })
   } catch (error) {

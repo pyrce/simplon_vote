@@ -134,7 +134,7 @@ controller.delete = async (req, res) => {
     await User.findByIdAndRemove(id)
     res.status()
     res.status(200).json({
-      resut: "success",
+      result: "success",
       message: "utilisateur supprimé"
     })
   } catch (error) {
