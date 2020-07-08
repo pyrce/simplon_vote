@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 var ObjectId = mongoose.Types.ObjectId;
+const Schema = mongoose.Schema;
 
 const voteSchema = mongoose.Schema({
     subject: {
@@ -17,7 +18,8 @@ const voteSchema = mongoose.Schema({
         type: Number
     },
     createdBy: {
-        type: ObjectId
+        type: Schema.Types.ObjectId,
+        ref : 'user'
     },
     participants: {
         type: Array,
