@@ -24,6 +24,7 @@ var controller = {}
  * @memberof module:controllers/index
  * @function
  * @returns {VIEW}
+ * @throws {JSON} - Renvoie un JSON en cas d'erreur
  */
 controller.list = async (req, res) => {
   const votes = await Vote.find({})
@@ -73,6 +74,7 @@ controller.addUser = async (req, res) => {
  * @param {array} participants
  * @param {string} status ['created', 'inprogress', 'finished']
  * @returns {VIEW} Redirect to '/'
+ * @throws {JSON} - Renvoie un JSON en cas d'erreur
  */
 
 controller.add = async (req, res) => {
@@ -105,9 +107,13 @@ controller.add = async (req, res) => {
 controller.visulogin = async (req,res) => {
   res.render('./index.ejs', {title: "login"})
 }
+
 controller.dashboard = async (req,res) => {
-  res.render('./dashboard.ejs' , {
-    title: "sujet"
+  const votes = await Vote.find().populate('createdBy').exec()
+    console.log(votes)
+    res.render('./dashboard.ejs' , {
+    title: "sujet",
+    votes: votes
   })
 }
 
@@ -144,6 +150,7 @@ controller.logout = async (req,res) => {
  * @memberof module:controllers/index
  * @function
  * @returns {VIEW} "detail"
+ * @throws {JSON} - Renvoie un JSON en cas d'erreur
  */
 controller.show = async (req, res) => {
   const {
@@ -188,6 +195,7 @@ controller.inscription = async (req, res) => {
  * @param {array} participants
  * @param {string} status ['created', 'inprogress', 'finished']
  * @returns {VIEW} Redirect to '/'
+ * @throws {JSON} - Renvoie un JSON en cas d'erreur
  */
 controller.update = async (req, res) => {
   const {
@@ -229,6 +237,7 @@ controller.update = async (req, res) => {
 /** Delete one vote
  * @name delete
  * @memberof module:controllers/index
+ * @throws {JSON} - Renvoie un JSON en cas d'erreur
  */
 controller.delete = async (req, res) => {
   try {
@@ -261,6 +270,39 @@ controller.delete = async (req, res) => {
 controller.ajout = async (req, res) => {
   res.status(201).json({
     user
+  })
+}
+
+
+
+
+controller.showend = async (req,res) => {
+  const terminer = 'finished' ;
+  const votes = await Vote.find({status:  terminer}).populate('createdBy').exec()
+  console.log(votes)
+  res.render('./dashboard' , {
+    title: "sujet",
+    votes: votes
+  })
+}
+
+controller.showinprogress = async (req,res) => {
+  const inprogress = 'inprogress' ;
+  const votes = await Vote.find({status:  inprogress}).populate('createdBy').exec()
+  console.log(votes)
+  res.render('./dashboard' , {
+    title: "sujet",
+    votes: votes
+  })
+}
+
+controller.showcreated = async (req,res) => {
+  const created = 'created' ;
+  const votes = await Vote.find({status:  created}).populate('createdBy').exec()
+  console.log(votes)
+  res.render('./dashboard' , {
+    title: "sujet",
+    votes: votes
   })
 }
 
