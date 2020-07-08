@@ -40,7 +40,8 @@ controller.list = async (req, res) => {
   }
 }
 
-/** Ajout un utilisateur et redirige sur '/'
+/** 
+ * Ajout un utilisateur et redirige sur '/'
  * @name addUser
  * @memberof module:controllers/index
  * @fonction
@@ -62,7 +63,8 @@ controller.addUser = async (req, res) => {
   }).then(res.redirect('/'))
 }
 
-/** Ajoute un sujet de vote et redirige sur '/'
+/** 
+ * Ajoute un sujet de vote et redirige sur '/'
  * @name add
  * @memberof module:controllers/index
  * @function
@@ -125,7 +127,7 @@ controller.dashboard = async (req,res) => {
 }
 
 /**
- * 
+ * Connexion
  */
 controller.login = async (req,res) => {
   const {email, password} = req.body

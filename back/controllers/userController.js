@@ -155,6 +155,7 @@ controller.delete = async (req, res) => {
 }
 
 /**
+ * Connexion
  * @name login
  * @verb POST
  * @memberof module:controllers/user
@@ -198,7 +199,12 @@ controller.login = async (req, res) => {
     }
   }
 }
+
+/**
+ * 
+ */
 controller.signup = (req, res) => {
 
 }
+
 module.exports = controller;
