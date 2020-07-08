@@ -398,4 +398,17 @@ controller.showmine = async (req, res) => {
 
 // }
 
+/** show inprogress sujet
+ * @name show
+ * @memberof module:controllers/index
+ * @function
+ * @returns {VIEW} "encours"
+ */
+controller.encours = async (req, res) => {
+  const votes = await Vote.find({status: 'inprogress'}).populate('createdBy').exec()
+  
+  console.log(votes)
+ res.render("encours",{title:'encours',votes : votes })
+}
+
 module.exports = controller;

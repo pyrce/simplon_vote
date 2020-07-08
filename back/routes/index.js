@@ -67,6 +67,17 @@ router.delete('/votes/:id', indexController.delete);
  * @param {function} indexController.update
  */
 router.put('/votes/:id', indexController.update);
+
+/**
+ * Retourne la vue pour afficher les sujets encours de vote
+ * @name Show GET
+ * @function
+ * @memberof module:routers/index
+ * @param {function} indexController.show
+ */
+router.get('/encours', indexController.encours);
+
+
 router.get('/inscription', indexController.inscription);
 router.post('/addUser', indexController.addUser);
 // router.post("/api/login", usersController.login);
