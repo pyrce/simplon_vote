@@ -18,7 +18,9 @@
 
         <div class="card">
           <div class="card-body">
-            <p class="text-center"><b><%= vote.subject %></b> <br /> <small>By <%= vote.createdBy %></small></p>
+            <p class="text-center"><b><%= vote.subject %></b> <br /> <small>By <% if (vote.createdBy != null) { %>
+              <%= vote.createdBy.login %>
+            <% } %></small></p>
             <p class="text-right"> <%= vote.participants.length %> / <%= vote.quota %> Participants ▶️</p>
             <div class="progress">
               <% var vot= vote.participants.length/vote.quota*100 %>
