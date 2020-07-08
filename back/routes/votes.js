@@ -2,18 +2,19 @@
 const router = require('express').Router();
 const voteController = require('../controllers/voteController.js');
 
-/** Express router providing user related routes
+/** Routes de l'API pour les sujets de vote
  * @module routers/votes
  * @requires express
  */
 
 /**
- * Renvoie la liste de tout les votes
+ * Renvoie la liste de tout les sujets de votes
  * @name List GET
  * @function
  * @memberof module:routers/votes
- * @param {string} '/api/votes'
+ * @param {string} '/api/votes' - uri
  * @param {function} voteController.list
+ * @return {JSON}
  */
 router.get('/', voteController.list)
 
@@ -22,38 +23,42 @@ router.get('/', voteController.list)
  * @name Add POST
  * @function
  * @memberof module:routers/votes
- * @param {string} '/api/votes'
+ * @param {string} '/api/votes' - uri
  * @param {function} voteController.add
+ * @return {JSON}
  */
 router.post('/', voteController.add)
 
 /**
- * Show one vote by a id
+ * Renvoie les informations d'un sujet de vote par rapport à un identifiant 
  * @name Show GET
  * @function
  * @memberof module:routers/votes
- * @param {string} '/api/votes/:id'
+ * @param {string} '/api/votes/:id' - uri
  * @param {function} voteController.show
+ * @return {JSON}
  */
 router.get('/:id', voteController.show)
 
 /**
- * Update a vote by id 
+ * Modifie un sujet de vote par rapport à son identifiant
  * @name Update PUT
  * @function
  * @memberof module:routers/votes
- * @param {string} '/api/users/:id'
+ * @param {string} '/api/votes/:id' - uri
  * @param {function} voteController.update
+ * @return {JSON}
  */
 router.put('/:id', voteController.update);
 
 /**
- * Delete a vote by id
+ * Supprime un sujet de vote par rapport à son identifiant
  * @name Delete DELETE
  * @function
  * @memberof module:routers/votes
- * @param {string} '/api/votes/:id'
+ * @param {string} '/api/votes/:id' - uri
  * @param {function} voteController.delete
+ * @return {JSON}
  */
 router.delete('/:id', voteController.delete);
 
