@@ -131,8 +131,6 @@ controller.delete = async (req, res) => {
 }
 
 
-
-
 // controller.list = async (req,res) => {
 //     const votes = await Vote.find({})
 //     res.status(200).json({

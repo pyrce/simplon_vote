@@ -18,13 +18,10 @@ const voteSchema = mongoose.Schema({
         type: Number
     },
     createdBy: {
-<<<<<<< HEAD
+        
         type: Schema.Types.ObjectId,
         ref : 'user'
-=======
-        type: ObjectId,
-        ref: 'user'
->>>>>>> 19572b07b5e2b4b3898d6b379a50b37744368232
+
     },
     participants: {
         type: Array,
