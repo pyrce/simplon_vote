@@ -323,6 +323,37 @@ controller.showend = async (req, res) => {
   })
 }
 
+controller.showinprogress = async (req, res) => {
+  const inprogress = 'inprogress';
+  const votes = await Vote.find({
+    status: inprogress
+  }).populate('createdBy').exec()
+  console.log(votes)
+  res.render('./dashboard', {
+    title: "sujet",
+    votes: votes,
+    type: "progress"
+  })
+}
+
+controller.showmine = async (req, res) => {
+  const created = 'created';
+  console.log(req.session.user)
+  const votes = await Vote.find({
+    status: created
+  }).populate({
+    path: 'createdBy',
+    match: {
+      '_id': req.session.user.id
+    }
+  }).exec()
+  res.render('./dashboard', {
+    title: "sujet",
+    votes: votes,
+    type: "mine"
+  })
+}
+
 // controller.addvote = (req,res)=>{
 
 // }

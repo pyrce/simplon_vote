@@ -75,9 +75,9 @@ router.get('/logout', indexController.logout)
 router.post('/login', indexController.login)
 router.get('/login', indexController.visulogin)
 router.get('/dashboard/showall', indexController.showall)
-// router.get('/dashbord/showmine', indexController.showmine)
+router.get('/dashboard/showmine', indexController.showmine)
 // router.get('/dashboard/showend', indexController.showend)
-// router.get('/dashboard/showinprogress', indexController.showinprogress)
+router.get('/dashboard/progress', indexController.showinprogress)
 // router.get('/dashboard/showpart', indexController.showpart)
 router.get('/ajout', indexController.ajout);
 router.get('/dashboard/showend', indexController.showend);
