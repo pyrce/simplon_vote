@@ -16,9 +16,23 @@
           <a class="nav-link" href="/resultat">Résultats</a>
         </li>
       </ul>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#"><%= locals.currentUser.login %></a>
+        </li>
+      </ul>
     </div>
   </nav>
 
   <br/>
+
+  <% if (locals.msgFlash.message) { %>
+    <div class="alert alert-<%= locals.msgFlash.type %> alert-dismissible fade show mt-3" role="alert">
+      <strong><%= locals.msgFlash.message %></strong>.
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  <% }%>
 
 
