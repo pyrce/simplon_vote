@@ -50,9 +50,13 @@ controller.list = async (req, res) => {
  */
 
 controller.addUser = async (req, res) => {
+  if (!validator.isEmail(req.body.email)) {
+    return res.redirect('/')
+  }
+
   User.create({
-    pseudo: validator.escape(req.body.pseudo),
-    email: validator.normalizeEmail(req.body.email),
+    login: validator.escape(req.body.pseudo),
+    email: req.body.email,
     password: req.body.password
   }).then(res.redirect('/'))
 }
@@ -212,7 +216,7 @@ controller.update = async (req, res) => {
       omitUndefined: true
     })
     res.redirect("/").json({
-      resut: "success",
+      result: "success",
       message: "vote supprimé"
     })
   } catch (error) {
@@ -234,7 +238,7 @@ controller.delete = async (req, res) => {
     await Vote.findByIdAndRemove(id)
     res.status()
     resresultjson({
-      resut: "success",
+      result: "success",
       message: "vote supprimé"
     })
   } catch (error) {
