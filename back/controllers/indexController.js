@@ -160,7 +160,8 @@ controller.logout = async (req,res) => {
   res.redirect('/')
 }
 
-/** Affiche le détail d'un sujet de vote
+/** 
+ * Affiche le détail d'un sujet de vote
  * @name show
  * @memberof module:controllers/index
  * @function
@@ -201,7 +202,8 @@ controller.inscription = async (req, res) => {
   }
 }
 
-/** Modifie un sujet de vote
+/** 
+ * Modifie un sujet de vote
  * @name update
  * @memberof module:controllers/index
  * @function
@@ -252,7 +254,8 @@ controller.update = async (req, res) => {
   }
 }
 
-/** Supprime un sujet de vote
+/** 
+ * Supprime un sujet de vote
  * @name delete
  * @memberof module:controllers/index
  * @throws {JSON} - Renvoie un JSON en cas d'erreur
