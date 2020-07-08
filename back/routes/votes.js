@@ -4,7 +4,7 @@ const voteController = require('../controllers/voteController.js');
 
 /** Routes de l'API pour les sujets de vote
  * @module routers/votes
- * @requires express
+ * @requires express express.Router()
  */
 
 /**

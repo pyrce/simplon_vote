@@ -5,7 +5,7 @@ const userController = require('../controllers/userController.js');
 
 /** Routes de l'API pour les utilisateurs
  * @module routers/users
- * @requires express
+ * @requires express express.Router()
  */
 
 
