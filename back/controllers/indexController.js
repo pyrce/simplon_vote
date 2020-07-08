@@ -29,7 +29,7 @@ var controller = {}
 controller.list = async (req, res) => {
   const votes = await Vote.find({})
   try {
-    res.render("index", {
+    res.render("dashboar/all", {
       votes: votes,
       title: "application votes"
     })
@@ -52,14 +52,19 @@ controller.list = async (req, res) => {
 
 controller.addUser = async (req, res) => {
   if (!validator.isEmail(req.body.email)) {
-    return res.redirect('/')
+    return res.redirect('/inscription')
   }
 
   User.create({
     login: validator.escape(req.body.pseudo),
     email: req.body.email,
     password: req.body.password
-  }).then(res.redirect('/'))
+  }).then(
+    req.session.msgFlash = {
+      type: "success",
+      message: "Félicitation vous êtes inscrit"
+    }, res.redirect('/')
+  )
 }
 
 /** add One vote
@@ -104,43 +109,73 @@ controller.add = async (req, res) => {
     })
   }
 }
-controller.visulogin = async (req,res) => {
-  res.render('./index.ejs', {title: "login"})
+controller.visulogin = async (req, res) => {
+  res.render('./index.ejs', {
+    title: "login"
+  })
 }
 
-controller.dashboard = async (req,res) => {
+controller.dashboard = async (req, res) => {
   const votes = await Vote.find().populate('createdBy').exec()
-    console.log(votes)
-    res.render('./dashboard.ejs' , {
+  console.log(votes)
+  res.render('./dashboard.ejs', {
     title: "sujet",
     votes: votes
   })
 }
+controller.showall = async (req, res) => {
+  const votes = await Vote.find({})
+    .populate("createdBy")
+  console.log(votes)
+  res.render('./dashboard.ejs', {
+    title: "sujet",
+    votes,
+    type: "all"
+  })
+}
 
-controller.login = async (req,res) => {
-  const {email, password} = req.body
-  if( !email || !password ){
-    req.session.msgFlash = {type: "danger", message: "Donnée manquante"}
+controller.login = async (req, res) => {
+  const {
+    email,
+    password
+  } = req.body
+  if (!email || !password) {
+    req.session.msgFlash = {
+      type: "danger",
+      message: "Donnée manquante"
+    }
     res.redirect('/login')
   } else {
     try {
-      const user = await User.findOne({ email: email })
-    if (!user || (user.email !== email && user.password !== password) ){
-      req.session.msgFlash = {type: "danger", message: "Identifiants invalide"}
-      res.redirect('/login')
-    } else {
-      req.session.user = user // use session for user connected
-      console.log(req.session)
-      res.redirect('/dashboard')
-    }
+      const user = await User.findOne({
+        email: email
+      })
+      if (!user || (user.email !== email && user.password !== password)) {
+        req.session.msgFlash = {
+          type: "danger",
+          message: "Identifiants invalide"
+        }
+        res.redirect('/login')
+      } else {
+        req.session.user = user // use session for user connected
+        console.log(req.session)
+        req.session.msgFlash = {
+          type: "success",
+          message: "Bienvenu " + user.login
+        }
+        res.redirect('/dashboard/showall')
+      }
     } catch (error) {
-      req.session.msgFlash = {type: "error", message: "Identifiants invalide"}
-      res.redirect('/login',)
+      req.session.msgFlash = {
+        type: "error",
+        message: "Identifiants invalide"
+      }
+      res.redirect('/login', )
     }
   }
 }
 
-controller.logout = async (req,res) => {
+controller.logout = async (req, res) => {
   req.session = null
   res.redirect('/')
 }
@@ -276,33 +311,46 @@ controller.ajout = async (req, res) => {
 
 
 
-controller.showend = async (req,res) => {
-  const terminer = 'finished' ;
-  const votes = await Vote.find({status:  terminer}).populate('createdBy').exec()
+controller.showend = async (req, res) => {
+  const terminer = 'finished';
+  const votes = await Vote.find({
+    status: terminer
+  }).populate('createdBy').exec()
   console.log(votes)
-  res.render('./dashboard' , {
+  res.render('./dashboard', {
     title: "sujet",
     votes: votes
   })
 }
 
-controller.showinprogress = async (req,res) => {
-  const inprogress = 'inprogress' ;
-  const votes = await Vote.find({status:  inprogress}).populate('createdBy').exec()
+controller.showinprogress = async (req, res) => {
+  const inprogress = 'inprogress';
+  const votes = await Vote.find({
+    status: inprogress
+  }).populate('createdBy').exec()
   console.log(votes)
-  res.render('./dashboard' , {
+  res.render('./dashboard', {
     title: "sujet",
-    votes: votes
+    votes: votes,
+    type: "progress"
   })
 }
 
-controller.showcreated = async (req,res) => {
-  const created = 'created' ;
-  const votes = await Vote.find({status:  created}).populate('createdBy').exec()
-  console.log(votes)
-  res.render('./dashboard' , {
+controller.showmine = async (req, res) => {
+  const created = 'created';
+  console.log(req.session.user)
+  const votes = await Vote.find({
+    status: created
+  }).populate({
+    path: 'createdBy',
+    match: {
+      '_id': req.session.user.id
+    }
+  }).exec()
+  res.render('./dashboard', {
     title: "sujet",
-    votes: votes
+    votes: votes,
+    type: "mine"
   })
 }
 
