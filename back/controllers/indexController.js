@@ -111,30 +111,22 @@ controller.add = async (req, res) => {
     })
   }
 }
-<<<<<<< HEAD
 
 /**
  * @name visulogin
  * @memberof module:controllers/index
  */
-controller.visulogin = async (req,res) => {
-  res.render('./index.ejs', {title: "login"})
-}
-
-/**
- * @name dashboard
- * @memberof module:controllers/index
- */
-controller.dashboard = async (req,res) => {
-=======
 controller.visulogin = async (req, res) => {
   res.render('./index.ejs', {
     title: "login"
   })
 }
 
+/**
+ * @name dashboard
+ * @memberof module:controllers/index
+ */
 controller.dashboard = async (req, res) => {
->>>>>>> 3a36f908a66a88bf6b993ed22e28592548467c12
   const votes = await Vote.find().populate('createdBy').exec()
   console.log(votes)
   res.render('./dashboard.ejs', {
@@ -153,15 +145,9 @@ controller.showall = async (req, res) => {
   })
 }
 
-<<<<<<< HEAD
 /**
  * Connexion
  */
-controller.login = async (req,res) => {
-  const {email, password} = req.body
-  if( !email || !password ){
-    req.session.msgFlash = {type: "danger", message: "Donnée manquante"}
-=======
 controller.login = async (req, res) => {
   const {
     email,
@@ -172,7 +158,6 @@ controller.login = async (req, res) => {
       type: "danger",
       message: "Donnée manquante"
     }
->>>>>>> 3a36f908a66a88bf6b993ed22e28592548467c12
     res.redirect('/login')
   } else {
     try {
@@ -204,15 +189,11 @@ controller.login = async (req, res) => {
   }
 }
 
-<<<<<<< HEAD
 /**
  * @name logout
  * @memberof module:controllers/index
  */
-controller.logout = async (req,res) => {
-=======
 controller.logout = async (req, res) => {
->>>>>>> 3a36f908a66a88bf6b993ed22e28592548467c12
   req.session = null
   res.redirect('/')
 }
@@ -358,24 +339,15 @@ controller.ajout = async (req, res) => {
   })
 }
 
-<<<<<<< HEAD
 /**
  * @name showend
  * @memberof module:controllers/index
  */
-controller.showend = async (req,res) => {
-  const terminer = 'finished' ;
-  const votes = await Vote.find({status:  terminer}).populate('createdBy').exec()
-=======
-
-
-
 controller.showend = async (req, res) => {
   const terminer = 'finished';
   const votes = await Vote.find({
     status: terminer
   }).populate('createdBy').exec()
->>>>>>> 3a36f908a66a88bf6b993ed22e28592548467c12
   console.log(votes)
   res.render('./dashboard', {
     title: "sujet",
