@@ -103,6 +103,7 @@ router.get('/dashboard/progress', indexController.showinprogress)
 // router.get('/dashboard/showpart', indexController.showpart)
 router.get('/ajout', indexController.ajout);
 router.get('/dashboard/showend', indexController.showend);
+router.get('/dashboard/part', indexController.part);
 /**
  * Retourne la vue pour afficher les sujets crée par utilisateur
  * @name Show GET

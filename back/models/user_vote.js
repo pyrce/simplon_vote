@@ -8,7 +8,8 @@ const userVoteSchema = mongoose.Schema({
     },
     vote: {
         type: ObjectId,
-        required: true
+        required: true,
+        ref: 'vote'
     },
     
     choix: {
