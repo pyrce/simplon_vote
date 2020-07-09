@@ -40,6 +40,6 @@ const voteSchema = mongoose.Schema({
         default: "created"
     },
     
-})
+},{collection:"vote"})
 
 module.exports = mongoose.model('vote', voteSchema)

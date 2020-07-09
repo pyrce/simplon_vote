@@ -6,7 +6,7 @@ module.exports = {
     // See https://github.com/seppevs/migrate-mongo/#creating-a-new-migration-script
     // Example:
     // await db.collection('albums').updateOne({artist: 'The Beatles'}, {$set: {blacklisted: true}});
-    return await db.collection('users_votes').insertMany([
+    return await db.collection('usersVotes').insertMany([
       {
         "_id": mongoose.Types.ObjectId("5f033d9a220832635062c9f7"),
         "user": mongoose.Types.ObjectId("5f03355d220832635062c9f0"),
@@ -33,6 +33,6 @@ module.exports = {
     // TODO write the statements to rollback your migration (if possible)
     // Example:
     // await db.collection('albums').updateOne({artist: 'The Beatles'}, {$set: {blacklisted: false}});
-    return await db.collection('users_votes').drop()
+    return await db.collection('usersVotes').deleteMany({})
   }
 };

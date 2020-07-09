@@ -44,7 +44,7 @@
             <p class="text-center"><b><%= vote.subject %></b> <br /> <small>By <% if (vote.createdBy != null) { %>
                 <%= vote.createdBy.login %>
                 <% } %></small></p>
-            <p class="text-right"> <%= vote.participants.length %> / <%= vote.quota %> Participants <%if(vote.participants.indexOf(user._id)==-1){%> <button onclick="participer('<%=vote._id%>')" class="btn btn-info"><i class="fas fa-arrow-circle-right"></i> </button><%}%></p>
+            <p class="text-right"> <%= vote.participants.length %> / <%= vote.quota %> Participants <%if (!vote.participants.includes(locals.currentUser.id)){%> <button onclick="participer('<%=vote._id%>')" class="btn btn-info"><i class="fas fa-arrow-circle-right"></i> </button><%}%></p>
             <div class="progress">
               <% var vot= vote.participants.length/vote.quota*100 %>
               <div class="progress-bar bg-warning" role="progressbar" style="width: <%= vot %>%;"
