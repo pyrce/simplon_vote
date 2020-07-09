@@ -4,7 +4,7 @@
  */
 
 const mongoose = require('mongoose')
-var ObjectId=mongoose.Schema.Types.ObjectId;
+var ObjectId = mongoose.Schema.Types.ObjectId;
 
 /**
  * @name userSchema
@@ -14,7 +14,9 @@ var ObjectId=mongoose.Schema.Types.ObjectId;
  * @param {array} - Propriétés de mon schéma
  */
 const userSchema = mongoose.Schema({
-    _id:{ type: ObjectId},
+    _id: {
+        type: ObjectId
+    },
     login: {
         type: String,
         required: true,
@@ -29,6 +31,6 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true
     }
-},{collection:"users"})
+})
 
 module.exports = mongoose.model('users', userSchema)
