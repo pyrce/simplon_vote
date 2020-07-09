@@ -22,7 +22,7 @@
           <p class="text-right"> <%= vote.participants.length %> / <%= vote.quota %> Participants ▶️</p>
           <div class="progress">
             <% var vot= vote.participants.length/vote.quota*100 %>
-            <div class="progress-bar bg-warning" role="progressbar" style="width: <%= vot %>%;"
+            <div class="progress-bar bg-warning" role="progressbar" style="width:<%= vot %>%"
               aria-valuenow="<%= vot %>" aria-valuemin="0" aria-valuemax="100"> <%= vot %>%</div>
           </div>
         </div>
