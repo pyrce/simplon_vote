@@ -10,13 +10,21 @@ const voteSchema = mongoose.Schema({
     },
     quota: {
         type: Number,
-        required: true
+        required: true,
+        validate : {
+            validator : Number.isInteger,
+            message   : "{VALUE} n'est pas un entier"
+        }
     },
     choices: {
         type: Array
     },
     nbVote: {
-        type: Number
+        type: Number,
+        validate : {
+            validator : Number.isInteger,
+            message   : "{VALUE} n'est pas un entier"
+        }
     },
     createdBy: {
         type: ObjectId,
