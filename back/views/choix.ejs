@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <% include ../partials/head %>
+    <% include ./partials/head %>
 </head>
 <body class="container">
 
 <header>
-    <% include ../partials/header %>
+    <% include ./partials/header %>
 </header>
 
 <main>
@@ -16,21 +16,21 @@
             <div class="form-group">
                     <label><h5>Sujet</h5></label>
                     <div>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae ex molestiae obcaecati, perspiciatis ipsum doloribus placeat in. Recusandae voluptas earum quo, consequuntur molestiae optio ea, minima tempore enim inventore saepe.
-                        <br>
+                        <p><%= vote.subject %></p>
+                        
                     </div>
             </div> 
             <form  id="form_vote" class="form" action="post">
             <div class="form-group">
                     <label><h5>Choix</h5></label>
+                    <% vote.choices.forEach(function(choix) { %>
                     <div>
-                        <input type="radio" id="choix1" name="choix" value="choix1">
-                        <label for="choix1">choix1</label>
+                        <input type="radio" name="choix" value="<%= vote.choices.indexOf(choix) %>">
+                        <label ><%= choix %></label>
                     </div>
-                    <div>
-                        <input type="radio" id="choix2" name="choix" value="choix2">
-                        <label for="choix2">choix2</label>
-                    </div>
+                    
+      <% }); %>
+                   
             </div> 
             
            </form>
@@ -42,7 +42,7 @@
 </main>
 
 <footer>
-    <% include ../partials/footer %>
+    <% include ./partials/footer %>
 </footer>
 
 </body>

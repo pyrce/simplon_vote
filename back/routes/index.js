@@ -78,6 +78,7 @@ router.put('/votes/:id', indexController.update);
 router.get('/encours', indexController.encours);
 
 
+router.get('/choix/:id', indexController.choix);
 router.get('/inscription', indexController.inscription);
 router.post('/addUser', indexController.addUser);
 // router.post("/api/login", usersController.login);

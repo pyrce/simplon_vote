@@ -356,6 +356,17 @@ controller.showend = async (req, res) => {
     type: "end"
   })
 }
+controller.choix = async (req,res) => {
+  const {
+    id
+  } = req.params
+  const votes = await Vote.findOne({_id: id}).populate('createdBy').exec()
+    console.log(votes)
+    res.render('./choix.ejs' , {
+    title: "sujet",
+    vote: votes
+  })
+}
 
 controller.showinprogress = async (req, res) => {
   const inprogress = 'inprogress';
