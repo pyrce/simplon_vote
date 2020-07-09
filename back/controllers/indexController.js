@@ -21,7 +21,7 @@ var ObjectId = mongoose.Types.ObjectId;
 var controller = {}
 var perPage=2;
 /** 
- * Liste tout les sujets de vote et retourne un vue
+ * Liste tout les sujets de vote de l'utilisateur connecté et retourne un vue
  * @name list
  * @memberof module:controllers/index
  * @function
@@ -32,10 +32,10 @@ controller.list = async (req, res) => {
   if (!req.session.user) {
     return res.redirect('/inscription')
   } 
-  var currentpage=(typeof req.param('page')!="undefined" || req.param('page')>0) ? req.param('page') : 0
+  var currentpage=(typeof req.params.page!="undefined" || req.params.page>0) ? req.params.page : 0
 
   var page = Math.max(0, currentpage);
-console.log("paginate")
+
   const votes = await Vote.find({}).limit(perPage)
 
   .skip(perPage * page).populate("createdBy")
@@ -59,10 +59,10 @@ console.log("paginate")
  * Ajout un utilisateur et redirige sur '/'
  * @name addUser
  * @memberof module:controllers/index
- * @fonction
- * @param {string} pseudo
- * @param {string} email
- * @param {string} mot de passe
+ * @function
+ * @param {string} req.body.pseudo
+ * @param {string} req.body.email
+ * @param {string} req.body.password
  * @returns {VIEW} redirect to '/'
  */
 
@@ -88,13 +88,13 @@ controller.addUser = async (req, res) => {
  * @name add
  * @memberof module:controllers/index
  * @function
- * @param {string} subject
- * @param {integer} quota
- * @param {array} choices
- * @param {integer} nbVote
- * @param {OjectId} createdBy
- * @param {array} participants
- * @param {string} status ['created', 'inprogress', 'finished']
+ * @param {string} req.body.subject
+ * @param {integer} req.body.quota
+ * @param {array} req.body.choices
+ * @param {integer} req.body.nbVote
+ * @param {OjectId} req.body.createdBy
+ * @param {array} req.body.participants
+ * @param {string} req.body.status - ['created', 'inprogress', 'finished']
  * @returns {VIEW} Redirect to '/'
  * @throws {JSON} - Renvoie un JSON en cas d'erreur
  */
@@ -132,7 +132,9 @@ controller.add = async (req, res) => {
 
 /**
  * @name visulogin
+ * @function
  * @memberof module:controllers/index
+ * @returns {VIEW}
  */
 controller.visulogin = async (req, res) => {
   res.render('./index.ejs', {
@@ -142,7 +144,9 @@ controller.visulogin = async (req, res) => {
 
 /**
  * @name dashboard
+ * @function
  * @memberof module:controllers/index
+ * @returns {VIEW}
  */
 controller.dashboard = async (req, res) => {
   const votes = await Vote.find().populate('createdBy').exec()
@@ -152,11 +156,17 @@ controller.dashboard = async (req, res) => {
     votes: votes
   })
 }
+
+/**
+ * @name showall
+ * @function
+ * @memberof module:controllers/index
+ */
 controller.showall = async (req, res) => {
   if (!req.session.user) {
     return res.redirect('/inscription')
   }
-  var currentpage=(typeof req.param('page')!="undefined" || req.param('page')>0) ? req.param('page') : 0
+  var currentpage=(typeof req.params.page!="undefined" || req.params.page>0) ? req.params.page : 0
 
   var page = Math.max(0, currentpage);
 
@@ -166,7 +176,7 @@ controller.showall = async (req, res) => {
   const count=votes.length;
 
     var user=req.session.user
-  // console.log(votes)
+   console.log(votes)
   res.render('./dashboard.ejs', {
     title: "sujet",
     votes:votes,
@@ -178,6 +188,11 @@ controller.showall = async (req, res) => {
 
 /**
  * Connexion
+ * @function
+ * @memberof module:controllers/index
+ * @param {string} req.body.email
+ * @param {string} req.body.password
+ * @returns {VIEW}
  */
 controller.login = async (req, res) => {
   const {
@@ -220,9 +235,13 @@ controller.login = async (req, res) => {
   }
 }
 
+
 /**
+ * Déconnecte l'utilisateur
  * @name logout
  * @memberof module:controllers/index
+ * @function
+ * @returns {VIEW}
  */
 controller.logout = async (req, res) => {
   req.session = null
@@ -268,6 +287,14 @@ controller.show = async (req, res) => {
     })
   }
 }
+
+/**
+ * 
+ * @name vote
+ * @memberof module:contollers/index
+ * @function
+ * @returns {VIEW}
+ */
 controller.vote = async (req, res) => {
   var currentVote = await Vote.findOne({
     _id: req.params.id
@@ -287,6 +314,9 @@ controller.vote = async (req, res) => {
 /**
  * @name inscription
  * @memberof module:controllers/index
+ * @function
+ * @returns {VIEW}
+ * @throws {JSON}
  */
 controller.inscription = async (req, res) => {
   try {
@@ -342,6 +372,7 @@ controller.update = (req, res) => {
  * @todo Tester le fonctionnement
  * @name delete
  * @memberof module:controllers/index
+ * @function
  * @throws {JSON} - Renvoie un JSON en cas d'erreur
  */
 controller.delete = async (req, res) => {
@@ -363,6 +394,7 @@ controller.delete = async (req, res) => {
  * Mes sujets de vote crée
  * @name Show
  * @memberof module:controllers/index
+ * @function
  * @returns {VIEW} "liste_create"
  */
 controller.liste_create = async (req, res) => {
@@ -390,8 +422,10 @@ controller.liste_create = async (req, res) => {
 // }
 
 /**
+ * 
  * @name ajout
  * @memberof module:controllers/index
+ * @function
  */
 controller.ajout = async (req, res) => {
   res.status(201).json({
@@ -402,13 +436,14 @@ controller.ajout = async (req, res) => {
 /**
  * @name showend
  * @memberof module:controllers/index
+ * @function
  */
 controller.showend = async (req, res) => {
   if (!req.session.user) {
     return res.redirect('/inscription')
   } 
   const terminer = 'finished';
-  var currentpage=(typeof req.param('page')!="undefined" || req.param('page')>0) ? req.param('page') : 0
+  var currentpage=(typeof req.params.page!="undefined" || req.params.page>0) ? req.params.page : 0
 
   var page = Math.max(0, currentpage);
 
@@ -424,6 +459,13 @@ controller.showend = async (req, res) => {
     type: "end"
   })
 }
+
+/**
+ * @name choix
+ * @memberof module:controllers/index
+ * @function
+ * @returns {VIEW}
+ */
 controller.choix = async (req, res) => {
   const {
     id
@@ -445,12 +487,17 @@ controller.choix = async (req, res) => {
   })
 }
 
+/**
+ * @name showinprogress
+ * @memberof module:controllers/index
+ * @returns {VIEW}
+ */
 controller.showinprogress = async (req, res) => {
   if (!req.session.user) {
     return res.redirect('/inscription')
   } 
   const inprogress = 'inprogress';
-  var currentpage=(typeof req.param('page')!="undefined" || req.param('page')>0) ? req.param('page') : 0
+  var currentpage=(typeof req.params.page!="undefined" || req.params.page>0) ? req.params.page : 0
 
   var page = Math.max(0, currentpage);
 console.log("paginate")
@@ -467,6 +514,12 @@ console.log("paginate")
   })
 }
 
+/**
+ * @name showmine
+ * @memberof module:controllers/index
+ * @function
+ * @returns {VIEW}
+ */
 controller.showmine = async (req, res) => {
   if (!req.session.user) {
     return res.redirect('/inscription')
@@ -474,7 +527,7 @@ controller.showmine = async (req, res) => {
   const created = 'created';
   var user=req.session.user;
   // console.log(req.session.user)
-  var currentpage=(typeof req.param('page')!="undefined" || req.param('page')>0) ? req.param('page') : 0
+  var currentpage=(typeof req.params.page!="undefined" || req.params.page>0) ? req.params.page : 0
 
   
     var page = Math.max(0, currentpage);
@@ -492,8 +545,15 @@ console.log("paginate")
   })
 }
 
+/**
+ * Participation
+ * @name part
+ * @memberof module:controllers/index
+ * @function
+ * @returns {VIEW}
+ */
 controller.part = async (req, res) => {
-  var currentpage=(typeof req.param('page')!="undefined" || req.param('page')>0) ? req.param('page') : 0
+  var currentpage=(typeof req.params.page!="undefined" || req.params.page>0) ? req.params.page : 0
   var  page = Math.max(0, currentpage);
   
   const votes = await UserVote.find({
@@ -530,7 +590,7 @@ controller.part = async (req, res) => {
  * @returns {VIEW} "encours"
  */
 controller.encours = async (req, res) => {
-  var currentpage=(typeof req.param('page')!="undefined" || req.param('page')>0) ? req.param('page') : 0
+  var currentpage=(typeof req.params.page!="undefined" || req.params.page>0) ? req.params.page : 0
   var  page = Math.max(0, currentpage);
 
   const votes = await Vote.find({status:'inprogress'}).limit(perPage)

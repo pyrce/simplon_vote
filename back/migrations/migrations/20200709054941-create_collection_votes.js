@@ -8,7 +8,7 @@ module.exports = {
       validator: {
         $jsonSchema: {
           bsonType: 'object',
-          required: ['subject', 'quota', 'choices', 'nbVote', 'participants', 'createdBy', 'status'],
+          required: ['subject', 'quota', 'choices', 'nbVote', 'createdBy', 'participants', 'status'],
           properties: {
               subject: {
                 bsonType: 'string'

@@ -10,20 +10,25 @@ var usersController = require('../controllers/userController.js');
 
 /**
  * Retourne la vue de l'inscription
- * @name Inscription GET
+ * @name inscription GET
  * @function
  * @memberof module:routers/index
- * @param {string} '/inscription' - uri
+ * @param {string} '/inscription' - Path
  * @param {function} indexController.inscription
  */
 router.get('/inscription', indexController.inscription);
 
 /**
+ * @todo Duplicat
+ */
+//router.get('/inscription', indexController.inscription);
+
+/**
  * Retourne la vue de la liste des sujets de vote
- * @name List GET
+ * @name list GET
  * @function
  * @memberof module:routers/index
- * @param {string} '/' - uri
+ * @param {string} '/' - Path
  * @param {function} indexController.list
  */
 router.get('/', indexController.list);
@@ -37,95 +42,156 @@ router.get('/', indexController.list);
  * @param {function} indexController.list
  */
 router.get('/:page', indexController.list);
-
-
-/**
- * Retourne la vue pour afficher un sujet de vote par rapport à son identifiant
- * @name Show GET
- * @function
- * @memberof module:routers/index
- * @param {string} '/votes/:id' - uri
- * @param {function} indexController.show
- */
-router.get('/votes/:id', indexController.show);
-
 /**
  * Retourne la vue pour l'ajout d'un sujet de vote  
- * @name Add POST
+ * @name add POST
  * @function
  * @memberof module:routers/index
- * @param {string} '/votes' - uri
+ * @param {string} '/votes' - Path
  * @param {function} indexController.add
  */
 router.post('/votes', indexController.add);
 
 /**
- * Supprime un sujet de vote par rapport à son identifiant
- * @name  Delete DELETE
+ * Retourne la vue pour afficher un sujet de vote par rapport à son identifiant
+ * @name show GET
  * @function
  * @memberof module:routers/index
- * @param {string} '/votes/:id' - uri
+ * @param {string} '/votes/:id' - Path
+ * @param {function} indexController.show
+ */
+router.get('/votes/:id', indexController.show);
+
+/**
+ * Modifie un sujet de vote par rapport à son identifiant
+ * @name update PUT
+ * @function
+ * @memberof module:routers/index
+ * @param {string} '/votes/:id' - Path
+ * @param {function} indexController.update
+ */
+router.put('/votes/:id', indexController.update);
+
+/**
+ * Supprime un sujet de vote par rapport à son identifiant
+ * @name  delete DELETE
+ * @function
+ * @memberof module:routers/index
+ * @param {string} '/votes/:id' - Path
  * @param {function} indexController.delete
  */
 router.delete('/votes/vote/:id', indexController.delete);
 
 /**
  * vote un sujet de vote par rapport à son identifiant
- * @name  POST POST
+ * @name vote POST
  * @function
  * @memberof module:routers/index
- * @param {string} '/votes/:id'
+ * @param {string} '/votes/:id' - Path
  * @param {function} indexController.vote
  */
 router.post('/votes/vote/:id', indexController.vote);
 
 /**
- * Modifie un sujet de vote par rapport à son identifiant
- * @name Update PUT
+ * Retourne la vue pour afficher les sujets en cours de vote
+ * @name encours GET
  * @function
  * @memberof module:routers/index
- * @param {string} '/votes/:id' - uri
- * @param {function} indexController.update
- */
-router.put('/votes/:id', indexController.update);
-
-/**
- * Retourne la vue pour afficher les sujets encours de vote
- * @name Show GET
- * @function
- * @memberof module:routers/index
- * @param {function} indexController.show
+ * @param {string} '/encours' - Path
+ * @param {function} indexController.encours
  */
 router.get('/encours', indexController.encours);
 
-
+/**
+ * 
+ * @name choix GET
+ * @function
+ * @memberof module:routes/index
+ * @param {string} '/choix/:id' - Path
+ * @param {function} indexController.choix 
+ */
 router.get('/choix/:id', indexController.choix);
-router.get('/inscription', indexController.inscription);
+
+/**
+ * @name addUser POST
+ * @memberof module:routers/index
+ */
 router.post('/addUser', indexController.addUser);
-// router.post("/api/login", usersController.login);
-// router.post("/api/signup", usersController.signup);
-router.get('/logout', indexController.logout)
-router.post('/login', indexController.login)
+
+/**
+ * Affiche la vue de la connexion
+ * @name VisuLogin GET
+ * @memberof module:routers/index
+ */
 router.get('/login', indexController.visulogin)
+
+/**
+ * Effectue la connexion
+ * @name login POST
+ * @memberof module:routers/index
+ */
+router.post('/login', indexController.login)
+
+/**
+ * @name logout GET
+ * @memberof module:routers/index
+ */
+router.get('/logout', indexController.logout)
+
+/**
+ * @name showall GET
+ * @memberof module:routers/index
+ */
 router.get('/dashboard/showall', indexController.showall)
+
+/**
+ * @name showmine GET
+ * @memberof module:routers/index
+ */
 router.get('/dashboard/showmine', indexController.showmine)
+
 router.get('/dashboard/showall/:page', indexController.showall)
 router.get('/dashboard/showmine/:page', indexController.showmine)
 
+/**
+ * @name showinprogress
+ * @memberof module:routers/index
+ */
 router.get('/dashboard/progress', indexController.showinprogress)
-router.get('/dashboard/progress/:pge', indexController.showinprogress)
+router.get('/dashboard/progress/:page', indexController.showinprogress)
+
+/**
+ * 
+ * @memberof module:routers/index
+ */
 // router.get('/dashboard/showpart', indexController.showpart)
+
+/**
+ * 
+ * @memberof module:routers/index
+ */
 router.get('/ajout', indexController.ajout);
+
+/**
+ * 
+ * @memberof module:routers/index
+ */
 router.get('/dashboard/showend', indexController.showend);
+
+/**
+ * 
+ * @memberof module:routers/index
+ */
 router.get('/dashboard/part', indexController.part);
 
 router.get('/dashboard/showend/:page', indexController.showend);
 router.get('/dashboard/part/:page', indexController.part);
 /**
- * Retourne la vue pour afficher les sujets crée par utilisateur
- * @name Show GET
+ * Retourne la vue pour afficher les sujets crée par l'utilisateur
+ * @name liste_create GET
  * @function
  * @memberof module:routers/index
+ * @param {string} '/liste_create' - Path
  * @param {function} indexController.liste_create
  */
 router.get('/liste_create', indexController.liste_create)
