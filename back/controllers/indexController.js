@@ -351,14 +351,18 @@ controller.update = (req, res) => {
   } = req.params
 
   try {
-    Vote.findOne({_id:id}).then(vote=>{
-     var p= vote.participants;
-   
-     p.push(new ObjectId(req.session.user._id));
-     if(p.length==vote.quota)vote.status="inprogress"
-     vote.participants=p;
-      vote.save();
-      res.sendStatus(200);
+    Vote.findOne({_id:id}).then(vote=> {
+      var p = vote.participants;
+      if (p >= vote.quota) {
+        req.session.msgFlash = {type: "warning", message: "le nombre de participant maximum à été atteint"}
+        return res.redirect('/')
+      } else {
+        p.push(new ObjectId(req.session.user._id));
+        if (p.length==vote.quota)vote.status="inprogress"
+        vote.participants = p;
+        vote.save();
+        res.sendStatus(200);
+      }
     })
   } catch (error) {
     res.status(400).json({
