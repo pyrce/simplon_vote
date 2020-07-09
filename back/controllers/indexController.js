@@ -296,7 +296,7 @@ controller.update =  (req,res) => {
     Vote.findOne({_id:id}).then(vote=>{
      var p= vote.participants;
    
-     p.push(req.session.user._id);
+     p.push(new ObjectId(req.session.user._id));
      if(p.length==vote.quota)vote.status="inprogress"
      vote.participants=p;
       vote.save();
@@ -329,8 +329,25 @@ controller.delete = async (req, res) => {
   }
 }
 
+/** 
+ * Mes sujets de vote crée
+ * @name Show
+ * @memberof module:controllers/index
+ * @returns {VIEW} "liste_create"
+ */
+controller.liste_create = async (req, res) => {
+  //req.session.user = user // use session for user connected
+  console.log(req.session.user._id)
+  var userId=req.session.user._id
+const votes = await Vote.find({createdBy:userId})
 
+console.log(votes)
+  res.render("liste_create", {
+    votes:votes,
+    title:"Ma liste des sujets votes "
+  })
 
+}
 
 // controller.list = async (req,res) => {
 //     const votes = await Vote.find({})
@@ -364,6 +381,17 @@ controller.showend = async (req, res) => {
     title: "sujet",
     votes: votes,
     type: "end"
+  })
+}
+controller.choix = async (req,res) => {
+  const {
+    id
+  } = req.params
+  const votes = await Vote.findOne({_id: id}).populate('createdBy')
+
+    res.render('./choix.ejs' , {
+    title: "sujet",
+    vote: votes
   })
 }
 

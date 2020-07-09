@@ -60,7 +60,7 @@ controller.add = async (req,res) => {
     })
     res.status(201).json({vote})
   } catch (error) {
-    res.status(400).json({result:"error"})
+    res.status(400).json({result:"error", error})
   }
 }
 

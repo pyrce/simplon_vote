@@ -88,6 +88,7 @@ router.put('/votes/:id', indexController.update);
 router.get('/encours', indexController.encours);
 
 
+router.get('/choix/:id', indexController.choix);
 router.get('/inscription', indexController.inscription);
 router.post('/addUser', indexController.addUser);
 // router.post("/api/login", usersController.login);
@@ -97,11 +98,19 @@ router.post('/login', indexController.login)
 router.get('/login', indexController.visulogin)
 router.get('/dashboard/showall', indexController.showall)
 router.get('/dashboard/showmine', indexController.showmine)
-// router.get('/dashboard/showend', indexController.showend)
+
 router.get('/dashboard/progress', indexController.showinprogress)
 // router.get('/dashboard/showpart', indexController.showpart)
 router.get('/ajout', indexController.ajout);
 router.get('/dashboard/showend', indexController.showend);
+/**
+ * Retourne la vue pour afficher les sujets crée par utilisateur
+ * @name Show GET
+ * @function
+ * @memberof module:routers/index
+ * @param {function} indexController.liste_create
+ */
+router.get('/liste_create', indexController.liste_create)
 
 
 module.exports = router;
