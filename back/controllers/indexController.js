@@ -564,7 +564,7 @@ controller.part = async (req, res) => {
     path: 'vote',
     populate: {
       path: 'createdBy',
-      model: 'users'
+      model: 'user'
     }
   }).exec()
   const count=votes.length;
