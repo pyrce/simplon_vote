@@ -525,7 +525,7 @@ controller.part = async (req, res) => {
     path: 'vote',
     populate: {
       path: 'createdBy',
-      model: 'users'
+      model: 'user'
     }
   }).exec()
   var result =[];
