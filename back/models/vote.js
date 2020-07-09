@@ -28,7 +28,7 @@ const voteSchema = mongoose.Schema({
     },
     createdBy: {
         type: ObjectId,
-        ref:"users"
+        ref:"user"
     },
     participants: {
         type: Array,
@@ -40,6 +40,6 @@ const voteSchema = mongoose.Schema({
         default: "created"
     },
     
-},{collection:"vote"})
+})
 
 module.exports = mongoose.model('vote', voteSchema)
