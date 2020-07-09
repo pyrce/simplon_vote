@@ -3,7 +3,7 @@ const Vote = require("../models/vote");
 const User = require("../models/user");
 const UserVote = require("../models/user_vote");
 const validator = require('validator');
-var ObjectId=mongoose.Types.ObjectId;
+var ObjectId = mongoose.Types.ObjectId;
 
 /** Controller INDEX
  * @module controllers/index
@@ -35,7 +35,7 @@ var user=req.session.user
     res.render("dashboard", {
       votes: votes,
       title: "application votes",
-      user:user,
+      user: user,
       type: "all"
     })
   } catch (error) {
@@ -99,10 +99,10 @@ controller.add = async (req, res) => {
     participants,
     status
   } = req.body
- 
-  try { 
+
+  try {
     Vote.create({
-      _id:new ObjectId(),
+      _id: new ObjectId(),
       subject,
       quota,
       choices,
@@ -110,8 +110,9 @@ controller.add = async (req, res) => {
       createdBy,
       participants,
       status
-    }).then(msg=>{
-    res.sendStatus(200)})
+    }).then(msg => {
+      res.sendStatus(200)
+    })
   } catch (error) {
     res.status(400).json({
       result: "error"
@@ -219,23 +220,24 @@ controller.show = async (req, res) => {
     id
   } = req.params
   try {
- const vote = await Vote.findById(id)
+    const vote = await Vote.findById(id)
     if (!vote) return res.status(400).json({
       result: "error",
       message: "vote non trouvé"
-    })    
-   
-   // const monchoix=await UserVote.findOne({vote:id,user:req.session.user._id});
- const monchoix= await UserVote.aggregate([
-    {
+    })
+
+    // const monchoix=await UserVote.findOne({vote:id,user:req.session.user._id});
+    const monchoix = await UserVote.aggregate([{
       $match: {
-      vote: new ObjectId(vote._id), 
+        vote: new ObjectId(vote._id),
         user: new ObjectId(req.session.user._id)
       }
-    }
-  ]);
+    }]);
 
-    res.render("choix",{vote:vote,monchoix:monchoix[0]})
+    res.render("choix", {
+      vote: vote,
+      monchoix: monchoix[0]
+    })
 
   } catch (error) {
     res.status(400).json({
@@ -244,18 +246,20 @@ controller.show = async (req, res) => {
     })
   }
 }
-controller.vote=async (req,res)=>{
-var currentVote=await Vote.findOne({_id:req.params.id});
-var liste_choix=currentVote.choices;
-console.log(req.body)
-UserVote.create({
-  _id:new ObjectId(),
-  user:req.session.user._id,
-  vote:req.body.voteid,
-  choix:liste_choix.indexOf(req.body.choix)
-}).then((vote)=>{
-  res.redirect("/votes/"+req.params.id);
-})
+controller.vote = async (req, res) => {
+  var currentVote = await Vote.findOne({
+    _id: req.params.id
+  });
+  var liste_choix = currentVote.choices;
+  console.log(req.body)
+  UserVote.create({
+    _id: new ObjectId(),
+    user: req.session.user._id,
+    vote: req.body.voteid,
+    choix: liste_choix.indexOf(req.body.choix)
+  }).then((vote) => {
+    res.redirect("/votes/" + req.params.id);
+  })
 }
 
 /**
@@ -289,8 +293,10 @@ controller.inscription = async (req, res) => {
  * @returns {VIEW} Redirect to '/'
  * @throws {JSON} - Renvoie un JSON en cas d'erreur
  */
-controller.update =  (req,res) => {
-  const { id } = req.params
+controller.update = (req, res) => {
+  const {
+    id
+  } = req.params
 
   try {
     Vote.findOne({_id:id}).then(vote=>{
@@ -303,7 +309,9 @@ controller.update =  (req,res) => {
       res.sendStatus(200);
     })
   } catch (error) {
-    res.status(400).json({result:"error"})
+    res.status(400).json({
+      result: "error"
+    })
   }
 }
 
@@ -320,7 +328,7 @@ controller.delete = async (req, res) => {
       id
     } = req.params
     await Vote.findByIdAndRemove(id)
- 
+
     res.sendStatus(200);
   } catch (error) {
     res.status(400).json({
@@ -338,13 +346,15 @@ controller.delete = async (req, res) => {
 controller.liste_create = async (req, res) => {
   //req.session.user = user // use session for user connected
   console.log(req.session.user._id)
-  var userId=req.session.user._id
-const votes = await Vote.find({createdBy:userId})
+  var userId = req.session.user._id
+  const votes = await Vote.find({
+    createdBy: userId
+  })
 
-console.log(votes)
+  console.log(votes)
   res.render("liste_create", {
-    votes:votes,
-    title:"Ma liste des sujets votes "
+    votes: votes,
+    title: "Ma liste des sujets votes "
   })
 
 }
@@ -383,13 +393,15 @@ controller.showend = async (req, res) => {
     type: "end"
   })
 }
-controller.choix = async (req,res) => {
+controller.choix = async (req, res) => {
   const {
     id
   } = req.params
-  const votes = await Vote.findOne({_id: id}).populate('createdBy')
-
-    res.render('./choix.ejs' , {
+  const votes = await Vote.findOne({
+    _id: id
+  }).populate('createdBy').exec()
+  console.log(votes)
+  res.render('./choix.ejs', {
     title: "sujet",
     vote: votes
   })
@@ -447,10 +459,15 @@ controller.showmine = async (req, res) => {
  * @returns {VIEW} "encours"
  */
 controller.encours = async (req, res) => {
-  const votes = await Vote.find({status: 'inprogress'}).populate('createdBy').exec()
-  
+  const votes = await Vote.find({
+    status: 'inprogress'
+  }).populate('createdBy').exec()
+
   // console.log(votes)
- res.render("encours",{title:'encours',votes : votes })
+  res.render("encours", {
+    title: 'encours',
+    votes: votes
+  })
 }
 
 module.exports = controller;
