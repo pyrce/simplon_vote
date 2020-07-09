@@ -4,6 +4,12 @@ const User = require("../models/user");
 const UserVote = require("../models/user_vote");
 const validator = require('validator');
 var ObjectId=mongoose.Types.ObjectId;
+
+/** Controller INDEX
+ * @module controllers/index
+ * @requires mongoose
+ */
+
 //Set up default mongoose connection
 // var mongoDB = 'mongodb://localhost:27017/simplon-vote';
 // var ObjectId=mongoose.Types.ObjectId;
@@ -15,19 +21,22 @@ var ObjectId=mongoose.Types.ObjectId;
 var controller = {}
 
 /** 
- * List all votes
+ * Liste tout les sujets de vote et retourne un vue
  * @name list
+ * @memberof module:controllers/index
  * @function
- * @returns {json} votes
+ * @returns {VIEW}
+ * @throws {JSON} - Renvoie un JSON en cas d'erreur
  */
 controller.list = async (req, res) => {
   var votes=await Vote.find({}).populate("createdBy")
 var user=await User.findOne({_id:"5f03355d220832635062c9f1"});
   try {
-    res.render("index", {
+    res.render("dashboard", {
       votes: votes,
       title: "application votes",
-      user:user
+      user:user,
+      type: "all"
     })
   } catch (error) {
     res.status(400).json({
@@ -36,24 +45,38 @@ var user=await User.findOne({_id:"5f03355d220832635062c9f1"});
   }
 }
 
-/** add one user
+/** 
+ * Ajout un utilisateur et redirige sur '/'
  * @name addUser
+ * @memberof module:controllers/index
  * @fonction
  * @param {string} pseudo
  * @param {string} email
  * @param {string} mot de passe
+ * @returns {VIEW} redirect to '/'
  */
 
 controller.addUser = async (req, res) => {
+  if (!validator.isEmail(req.body.email)) {
+    return res.redirect('/inscription')
+  }
+
   User.create({
     login: validator.escape(req.body.pseudo),
-    email: validator.normalizeEmail(req.body.email),
+    email: req.body.email,
     password: req.body.password
-  }).then(res.redirect('/'))
+  }).then(
+    req.session.msgFlash = {
+      type: "success",
+      message: "Félicitation vous êtes inscrit"
+    }, res.redirect('/')
+  )
 }
 
-/** add One vote
+/** 
+ * Ajoute un sujet de vote et redirige sur '/'
  * @name add
+ * @memberof module:controllers/index
  * @function
  * @param {string} subject
  * @param {integer} quota
@@ -62,7 +85,8 @@ controller.addUser = async (req, res) => {
  * @param {OjectId} createdBy
  * @param {array} participants
  * @param {string} status ['created', 'inprogress', 'finished']
- * @returns {json} vote
+ * @returns {VIEW} Redirect to '/'
+ * @throws {JSON} - Renvoie un JSON en cas d'erreur
  */
 
 controller.add = async (req, res) => {
@@ -94,51 +118,100 @@ controller.add = async (req, res) => {
     })
   }
 }
-controller.visulogin = async (req,res) => {
-  res.render('./index.ejs', {title: "login"})
-}
-controller.dashboard = async (req,res) => {
-  var votes=await Vote.find({}).populate("createdBy")
-  var user=await User.findOne({_id:"5f03355d220832635062c9f1"});
-  res.render('./sujet.ejs' , {
-    votes:votes,
-    user:user,
-    title: "sujet"
+
+/**
+ * @name visulogin
+ * @memberof module:controllers/index
+ */
+controller.visulogin = async (req, res) => {
+  res.render('./index.ejs', {
+    title: "login"
   })
 }
 
-controller.login = async (req,res) => {
-  const {email, password} = req.body
-  if( !email || !password ){
-    req.session.msgFlash = {type: "error", message: "Identifiants invalide"}
+/**
+ * @name dashboard
+ * @memberof module:controllers/index
+ */
+controller.dashboard = async (req, res) => {
+  const votes = await Vote.find().populate('createdBy').exec()
+  console.log(votes)
+  res.render('./dashboard.ejs', {
+    title: "sujet",
+    votes: votes
+  })
+}
+controller.showall = async (req, res) => {
+  const votes = await Vote.find({})
+    .populate("createdBy")
+  // console.log(votes)
+  res.render('./dashboard.ejs', {
+    title: "sujet",
+    votes,
+    type: "all"
+  })
+}
+
+/**
+ * Connexion
+ */
+controller.login = async (req, res) => {
+  const {
+    email,
+    password
+  } = req.body
+  if (!email || !password) {
+    req.session.msgFlash = {
+      type: "danger",
+      message: "Donnée manquante"
+    }
     res.redirect('/login')
   } else {
     try {
-      const user = await User.findOne({ email: email })
-    if (!user || (user.email !== email && user.password !== password) ){
-      req.session.msgFlash = {type: "error", message: "Identifiants invalide"}
-      res.redirect('/login')
-    } else {
-      req.session.user = user // use session for user connected
-      console.log(req.session)
-      res.redirect('/dashboard')
-    }
+      const user = await User.findOne({
+        email: email
+      })
+      if (!user || (user.email !== email && user.password !== password)) {
+        req.session.msgFlash = {
+          type: "danger",
+          message: "Identifiants invalide"
+        }
+        res.redirect('/login')
+      } else {
+        req.session.user = user // use session for user connected
+        console.log(req.session)
+        req.session.msgFlash = {
+          type: "success",
+          message: "Bienvenu " + user.login
+        }
+        res.redirect('/dashboard/showall')
+      }
     } catch (error) {
-      req.session.msgFlash = {type: "error", message: "Identifiants invalide"}
-      res.redirect('/login',)
+      req.session.msgFlash = {
+        type: "error",
+        message: "Identifiants invalide"
+      }
+      res.redirect('/login', )
     }
   }
 }
 
-controller.logout = async (req,res) => {
+/**
+ * @name logout
+ * @memberof module:controllers/index
+ */
+controller.logout = async (req, res) => {
   req.session = null
   res.redirect('/')
 }
 
-/** show one vote
+/** 
+ * Affiche le détail d'un sujet de vote
  * @name show
+ * @memberof module:controllers/index
  * @function
- * @returns {json} vote
+ * @returns {VIEW} "detail"
+ * @throws {JSON} - Renvoie un JSON en cas d'erreur
  */
 controller.show = async (req, res) => {
   const {
@@ -184,6 +257,10 @@ UserVote.create({
 })
 }
 
+/**
+ * @name inscription
+ * @memberof module:controllers/index
+ */
 controller.inscription = async (req, res) => {
   try {
     res.render("inscription", {
@@ -196,8 +273,10 @@ controller.inscription = async (req, res) => {
   }
 }
 
-/** Update one vote
+/** 
+ * Modifie un sujet de vote
  * @name update
+ * @memberof module:controllers/index
  * @function
  * @param {string} subject
  * @param {integer} quota
@@ -206,7 +285,8 @@ controller.inscription = async (req, res) => {
  * @param {OjectId} createdBy
  * @param {array} participants
  * @param {string} status ['created', 'inprogress', 'finished']
- * @returns {json} vote
+ * @returns {VIEW} Redirect to '/'
+ * @throws {JSON} - Renvoie un JSON en cas d'erreur
  */
 controller.update =  (req,res) => {
   const { id } = req.params
@@ -226,8 +306,12 @@ controller.update =  (req,res) => {
   }
 }
 
-/** Delete one vote
+/** 
+ * Supprime un sujet de vote
+ * @todo Tester le fonctionnement
  * @name delete
+ * @memberof module:controllers/index
+ * @throws {JSON} - Renvoie un JSON en cas d'erreur
  */
 controller.delete = async (req, res) => {
   try {
@@ -254,9 +338,58 @@ controller.delete = async (req, res) => {
 //         votes
 //     })
 // }
+
+/**
+ * @name ajout
+ * @memberof module:controllers/index
+ */
 controller.ajout = async (req, res) => {
   res.status(201).json({
     user
+  })
+}
+
+/**
+ * @name showend
+ * @memberof module:controllers/index
+ */
+controller.showend = async (req, res) => {
+  const terminer = 'finished';
+  const votes = await Vote.find({
+    status: terminer
+  }).populate('createdBy').exec()
+  // console.log(votes)
+  res.render('./dashboard', {
+    title: "sujet",
+    votes: votes,
+    type: "end"
+  })
+}
+
+controller.showinprogress = async (req, res) => {
+  const inprogress = 'inprogress';
+  const votes = await Vote.find({
+    status: inprogress
+  }).populate('createdBy').exec()
+  // console.log(votes)
+  res.render('./dashboard', {
+    title: "sujet",
+    votes: votes,
+    type: "progress"
+  })
+}
+
+controller.showmine = async (req, res) => {
+  const created = 'created';
+  // console.log(req.session.user)
+  const votes = await Vote.find({
+    createdBy: req.session.user._id,
+    status: created
+  }).populate('createdBy').exec()
+  res.render('./dashboard', {
+    title: "sujet",
+    votes: votes,
+    type: "mine"
   })
 }
 
@@ -275,5 +408,18 @@ controller.ajout = async (req, res) => {
 // controller.deletevote=(req,res)=>{
 
 // }
+
+/** show inprogress sujet
+ * @name show
+ * @memberof module:controllers/index
+ * @function
+ * @returns {VIEW} "encours"
+ */
+controller.encours = async (req, res) => {
+  const votes = await Vote.find({status: 'inprogress'}).populate('createdBy').exec()
+  
+  // console.log(votes)
+ res.render("encours",{title:'encours',votes : votes })
+}
 
 module.exports = controller;

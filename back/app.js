@@ -47,7 +47,7 @@ app.use('/*', function (req, res, next) {
   res.locals.currentUser = {}
   if (req.session.user) {
     res.locals.currentUser.login = req.session.user.login // login de l'utilisateur connecté (dans le menu) accessible pour toutes les vues
-    res.locals.currentUser.id = req.session.user.id
+    res.locals.currentUser.id = req.session.user._id
   }
   next()
 })

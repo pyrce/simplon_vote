@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 var ObjectId = mongoose.Types.ObjectId;
+const Schema = mongoose.Schema;
 
 const voteSchema = mongoose.Schema({
     _id:{ type: ObjectId},
@@ -30,6 +31,7 @@ const voteSchema = mongoose.Schema({
         enum: ['created', 'inprogress', 'finished'],
         default: "created"
     },
+    
 })
 
 module.exports = mongoose.model('vote', voteSchema)

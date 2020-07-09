@@ -1,6 +1,11 @@
 const mongoose=require("mongoose");
 const Vote = require("../models/vote");
 
+/** Controller VOTE
+ * @module controllers/vote
+ * @requires mongoose
+ */
+
 //Set up default mongoose connection
 // var mongoDB = 'mongodb://localhost:27017/simplon-vote';
 // var ObjectId=mongoose.Types.ObjectId;
@@ -12,8 +17,9 @@ const Vote = require("../models/vote");
 var controller={}
 
 /** 
- * List all votes
+ * Liste tout les sujets de vote
  * @name list
+ * @memberof module:controllers/vote
  * @function
  * @returns {json} votes
  */
@@ -26,8 +32,10 @@ controller.list = async (req,res) => {
   }
 }
 
-/** Add one vote
+/** 
+ * Ajoute un nouveau sujet de vote
  * @name add
+ * @memberof module:controllers/vote
  * @function
  * @param {string} subject
  * @param {integer} quota
@@ -56,8 +64,10 @@ controller.add = async (req,res) => {
   }
 }
 
-/** Show one vote
+/** 
+ * Affiche le détail d'un sujet de vote
  * @name show
+ * @memberof module:controllers/vote
  * @function
  * @returns {json} vote
  */
@@ -72,8 +82,10 @@ controller.show = async (req,res) => {
   }
 }
 
-/** Update one vote
+/** 
+ * Modifie un sujet de vote
  * @name update
+ * @memberof module:controllers/vote
  * @function
  * @param {string} subject
  * @param {integer} quota
@@ -106,21 +118,21 @@ controller.update = async (req,res) => {
   }
 }
 
-/** delete one vote
+/** 
+ * Supprime un sujet de vote
  * @name delete
+ * @memberof module:controllers/vote
  */
 controller.delete = async (req, res) => {
   try {
     const { id } = req.params
     await Vote.findByIdAndRemove(id)
     res.status()
-    res.status(200).json({resut:"success", message: "vote supprimé"})
+    res.status(200).json({result:"success", message: "vote supprimé"})
   } catch (error) {
     res.status(400).json({result:"error"})
   }
 }
-
-
 
 
 // controller.list = async (req,res) => {

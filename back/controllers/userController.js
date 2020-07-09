@@ -1,5 +1,11 @@
 const mongoose = require("mongoose");
 const User = require("../models/user");
+
+/** Controller USER
+ * @module controllers/user
+ * @requires mongoose
+ */
+
 /*
 //Set up default mongoose connection
 var mongoDB = 'mongodb://localhost:27017/simplon-vote';
@@ -11,8 +17,10 @@ mongoose.connect(mongoDB, {
 
 var controller = {}
 
-/** List all users
+/** 
+ * Liste tout les utilisateurs
  * @name list
+ * @memberof module:controllers/user
  * @function
  * @returns {json} users
  */
@@ -29,9 +37,10 @@ controller.list = async (req, res) => {
   }
 }
 
-/** Add one user
+/** 
+ * Ajoute un nouvel utilisateur
  * @name add
- * @function
+ * @memberof module:controllers/user
  * @param {string} login
  * @param {string} email
  * @param {string} password
@@ -59,8 +68,10 @@ controller.add = async (req, res) => {
   }
 }
 
-/** Show one user
+/** 
+ * Affiche le détail d'un utilisateur
  * @name show
+ * @memberof module:controllers/user
  * @function
  * @returns {json} user
  */
@@ -85,8 +96,10 @@ controller.show = async (req, res) => {
   }
 }
 
-/** Update one user
+/** 
+ * Modifie un utilisateur
  * @name update
+ * @memberof module:controllers/user
  * @function
  * @param {string} login
  * @param {string} email
@@ -122,8 +135,10 @@ controller.update = async (req, res) => {
   }
 }
 
-/** Delete one user
+/** 
+ * Supprime un utilisateur
  * @name delete
+ * @memberof module:controllers/user
  * @function
  */
 controller.delete = async (req, res) => {
@@ -134,7 +149,7 @@ controller.delete = async (req, res) => {
     await User.findByIdAndRemove(id)
     res.status()
     res.status(200).json({
-      resut: "success",
+      result: "success",
       message: "utilisateur supprimé"
     })
   } catch (error) {
@@ -145,8 +160,10 @@ controller.delete = async (req, res) => {
 }
 
 /**
+ * Connexion
  * @name login
  * @verb POST
+ * @memberof module:controllers/user
  * @function
  * @param {object} req
  * @param {string} req.email
@@ -187,7 +204,12 @@ controller.login = async (req, res) => {
     }
   }
 }
+
+/**
+ * 
+ */
 controller.signup = (req, res) => {
 
 }
+
 module.exports = controller;
