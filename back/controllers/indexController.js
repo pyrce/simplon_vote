@@ -19,7 +19,7 @@ var ObjectId = mongoose.Types.ObjectId;
 // });
 
 var controller = {}
-
+var perPage=2;
 /** 
  * Liste tout les sujets de vote de l'utilisateur connecté et retourne un vue
  * @name list
@@ -31,14 +31,21 @@ var controller = {}
 controller.list = async (req, res) => {
   if (!req.session.user) {
     return res.redirect('/inscription')
-  }
-  var votes = await Vote.find({}).populate("createdBy")
-  var user = req.session.user
+  } 
+  var currentpage=(typeof req.params.page!="undefined" || req.params.page>0) ? req.params.page : 0
+
+  var page = Math.max(0, currentpage);
+
+  const votes = await Vote.find({}).limit(perPage)
+
+  .skip(perPage * page).populate("createdBy")
+  const count=votes.length;
+
   try {
     res.render("dashboard", {
       votes: votes,
       title: "application votes",
-      user: user,
+      pages: count/perPage,
       type: "all"
     })
   } catch (error) {
@@ -159,13 +166,22 @@ controller.showall = async (req, res) => {
   if (!req.session.user) {
     return res.redirect('/inscription')
   }
-  const votes = await Vote.find({}).populate("createdBy")
-  var user = req.session.user
-  // console.log(votes)
+  var currentpage=(typeof req.params.page!="undefined" || req.params.page>0) ? req.params.page : 0
+
+  var page = Math.max(0, currentpage);
+
+  const votes = await Vote.find({}).limit(perPage)
+
+  .skip(perPage * page).populate("createdBy")
+  const count=votes.length;
+
+    var user=req.session.user
+   console.log(votes)
   res.render('./dashboard.ejs', {
     title: "sujet",
-    votes: votes,
-    user: user,
+    votes:votes,
+    user:user,
+    pages:count/perPage,
     type: "all"
   })
 }
@@ -335,16 +351,18 @@ controller.update = (req, res) => {
   } = req.params
 
   try {
-    Vote.findOne({
-      _id: id
-    }).then(vote => {
+    Vote.findOne({_id:id}).then(vote=> {
       var p = vote.participants;
-
-      p.push(new ObjectId(req.session.user._id));
-      if (p.length == vote.quota) vote.status = "inprogress"
-      vote.participants = p;
-      vote.save();
-      res.sendStatus(200);
+      if (p >= vote.quota) {
+        req.session.msgFlash = {type: "warning", message: "le nombre de participant maximum à été atteint"}
+        return res.redirect('/')
+      } else {
+        p.push(new ObjectId(req.session.user._id));
+        if (p.length==vote.quota)vote.status="inprogress"
+        vote.participants = p;
+        vote.save();
+        res.sendStatus(200);
+      }
     })
   } catch (error) {
     res.status(400).json({
@@ -429,13 +447,19 @@ controller.showend = async (req, res) => {
     return res.redirect('/inscription')
   }
   const terminer = 'finished';
-  const votes = await Vote.find({
-    status: terminer
-  }).populate('createdBy').exec()
+  var currentpage=(typeof req.params.page!="undefined" || req.params.page>0) ? req.params.page : 0
+
+  var page = Math.max(0, currentpage);
+
+  const votes = await Vote.find({status:terminer}).limit(perPage)
+
+  .skip(perPage * page).populate("createdBy")
+  const count=votes.length;
   // console.log(votes)
   res.render('./dashboard', {
     title: "sujet",
     votes: votes,
+    pages:count/perPage,
     type: "end"
   })
 }
@@ -477,13 +501,19 @@ controller.showinprogress = async (req, res) => {
     return res.redirect('/inscription')
   }
   const inprogress = 'inprogress';
-  const votes = await Vote.find({
-    status: inprogress
-  }).populate('createdBy').exec()
+  var currentpage=(typeof req.params.page!="undefined" || req.params.page>0) ? req.params.page : 0
+
+  var page = Math.max(0, currentpage);
+console.log("paginate")
+  const votes = await Vote.find({status:inprogress}).limit(perPage)
+
+  .skip(perPage * page).populate("createdBy")
+  const count=votes.length;
   // console.log(votes)
   res.render('./dashboard', {
     title: "sujet",
     votes: votes,
+    pages:count/perPage,
     type: "progress"
   })
 }
@@ -501,14 +531,20 @@ controller.showmine = async (req, res) => {
   const created = 'created';
   var user = req.session.user;
   // console.log(req.session.user)
-  const votes = await Vote.find({
-    createdBy: req.session.user._id,
-    status: created
-  }).populate('createdBy').exec()
+  var currentpage=(typeof req.params.page!="undefined" || req.params.page>0) ? req.params.page : 0
+
+  
+    var page = Math.max(0, currentpage);
+console.log("paginate")
+  const votes = await Vote.find({status:created,createdBy:user._id}).limit(perPage)
+
+  .skip(perPage * page).populate("createdBy")
+  const count=votes.length;
   res.render('./dashboard', {
     title: "sujet",
     votes: votes,
-    user: user,
+    user:user,
+    pages:count/perPage,
     type: "mine"
   })
 }
@@ -521,25 +557,55 @@ controller.showmine = async (req, res) => {
  * @returns {VIEW}
  */
 controller.part = async (req, res) => {
+  var currentpage=(typeof req.params.page!="undefined" || req.params.page>0) ? req.params.page : 0
+  var  page = Math.max(0, currentpage);
+  
   const votes = await UserVote.find({
     user: req.session.user._id
-  }).populate({
+  }).limit(perPage)
+
+  .skip(perPage * page).populate({
     path: 'vote',
     populate: {
       path: 'createdBy',
       model: 'user'
     }
   }).exec()
-  var result = [];
-  votes.forEach(function (element) {
+  const count=votes.length;
+
+  var result =[];
+  votes.forEach(function(element){
     result.push(element.vote)
   })
-  console.log(result)
+ 
   res.render('dashboard', {
     title: "sujet",
     votes: result,
+    pages:count/perPage,
     user: req.session.user,
     type: "part"
+  })
+}
+
+/** show inprogress sujet
+ * @name show
+ * @memberof module:controllers/index
+ * @function
+ * @returns {VIEW} "encours"
+ */
+controller.encours = async (req, res) => {
+  var currentpage=(typeof req.params.page!="undefined" || req.params.page>0) ? req.params.page : 0
+  var  page = Math.max(0, currentpage);
+
+  const votes = await Vote.find({status:'inprogress'}).limit(perPage)
+
+  .skip(perPage * page).populate("createdBy")
+  const count=await Vote.count();
+  // console.log(votes)
+  res.render("encours", {
+    title: 'encours',
+    pages:count/perPage,
+    votes: votes
   })
 }
 

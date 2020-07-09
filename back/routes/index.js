@@ -34,6 +34,15 @@ router.get('/inscription', indexController.inscription);
 router.get('/', indexController.list);
 
 /**
+ * Retourne la vue de la liste des sujets de vote
+ * @name List GET
+ * @function
+ * @memberof module:routers/index
+ * @param {string} '/' - uri
+ * @param {function} indexController.list
+ */
+router.get('/:page', indexController.list);
+/**
  * Retourne la vue pour l'ajout d'un sujet de vote  
  * @name add POST
  * @function
@@ -141,11 +150,15 @@ router.get('/dashboard/showall', indexController.showall)
  */
 router.get('/dashboard/showmine', indexController.showmine)
 
+router.get('/dashboard/showall/:page', indexController.showall)
+router.get('/dashboard/showmine/:page', indexController.showmine)
+
 /**
  * @name showinprogress
  * @memberof module:routers/index
  */
 router.get('/dashboard/progress', indexController.showinprogress)
+router.get('/dashboard/progress/:page', indexController.showinprogress)
 
 /**
  * 
@@ -171,6 +184,8 @@ router.get('/dashboard/showend', indexController.showend);
  */
 router.get('/dashboard/part', indexController.part);
 
+router.get('/dashboard/showend/:page', indexController.showend);
+router.get('/dashboard/part/:page', indexController.part);
 /**
  * Retourne la vue pour afficher les sujets crée par l'utilisateur
  * @name liste_create GET

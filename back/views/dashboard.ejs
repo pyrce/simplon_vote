@@ -77,16 +77,28 @@
 
 
         </div>
-  </main>
-  <script>
-    function participer(id) {
-      $.ajax({
-        url: "/votes/" + id,
-        type: "PUT",
-        headers: {
-          "X-HTTP-Method-Override": "PUT"
-        },
-        success: function (msg) {
+      <div class="row" data-pages="<%=pages%>" id="pages">
+
+      </div>
+  
+  </div>
+</main>
+<script>
+
+$( document ).ready(function() {
+    var url=location.href
+    var pages=$("#pages").data("pages");
+    for(p=1;p<=pages+1;p++){
+$("#pages").append('<a href="'+url+'/'+p+'" class="btn btn-primary mr-2"> '+p+'</a> ')
+    }
+});
+
+  function participer(id){ 
+$.ajax({
+  url:"/votes/"+id,
+  type:"PUT",
+  headers: {"X-HTTP-Method-Override": "PUT"}
+,success:function(msg){
 
           if (msg == "OK") {
             $(".msg").show(100, "swing");
