@@ -97,7 +97,7 @@ router.post('/login', indexController.login)
 router.get('/login', indexController.visulogin)
 router.get('/dashboard/showall', indexController.showall)
 router.get('/dashboard/showmine', indexController.showmine)
-// router.get('/dashboard/showend', indexController.showend)
+
 router.get('/dashboard/progress', indexController.showinprogress)
 // router.get('/dashboard/showpart', indexController.showpart)
 router.get('/ajout', indexController.ajout);
@@ -109,7 +109,7 @@ router.get('/dashboard/showend', indexController.showend);
  * @memberof module:routers/index
  * @param {function} indexController.liste_create
  */
-router.get('/liste_create',indexController.liste_create)
+router.get('/liste_create', indexController.liste_create)
 
 
 module.exports = router;
