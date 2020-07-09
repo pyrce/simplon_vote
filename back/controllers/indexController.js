@@ -320,7 +320,19 @@ controller.delete = async (req, res) => {
 }
 
 
+controller.liste_create = async (req, res) => {
+  //req.session.user = user // use session for user connected
+  console.log(req.session.user._id)
+  var userId=req.session.user._id
+const votes = await Vote.find({createdBy:userId})
 
+console.log(votes)
+  res.render("liste_create", {
+    votes:votes,
+    title:"Ma liste des sujets votes "
+  })
+
+}
 
 // controller.list = async (req,res) => {
 //     const votes = await Vote.find({})

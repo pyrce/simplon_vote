@@ -92,6 +92,14 @@ router.get('/dashboard/progress', indexController.showinprogress)
 // router.get('/dashboard/showpart', indexController.showpart)
 router.get('/ajout', indexController.ajout);
 router.get('/dashboard/showend', indexController.showend);
+/**
+ * Retourne la vue pour afficher les sujets crée par utilisateur
+ * @name Show GET
+ * @function
+ * @memberof module:routers/index
+ * @param {function} indexController.liste_create
+ */
+router.get('/liste_create',indexController.liste_create)
 
 
 module.exports = router;
