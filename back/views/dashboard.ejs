@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <% include ./partials/head %>
+  <% include ./partials/head %>
 </head>
+
 <body class="container">
 
   <header>
@@ -11,7 +13,8 @@
 
   <main>
     <div class="row">
-      <div class="col-md-12"> <div class="msg"></div>
+      <div class="col-md-12">
+        <div class="msg"></div>
         <div class="card">
           <div class="card-header">
             <ul class="nav nav-tabs card-header-tabs">
@@ -34,64 +37,71 @@
               </li>
             </ul>
           </div>
-      <% votes.forEach(function(vote) { %>
-      <% if (vote.status == 'inprogress') { %>
-      <div class="card" id="votes">
-        <% }else{ %>
+          <% votes.forEach(function(vote) { %>
+          <% if (vote.status == 'inprogress') { %>
           <div class="card" id="votes">
-          <% } %>
-          <div class="card-body">
-            <p class="text-center"><b><%= vote.subject %></b> <br /> 
-              <small>By <% if (vote.createdBy != null) { %>
-                <%= vote.createdBy.login %>
-                <% } %>
-              </small>
-              <% if (vote.participants.includes(locals.currentUser.id) && vote.participants.length >= vote.quota){ %>
-                <p class="text-center">
-                  <a class="btn btn-success" href="/choix/<%= vote._id %>">Voter <i class="fas fa-vote-yea"></i></a>
+            <% }else{ %>
+            <div class="card" id="votes">
+              <% } %>
+              <div class="card-body">
+                <p class="text-center"><b><%= vote.subject %></b> <br />
+                  <small>By <% if (vote.createdBy != null) { %>
+                    <%= vote.createdBy.login %>
+                    <% } %>
+                  </small>
+                  <% if (vote.participants.includes(locals.currentUser.id) && vote.participants.length == vote.quota){ %>
+                  <p class="text-center">
+                    <a class="btn btn-success" href="/choix/<%= vote._id %>">Voter <i class="fas fa-vote-yea"></i></a>
+                  </p>
+                  <% } %>
                 </p>
-              <% } %>
-            </p>
-            <p class="text-right"> <%= vote.participants.length %> / <%= vote.quota %> Participants <%if (!vote.participants.includes(locals.currentUser.id)){%> 
-              <% if (vote.participants.length < vote.quota ) { %>
-                <button onclick="participer('<%=vote._id%>')" class="btn btn-info"><i class="fas fa-arrow-circle-right"></i> 
-                </button>
-                <% } %>
-              <% } %>
-            </p>
-            <div class="progress">
-              <% var vot= vote.participants.length/vote.quota*100 %>
-              <div class="progress-bar bg-warning" role="progressbar" style="width: <%= vot %>%;"
-                aria-valuenow="<%= vot %>" aria-valuemin="0" aria-valuemax="100"> <%= vot %>%</div>
-            </div> </div>
-          </div>
+                <p class="text-right"> <%= vote.participants.length %> / <%= vote.quota %> Participants
+                  <%if (!vote.participants.includes(locals.currentUser.id)){%>
+                  <% if (vote.participants.length < vote.quota ) { %>
+                  <button onclick="participer('<%=vote._id%>')" class="btn btn-info"><i
+                      class="fas fa-arrow-circle-right"></i>
+                  </button>
+                  <% } %>
+                  <% } %>
+                </p>
+                <div class="progress">
+                  <% var vot= vote.participants.length/vote.quota*100 %>
+                  <div class="progress-bar bg-warning" role="progressbar" style="width: <%= vot %>%;"
+                    aria-valuenow="<%= vot %>" aria-valuemin="0" aria-valuemax="100"> <%= vot %>%</div>
+                </div>
+              </div>
+            </div>
             <%})%>
-          
+
+          </div>
+
+
         </div>
-      
-  
-  </div>
-</main>
-<script>
-  function participer(id){ 
-$.ajax({
-  url:"/votes/"+id,
-  type:"PUT",
-  headers: {"X-HTTP-Method-Override": "PUT"}
-,success:function(msg){
+  </main>
+  <script>
+    function participer(id) {
+      $.ajax({
+        url: "/votes/" + id,
+        type: "PUT",
+        headers: {
+          "X-HTTP-Method-Override": "PUT"
+        },
+        success: function (msg) {
 
-if(msg=="OK"){
-  $(".msg").show(100,"swing");
-  $(".msg").html('<button type="button" id="validationpanier" class="btn btn-success">vous êtes bien inscris</button>');
-  $(".msg").delay(4000).hide(50,"swing");
-  $("#votes").load(" #votes > *")
-}
-}
+          if (msg == "OK") {
+            $(".msg").show(100, "swing");
+            $(".msg").html(
+              '<button type="button" id="validationpanier" class="btn btn-success">vous êtes bien inscris</button>'
+            );
+            $(".msg").delay(4000).hide(50, "swing");
+            $("#votes").load(" #votes > *")
+          }
+        }
 
-})
-  }
-
-</script>
+      })
+    }
+  </script>
 
 </body>
+
 </html>

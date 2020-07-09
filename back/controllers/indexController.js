@@ -31,7 +31,7 @@ var controller = {}
 controller.list = async (req, res) => {
   if (!req.session.user) {
     return res.redirect('/inscription')
-  } 
+  }
   var votes = await Vote.find({}).populate("createdBy")
   var user = req.session.user
   try {
@@ -159,13 +159,13 @@ controller.showall = async (req, res) => {
   if (!req.session.user) {
     return res.redirect('/inscription')
   }
-  const votes = await Vote.find({}) .populate("createdBy")
-    var user=req.session.user
+  const votes = await Vote.find({}).populate("createdBy")
+  var user = req.session.user
   // console.log(votes)
   res.render('./dashboard.ejs', {
     title: "sujet",
-    votes:votes,
-    user:user,
+    votes: votes,
+    user: user,
     type: "all"
   })
 }
@@ -335,12 +335,14 @@ controller.update = (req, res) => {
   } = req.params
 
   try {
-    Vote.findOne({_id:id}).then(vote=>{
-     var p= vote.participants;
-   
-     p.push(new ObjectId(req.session.user._id));
-     if(p.length==vote.quota)vote.status="inprogress"
-     vote.participants=p;
+    Vote.findOne({
+      _id: id
+    }).then(vote => {
+      var p = vote.participants;
+
+      p.push(new ObjectId(req.session.user._id));
+      if (p.length == vote.quota) vote.status = "inprogress"
+      vote.participants = p;
       vote.save();
       res.sendStatus(200);
     })
@@ -425,7 +427,7 @@ controller.ajout = async (req, res) => {
 controller.showend = async (req, res) => {
   if (!req.session.user) {
     return res.redirect('/inscription')
-  } 
+  }
   const terminer = 'finished';
   const votes = await Vote.find({
     status: terminer
@@ -461,7 +463,7 @@ controller.choix = async (req, res) => {
   res.render('./choix.ejs', {
     title: "sujet",
     vote: votes,
-    monchoix:monchoix
+    monchoix: monchoix
   })
 }
 
@@ -473,7 +475,7 @@ controller.choix = async (req, res) => {
 controller.showinprogress = async (req, res) => {
   if (!req.session.user) {
     return res.redirect('/inscription')
-  } 
+  }
   const inprogress = 'inprogress';
   const votes = await Vote.find({
     status: inprogress
@@ -495,9 +497,9 @@ controller.showinprogress = async (req, res) => {
 controller.showmine = async (req, res) => {
   if (!req.session.user) {
     return res.redirect('/inscription')
-  } 
+  }
   const created = 'created';
-  var user=req.session.user;
+  var user = req.session.user;
   // console.log(req.session.user)
   const votes = await Vote.find({
     createdBy: req.session.user._id,
@@ -506,7 +508,7 @@ controller.showmine = async (req, res) => {
   res.render('./dashboard', {
     title: "sujet",
     votes: votes,
-    user:user,
+    user: user,
     type: "mine"
   })
 }
@@ -525,11 +527,11 @@ controller.part = async (req, res) => {
     path: 'vote',
     populate: {
       path: 'createdBy',
-      model: 'users'
+      model: 'user'
     }
   }).exec()
-  var result =[];
-  votes.forEach(function(element){
+  var result = [];
+  votes.forEach(function (element) {
     result.push(element.vote)
   })
   console.log(result)
@@ -538,40 +540,6 @@ controller.part = async (req, res) => {
     votes: result,
     user: req.session.user,
     type: "part"
-  })
-}
-
-// controller.addvote = (req,res)=>{
-
-// }
-// controller.detailvote=(req,res)=>{
-
-// }
-
-
-// controller.updatevote=(req,res)=>{
-
-// }
-
-// controller.deletevote=(req,res)=>{
-
-// }
-
-/** show inprogress sujet
- * @name show
- * @memberof module:controllers/index
- * @function
- * @returns {VIEW} "encours"
- */
-controller.encours = async (req, res) => {
-  const votes = await Vote.find({
-    status: 'inprogress'
-  }).populate('createdBy').exec()
-
-  // console.log(votes)
-  res.render("encours", {
-    title: 'encours',
-    votes: votes
   })
 }
 

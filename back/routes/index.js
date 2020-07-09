@@ -91,7 +91,7 @@ router.post('/votes/vote/:id', indexController.vote);
  * @param {string} '/encours' - Path
  * @param {function} indexController.encours
  */
-router.get('/encours', indexController.encours);
+// router.get('/encours', indexController.encours);
 
 /**
  * 
