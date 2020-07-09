@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: controllers/voteController.js</title>
+    <title>JSDoc: Source: controllers/votesController.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: controllers/voteController.js</h1>
+    <h1 class="page-title">Source: controllers/votesController.js</h1>
 
     
 
@@ -28,12 +28,8 @@
         <article>
             <pre class="prettyprint source linenums"><code>const mongoose=require("mongoose");
 const Vote = require("../models/vote");
-
-/** Controller VOTE
- * @module controllers/vote
- * @requires mongoose
- */
-
+const User=require('../models/user');
+var ObjectId=mongoose.Types.ObjectId;
 //Set up default mongoose connection
 // var mongoDB = 'mongodb://localhost:27017/simplon-vote';
 // var ObjectId=mongoose.Types.ObjectId;
@@ -45,25 +41,25 @@ const Vote = require("../models/vote");
 var controller={}
 
 /** 
- * Liste tout les sujets de vote
+ * List all votes
  * @name list
- * @memberof module:controllers/vote
  * @function
  * @returns {json} votes
  */
 controller.list = async (req,res) => {
-  const votes = await Vote.find({})
+var votes=await Vote.find({}).populate("createdBy")
+var user=await User.findOne({_id:"5f03355d220832635062c9f1"});
+
   try {
-    res.status(200).json({votes})
+    res.render("pages/sujet",{votes:votes,title:"application votes",user:user})
   } catch (error) {
     res.status(400).json({result: "error"})
   }
+  
 }
 
-/** 
- * Ajoute un nouveau sujet de vote
+/** add One vote
  * @name add
- * @memberof module:controllers/vote
  * @function
  * @param {string} subject
  * @param {integer} quota
@@ -75,9 +71,11 @@ controller.list = async (req,res) => {
  * @returns {json} vote
  */
 controller.add = async (req,res) => {
-  const {subject, quota, choices, nbVote, createdBy, participants, status} = req.body
+  var {subject, quota, choices, nbVote, createdBy, participants, status} = req.body
+  choices=choices.split(";");
   try {
     const vote = await Vote.create({
+      _id:new ObjectId(),
       subject,
       quota,
       choices,
@@ -86,16 +84,14 @@ controller.add = async (req,res) => {
       participants,
       status
     })
-    res.status(201).json({vote})
+    res.redirect("/")
   } catch (error) {
-    res.status(400).json({result:"error", error})
+    res.status(400).json({result:error})
   }
 }
 
-/** 
- * Affiche le détail d'un sujet de vote
+/** show one vote
  * @name show
- * @memberof module:controllers/vote
  * @function
  * @returns {json} vote
  */
@@ -104,16 +100,14 @@ controller.show = async (req,res) => {
   try {
     const vote = await Vote.findById(id)
     if (!vote) return res.status(400).json({result: "error", message: "vote non trouvé"})
-    res.status(200).json({vote})
+    res.render("/detail")
   } catch (error) {
     res.status(400).json({result: "error", message: error})
   }
 }
 
-/** 
- * Modifie un sujet de vote
- * @name update
- * @memberof module:controllers/vote
+/** update one vote
+ * @name add
  * @function
  * @param {string} subject
  * @param {integer} quota
@@ -124,43 +118,39 @@ controller.show = async (req,res) => {
  * @param {string} status ['created', 'inprogress', 'finished']
  * @returns {json} vote
  */
-controller.update = async (req,res) => {
+controller.update =  (req,res) => {
   const { id } = req.params
   const {subject, quota, choices, nbVote, createdBy, participants, status} = req.body
+
   try {
-    const vote = await Vote.findByIdAndUpdate(id, {
-      subject,
-      quota,
-      choices,
-      nbVote,
-      createdBy,
-      participants,
-      status
-    }).setOptions({
-        new: true, // for get the updated vote
-        omitUndefined: true
+    Vote.findOne({_id:id}).then(vote=>{
+     var p= vote.participants;
+   
+     p.push(ObjectId("5f03355d220832635062c9f1"));
+     vote.participants=p;
+      vote.save();
+      res.sendStatus(200);
     })
-    res.status(200).json({vote})
   } catch (error) {
     res.status(400).json({result:"error"})
   }
 }
 
-/** 
- * Supprime un sujet de vote
+/** delete one vote
  * @name delete
- * @memberof module:controllers/vote
  */
 controller.delete = async (req, res) => {
   try {
     const { id } = req.params
     await Vote.findByIdAndRemove(id)
-    res.status()
-    res.status(200).json({result:"success", message: "vote supprimé"})
-  } catch (error) {
+  
+    res.sendStatus(200);
+  } catch (error) { console.log(error);
     res.status(400).json({result:"error"})
   }
 }
+
+
 
 
 // controller.list = async (req,res) => {
@@ -170,11 +160,11 @@ controller.delete = async (req, res) => {
 //         votes
 //     })
 // }
-// controller.ajout = async (req,res) => {
-//   res.status(201).json({
-//     user
-//   })
-// }
+ controller.ajout = async (req,res) => {
+   res.status(201).json({
+     user
+   })
+ }
 
 // controller.addvote = (req,res)=>{
  

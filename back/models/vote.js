@@ -1,7 +1,19 @@
+/** Model user_vote
+ * @module models/vote
+ * @requires mongoose
+ */
+
 const mongoose = require('mongoose')
 var ObjectId = mongoose.Types.ObjectId;
 const Schema = mongoose.Schema;
 
+/**
+ * @name voteSchema
+ * @requires mongoose
+ * @memberof module:models/vote
+ * @function
+ * @param {array} - Propriétés de mon schéma
+ */
 const voteSchema = mongoose.Schema({
     _id:{ type: ObjectId},
     subject: {

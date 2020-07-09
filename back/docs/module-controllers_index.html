@@ -87,7 +87,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controllers_indexController.js.html">controllers/indexController.js</a>, <a href="controllers_indexController.js.html#line6">line 6</a>
+        <a href="controllers_indexController.js.html">controllers/indexController.js</a>, <a href="controllers_indexController.js.html#line8">line 8</a>
     </li></ul></dd>
     
 
@@ -144,14 +144,10 @@
 
         
             
-<h4 class="name" id=".addUser"><span class="type-signature">(static) </span>addUser<span class="type-signature"></span></h4>
+<h4 class="name" id=".showinprogress"><span class="type-signature">(static) </span>showinprogress<span class="type-signature"></span></h4>
 
 
 
-
-<div class="description">
-    add one user
-</div>
 
 
 
@@ -188,69 +184,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controllers_indexController.js.html">controllers/indexController.js</a>, <a href="controllers_indexController.js.html#line44">line 44</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id=".delete"><span class="type-signature">(static) </span>delete<span class="type-signature"></span></h4>
-
-
-
-
-<div class="description">
-    Delete one vote
-</div>
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controllers_indexController.js.html">controllers/indexController.js</a>, <a href="controllers_indexController.js.html#line234">line 234</a>
+        <a href="controllers_indexController.js.html">controllers/indexController.js</a>, <a href="controllers_indexController.js.html#line468">line 468</a>
     </li></ul></dd>
     
 
@@ -278,7 +212,7 @@
     
 
     
-    <h4 class="name" id=".add"><span class="type-signature">(static) </span>add<span class="signature">(subject, quota, choices, nbVote, createdBy, participants, status)</span><span class="type-signature"> &rarr; {VIEW}</span></h4>
+    <h4 class="name" id=".add"><span class="type-signature">(static) </span>add<span class="signature">()</span><span class="type-signature"> &rarr; {VIEW}</span></h4>
     
 
     
@@ -286,7 +220,7 @@
 
 
 <div class="description">
-    add One vote
+    Ajoute un sujet de vote et redirige sur '/'
 </div>
 
 
@@ -322,7 +256,7 @@
 
         <tr>
             
-                <td class="name"><code>subject</code></td>
+                <td class="name"><code>req.body.subject</code></td>
             
 
             <td class="type">
@@ -345,7 +279,7 @@
 
         <tr>
             
-                <td class="name"><code>quota</code></td>
+                <td class="name"><code>req.body.quota</code></td>
             
 
             <td class="type">
@@ -368,7 +302,7 @@
 
         <tr>
             
-                <td class="name"><code>choices</code></td>
+                <td class="name"><code>req.body.choices</code></td>
             
 
             <td class="type">
@@ -391,7 +325,7 @@
 
         <tr>
             
-                <td class="name"><code>nbVote</code></td>
+                <td class="name"><code>req.body.nbVote</code></td>
             
 
             <td class="type">
@@ -414,7 +348,7 @@
 
         <tr>
             
-                <td class="name"><code>createdBy</code></td>
+                <td class="name"><code>req.body.createdBy</code></td>
             
 
             <td class="type">
@@ -437,7 +371,7 @@
 
         <tr>
             
-                <td class="name"><code>participants</code></td>
+                <td class="name"><code>req.body.participants</code></td>
             
 
             <td class="type">
@@ -460,7 +394,7 @@
 
         <tr>
             
-                <td class="name"><code>status</code></td>
+                <td class="name"><code>req.body.status</code></td>
             
 
             <td class="type">
@@ -517,7 +451,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controllers_indexController.js.html">controllers/indexController.js</a>, <a href="controllers_indexController.js.html#line66">line 66</a>
+        <a href="controllers_indexController.js.html">controllers/indexController.js</a>, <a href="controllers_indexController.js.html#line79">line 79</a>
     </li></ul></dd>
     
 
@@ -604,7 +538,7 @@
     
 
     
-    <h4 class="name" id=".list"><span class="type-signature">(static) </span>list<span class="signature">()</span><span class="type-signature"> &rarr; {VIEW}</span></h4>
+    <h4 class="name" id=".addUser"><span class="type-signature">(static) </span>addUser<span class="signature">()</span><span class="type-signature"> &rarr; {VIEW}</span></h4>
     
 
     
@@ -612,7 +546,678 @@
 
 
 <div class="description">
-    List all votes
+    Ajout un utilisateur et redirige sur '/'
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>req.body.pseudo</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>req.body.email</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>req.body.password</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_indexController.js.html">controllers/indexController.js</a>, <a href="controllers_indexController.js.html#line51">line 51</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    redirect to '/'
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">VIEW</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".ajout"><span class="type-signature">(static) </span>ajout<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_indexController.js.html">controllers/indexController.js</a>, <a href="controllers_indexController.js.html#line408">line 408</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".choix"><span class="type-signature">(static) </span>choix<span class="signature">()</span><span class="type-signature"> &rarr; {VIEW}</span></h4>
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_indexController.js.html">controllers/indexController.js</a>, <a href="controllers_indexController.js.html#line441">line 441</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">VIEW</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".controller.login"><span class="type-signature">(static) </span>controller.login<span class="signature">()</span><span class="type-signature"> &rarr; {VIEW}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Connexion
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>req.body.email</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>req.body.password</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_indexController.js.html">controllers/indexController.js</a>, <a href="controllers_indexController.js.html#line181">line 181</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">VIEW</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".dashboard"><span class="type-signature">(static) </span>dashboard<span class="signature">()</span><span class="type-signature"> &rarr; {VIEW}</span></h4>
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_indexController.js.html">controllers/indexController.js</a>, <a href="controllers_indexController.js.html#line138">line 138</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">VIEW</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".delete"><span class="type-signature">(static) </span>delete<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Supprime un sujet de vote
 </div>
 
 
@@ -656,7 +1261,248 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controllers_indexController.js.html">controllers/indexController.js</a>, <a href="controllers_indexController.js.html#line21">line 21</a>
+        <a href="controllers_indexController.js.html">controllers/indexController.js</a>, <a href="controllers_indexController.js.html#line354">line 354</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+    <dt class="tag-todo">To Do:</dt>
+    <dd class="tag-todo">
+        <ul>
+            <li>Tester le fonctionnement</li>
+        </ul>
+    </dd>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Throws:</h5>
+
+        
+
+<dl>
+    <dt>
+        <div class="param-desc">
+        - Renvoie un JSON en cas d'erreur
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">JSON</span>
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+
+    
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".inscription"><span class="type-signature">(static) </span>inscription<span class="signature">()</span><span class="type-signature"> &rarr; {VIEW}</span></h4>
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_indexController.js.html">controllers/indexController.js</a>, <a href="controllers_indexController.js.html#line298">line 298</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Throws:</h5>
+
+        
+
+    <div class="param-desc">
+    
+        
+<span class="param-type">JSON</span>
+
+
+    
+    </div>
+
+
+    
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">VIEW</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".list"><span class="type-signature">(static) </span>list<span class="signature">()</span><span class="type-signature"> &rarr; {VIEW}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Liste tout les sujets de vote de l'utilisateur connecté et retourne un vue
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_indexController.js.html">controllers/indexController.js</a>, <a href="controllers_indexController.js.html#line23">line 23</a>
     </li></ul></dd>
     
 
@@ -739,7 +1585,7 @@
     
 
     
-    <h4 class="name" id=".show"><span class="type-signature">(static) </span>show<span class="signature">()</span><span class="type-signature"> &rarr; {VIEW}</span></h4>
+    <h4 class="name" id=".logout"><span class="type-signature">(static) </span>logout<span class="signature">()</span><span class="type-signature"> &rarr; {VIEW}</span></h4>
     
 
     
@@ -747,7 +1593,7 @@
 
 
 <div class="description">
-    show one vote
+    Déconnecte l'utilisateur
 </div>
 
 
@@ -791,7 +1637,219 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controllers_indexController.js.html">controllers/indexController.js</a>, <a href="controllers_indexController.js.html#line145">line 145</a>
+        <a href="controllers_indexController.js.html">controllers/indexController.js</a>, <a href="controllers_indexController.js.html#line223">line 223</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">VIEW</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".part"><span class="type-signature">(static) </span>part<span class="signature">()</span><span class="type-signature"> &rarr; {VIEW}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Participation
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_indexController.js.html">controllers/indexController.js</a>, <a href="controllers_indexController.js.html#line514">line 514</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">VIEW</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".show"><span class="type-signature">(static) </span>show<span class="signature">()</span><span class="type-signature"> &rarr; {VIEW}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Affiche le détail d'un sujet de vote
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_indexController.js.html">controllers/indexController.js</a>, <a href="controllers_indexController.js.html#line235">line 235</a>
     </li></ul></dd>
     
 
@@ -878,6 +1936,496 @@
     
 
     
+    <h4 class="name" id=".Show"><span class="type-signature">(static) </span>Show<span class="signature">()</span><span class="type-signature"> &rarr; {VIEW}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Mes sujets de vote crée
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_indexController.js.html">controllers/indexController.js</a>, <a href="controllers_indexController.js.html#line377">line 377</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    "liste_create"
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">VIEW</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".show"><span class="type-signature">(static) </span>show<span class="signature">()</span><span class="type-signature"> &rarr; {VIEW}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    show inprogress sujet
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_indexController.js.html">controllers/indexController.js</a>, <a href="controllers_indexController.js.html#line560">line 560</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    "encours"
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">VIEW</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".showall"><span class="type-signature">(static) </span>showall<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_indexController.js.html">controllers/indexController.js</a>, <a href="controllers_indexController.js.html#line153">line 153</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".showend"><span class="type-signature">(static) </span>showend<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_indexController.js.html">controllers/indexController.js</a>, <a href="controllers_indexController.js.html#line420">line 420</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".showmine"><span class="type-signature">(static) </span>showmine<span class="signature">()</span><span class="type-signature"> &rarr; {VIEW}</span></h4>
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_indexController.js.html">controllers/indexController.js</a>, <a href="controllers_indexController.js.html#line489">line 489</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">VIEW</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
     <h4 class="name" id=".update"><span class="type-signature">(static) </span>update<span class="signature">(subject, quota, choices, nbVote, createdBy, participants, status)</span><span class="type-signature"> &rarr; {VIEW}</span></h4>
     
 
@@ -886,7 +2434,7 @@
 
 
 <div class="description">
-    Update one vote
+    Modifie un sujet de vote
 </div>
 
 
@@ -1117,7 +2665,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controllers_indexController.js.html">controllers/indexController.js</a>, <a href="controllers_indexController.js.html#line183">line 183</a>
+        <a href="controllers_indexController.js.html">controllers/indexController.js</a>, <a href="controllers_indexController.js.html#line317">line 317</a>
     </li></ul></dd>
     
 
@@ -1199,6 +2747,108 @@
 
 
         
+            
+
+    
+
+    
+    <h4 class="name" id=".visulogin"><span class="type-signature">(static) </span>visulogin<span class="signature">()</span><span class="type-signature"> &rarr; {VIEW}</span></h4>
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_indexController.js.html">controllers/indexController.js</a>, <a href="controllers_indexController.js.html#line126">line 126</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">VIEW</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
     
 
     
@@ -1214,13 +2864,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-controllers_index.html">controllers/index</a></li><li><a href="module-controllers_user.html">controllers/user</a></li><li><a href="module-controllers_vote.html">controllers/vote</a></li><li><a href="module-routers_index.html">routers/index</a></li><li><a href="module-routers_users.html">routers/users</a></li><li><a href="module-routers_votes.html">routers/votes</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-controllers_index.html">controllers/index</a></li><li><a href="module-controllers_user.html">controllers/user</a></li><li><a href="module-controllers_vote.html">controllers/vote</a></li><li><a href="module-models_user.html">models/user</a></li><li><a href="module-models_user_vote.html">models/user_vote</a></li><li><a href="module-models_vote.html">models/vote</a></li><li><a href="module-routers_index.html">routers/index</a></li><li><a href="module-routers_users.html">routers/users</a></li><li><a href="module-routers_votes.html">routers/votes</a></li></ul><h3>Global</h3><ul><li><a href="global.html#add">add</a></li><li><a href="global.html#delete">delete</a></li><li><a href="global.html#list">list</a></li><li><a href="global.html#show">show</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.4</a> on Wed Jul 08 2020 11:34:20 GMT+0400 (Samara Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.4</a> on Thu Jul 09 2020 13:59:25 GMT+0400 (Samara Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
