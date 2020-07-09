@@ -21,7 +21,7 @@ var ObjectId=mongoose.Types.ObjectId;
 var controller = {}
 
 /** 
- * Liste tout les sujets de vote et retourne un vue
+ * Liste tout les sujets de vote de l'utilisateur connecté et retourne un vue
  * @name list
  * @memberof module:controllers/index
  * @function
@@ -29,8 +29,8 @@ var controller = {}
  * @throws {JSON} - Renvoie un JSON en cas d'erreur
  */
 controller.list = async (req, res) => {
-  var votes=await Vote.find({}).populate("createdBy")
-var user=await User.findOne({_id:"5f03355d220832635062c9f1"});
+  var votes = await Vote.find({}).populate("createdBy"); 
+  var user = await User.findOne({_id:"5f03355d220832635062c9f1"});
   try {
     res.render("dashboard", {
       votes: votes,
@@ -49,10 +49,10 @@ var user=await User.findOne({_id:"5f03355d220832635062c9f1"});
  * Ajout un utilisateur et redirige sur '/'
  * @name addUser
  * @memberof module:controllers/index
- * @fonction
- * @param {string} pseudo
- * @param {string} email
- * @param {string} mot de passe
+ * @function
+ * @param {string} req.body.pseudo
+ * @param {string} req.body.email
+ * @param {string} req.body.password
  * @returns {VIEW} redirect to '/'
  */
 
@@ -78,13 +78,13 @@ controller.addUser = async (req, res) => {
  * @name add
  * @memberof module:controllers/index
  * @function
- * @param {string} subject
- * @param {integer} quota
- * @param {array} choices
- * @param {integer} nbVote
- * @param {OjectId} createdBy
- * @param {array} participants
- * @param {string} status ['created', 'inprogress', 'finished']
+ * @param {string} req.body.subject
+ * @param {integer} req.body.quota
+ * @param {array} req.body.choices
+ * @param {integer} req.body.nbVote
+ * @param {OjectId} req.body.createdBy
+ * @param {array} req.body.participants
+ * @param {string} req.body.status ['created', 'inprogress', 'finished']
  * @returns {VIEW} Redirect to '/'
  * @throws {JSON} - Renvoie un JSON en cas d'erreur
  */
@@ -154,6 +154,11 @@ controller.showall = async (req, res) => {
 
 /**
  * Connexion
+ * @function
+ * @memberof module:controllers/index
+ * @param {string} req.body.email
+ * @param {string} req.body.password
+ * @para
  */
 controller.login = async (req, res) => {
   const {
