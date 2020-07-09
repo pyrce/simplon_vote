@@ -168,15 +168,13 @@ controller.showall = async (req, res) => {
   }
   var currentpage=(typeof req.params.page!="undefined" || req.params.page>0) ? req.params.page : 0
 
-  var page = Math.max(0, currentpage);
+  var page= Math.max(0, currentpage-1);
 
-  const votes = await Vote.find({}).limit(perPage)
-
-  .skip(perPage * page).populate("createdBy")
-  const count=votes.length;
+  const votes = await Vote.find({}).limit(perPage).skip(perPage * page).populate("createdBy")
+  const count= await Vote.find({}).populate("createdBy").count();
 
     var user=req.session.user
-   console.log(votes)
+   console.log(count)
   res.render('./dashboard.ejs', {
     title: "sujet",
     votes:votes,
@@ -300,7 +298,7 @@ controller.vote = async (req, res) => {
     _id: req.params.id
   });
   var liste_choix = currentVote.choices;
-  console.log(req.body)
+ 
   UserVote.create({
     _id: new ObjectId(),
     user: req.session.user._id,
@@ -405,7 +403,7 @@ controller.liste_create = async (req, res) => {
     createdBy: userId
   })
 
-  console.log(votes)
+ 
   res.render("liste_create", {
     votes: votes,
     title: "Ma liste des sujets votes "
@@ -447,10 +445,8 @@ controller.showend = async (req, res) => {
 
   var page = Math.max(0, currentpage);
 
-  const votes = await Vote.find({status:terminer}).limit(perPage)
-
-  .skip(perPage * page).populate("createdBy")
-  const count=votes.length;
+  const votes = await Vote.find({status:terminer}).limit(perPage).skip(perPage * page).populate("createdBy")
+  const count= await Vote.find({status:terminer}).count();
   // console.log(votes)
   res.render('./dashboard', {
     title: "sujet",
@@ -504,7 +500,7 @@ console.log("paginate")
   const votes = await Vote.find({status:inprogress}).limit(perPage)
 
   .skip(perPage * page).populate("createdBy")
-  const count=votes.length;
+  const count=await Vote.find({status:inprogress}).count();
   // console.log(votes)
   res.render('./dashboard', {
     title: "sujet",
@@ -530,12 +526,12 @@ controller.showmine = async (req, res) => {
   var currentpage=(typeof req.params.page!="undefined" || req.params.page>0) ? req.params.page : 0
 
   
-    var page = Math.max(0, currentpage);
+  var page =Math.max(0, currentpage);
 console.log("paginate")
   const votes = await Vote.find({status:created,createdBy:user._id}).limit(perPage)
 
   .skip(perPage * page).populate("createdBy")
-  const count=votes.length;
+  const count=await Vote.find({status:created,createdBy:user._id}).count();
   res.render('./dashboard', {
     title: "sujet",
     votes: votes,
@@ -554,8 +550,8 @@ console.log("paginate")
  */
 controller.part = async (req, res) => {
   var currentpage=(typeof req.params.page!="undefined" || req.params.page>0) ? req.params.page : 0
-  var  page = Math.max(0, currentpage);
-  
+  var page = Math.max(0, currentpage);
+  console.log(req.session.user._id)
   const votes = await UserVote.find({
     user: req.session.user._id
   }).limit(perPage)
@@ -564,11 +560,14 @@ controller.part = async (req, res) => {
     path: 'vote',
     populate: {
       path: 'createdBy',
-      model: 'user'
+      model: 'users'
     }
-  }).exec()
-  const count=votes.length;
+  }).exec();
 
+  const count=await UserVote.find({
+    user: req.session.user._id
+  }).count();
+console.log(votes)
   var result =[];
   votes.forEach(function(element){
     result.push(element.vote)
@@ -596,7 +595,7 @@ controller.encours = async (req, res) => {
   const votes = await Vote.find({status:'inprogress'}).limit(perPage)
 
   .skip(perPage * page).populate("createdBy")
-  const count=await Vote.count();
+  const count= await Vote.find({status:'inprogress'}).count();
   // console.log(votes)
   res.render("encours", {
     title: 'encours',

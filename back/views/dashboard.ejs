@@ -36,9 +36,9 @@
           </div>
       <% votes.forEach(function(vote) { %>
       <% if (vote.status == 'inprogress') { %>
-      <div class="card" id="votes">
+      <div class="card votes">
         <% }else{ %>
-          <div class="card" id="votes">
+          <div class="card votes">
           <% } %>
           <div class="card-body">
             <p class="text-center"><b><%= vote.subject %></b> <br /> 
@@ -52,8 +52,9 @@
                 </p>
               <% } %>
             </p>
-            <p class="text-right"> <%= vote.participants.length %> / <%= vote.quota %> Participants <%if (!vote.participants.includes(locals.currentUser.id)){%> 
+            <p class="text-right"> <%= vote.participants.length %> / <%= vote.quota %> Participants 
               <% if (vote.participants.length < vote.quota ) { %>
+                <%if (!vote.participants.includes(locals.currentUser.id)){%> 
                 <button onclick="participer('<%=vote._id%>')" class="btn btn-info"><i class="fas fa-arrow-circle-right"></i> 
                 </button>
                 <% } %>
@@ -68,21 +69,20 @@
             <%})%>
           
         </div>
-      <div class="row" data-pages="<%=pages%>" id="pages">
-
+      <div class="row" data-pages="<%=pages%>" data-type="<%=type%>" id="pages">
+     <%   for(p=1;p<=pages;p++){ %>
+        <%if(type=='part'){%>
+          <a href="/dashboard/part/<%=p%>" class="btn btn-primary mr-2"><%=p%></a> 
+          <%}else{%>
+            <a href="/dashboard/show<%=type%>/<%=p%>" class="btn btn-primary mr-2"><%=p%></a> 
+            <%}%>
+     <%}%>
       </div>
   
   </div>
 </main>
 <script>
 
-$( document ).ready(function() {
-    var url=location.href
-    var pages=$("#pages").data("pages");
-    for(p=1;p<=pages+1;p++){
-$("#pages").append('<a href="'+url+'/'+p+'" class="btn btn-primary mr-2"> '+p+'</a> ')
-    }
-});
 
   function participer(id){ 
 $.ajax({
@@ -95,7 +95,7 @@ if(msg=="OK"){
   $(".msg").show(100,"swing");
   $(".msg").html('<button type="button" id="validationpanier" class="btn btn-success">vous êtes bien inscris</button>');
   $(".msg").delay(4000).hide(50,"swing");
-  $("#votes").load(" #votes > *")
+  $(".votes").load(" .votes > *")
 }
 }
 
