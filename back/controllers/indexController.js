@@ -349,14 +349,18 @@ controller.update = (req, res) => {
   } = req.params
 
   try {
-    Vote.findOne({_id:id}).then(vote=>{
-     var p= vote.participants;
-   
-     p.push(new ObjectId(req.session.user._id));
-     if(p.length==vote.quota)vote.status="inprogress"
-     vote.participants=p;
-      vote.save();
-      res.sendStatus(200);
+    Vote.findOne({_id:id}).then(vote=> {
+      var p = vote.participants;
+      if (p >= vote.quota) {
+        req.session.msgFlash = {type: "warning", message: "le nombre de participant maximum à été atteint"}
+        return res.redirect('/')
+      } else {
+        p.push(new ObjectId(req.session.user._id));
+        if (p.length==vote.quota)vote.status="inprogress"
+        vote.participants = p;
+        vote.save();
+        res.sendStatus(200);
+      }
     })
   } catch (error) {
     res.status(400).json({
@@ -439,7 +443,7 @@ controller.ajout = async (req, res) => {
 controller.showend = async (req, res) => {
   if (!req.session.user) {
     return res.redirect('/inscription')
-  } 
+  }
   const terminer = 'finished';
   var currentpage=(typeof req.params.page!="undefined" || req.params.page>0) ? req.params.page : 0
 
@@ -479,7 +483,7 @@ controller.choix = async (req, res) => {
   res.render('./choix.ejs', {
     title: "sujet",
     vote: votes,
-    monchoix:monchoix
+    monchoix: monchoix
   })
 }
 
@@ -491,7 +495,7 @@ controller.choix = async (req, res) => {
 controller.showinprogress = async (req, res) => {
   if (!req.session.user) {
     return res.redirect('/inscription')
-  } 
+  }
   const inprogress = 'inprogress';
   var currentpage=(typeof req.params.page!="undefined" || req.params.page>0) ? req.params.page : 0
 
@@ -519,9 +523,9 @@ console.log("paginate")
 controller.showmine = async (req, res) => {
   if (!req.session.user) {
     return res.redirect('/inscription')
-  } 
+  }
   const created = 'created';
-  var user=req.session.user;
+  var user = req.session.user;
   // console.log(req.session.user)
   var currentpage=(typeof req.params.page!="undefined" || req.params.page>0) ? req.params.page : 0
 
