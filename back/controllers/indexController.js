@@ -399,11 +399,18 @@ controller.choix = async (req, res) => {
   } = req.params
   const votes = await Vote.findOne({
     _id: id
-  }).populate('createdBy').exec()
+  }).populate('createdBy')
+  const monchoix = await UserVote.aggregate([{
+    $match: {
+      vote: new ObjectId(votes._id),
+      user: new ObjectId(req.session.user._id)
+    }
+  }]);
   console.log(votes)
   res.render('./choix.ejs', {
     title: "sujet",
-    vote: votes
+    vote: votes,
+    monchoix:monchoix
   })
 }
 
