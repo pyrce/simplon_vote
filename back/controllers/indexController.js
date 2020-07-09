@@ -299,7 +299,7 @@ controller.update = async (req, res) => {
  * @todo Tester le fonctionnement
  * @name delete
  * @memberof module:controllers/index
- * @throws {JSON} - Renvoie un JSON en cas d'erreur
+ * @returns {VIEW} "liste_create"
  */
 controller.delete = async (req, res) => {
   try {
@@ -319,7 +319,12 @@ controller.delete = async (req, res) => {
   }
 }
 
-
+/** 
+ * Mes sujets de vote crée
+ * @name Show GET
+ * @memberof module:controllers/index
+ * @throws {JSON} - Renvoie un JSON en cas d'erreur
+ */
 controller.liste_create = async (req, res) => {
   //req.session.user = user // use session for user connected
   console.log(req.session.user._id)
