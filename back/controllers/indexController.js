@@ -454,6 +454,7 @@ controller.part = async (req, res) => {
   res.render('dashboard', {
     title: "sujet",
     votes: result,
+    user: req.session.user,
     type: "part"
   })
 }
