@@ -29,9 +29,10 @@ var controller = {}
 controller.list = async (req, res) => {
   const votes = await Vote.find({})
   try {
-    res.render("dashboar/all", {
+    res.render("dashboard", {
       votes: votes,
-      title: "application votes"
+      title: "application votes",
+      type: "all"
     })
   } catch (error) {
     res.status(400).json({
@@ -137,7 +138,7 @@ controller.dashboard = async (req, res) => {
 controller.showall = async (req, res) => {
   const votes = await Vote.find({})
     .populate("createdBy")
-  console.log(votes)
+  // console.log(votes)
   res.render('./dashboard.ejs', {
     title: "sujet",
     votes,
@@ -348,10 +349,11 @@ controller.showend = async (req, res) => {
   const votes = await Vote.find({
     status: terminer
   }).populate('createdBy').exec()
-  console.log(votes)
+  // console.log(votes)
   res.render('./dashboard', {
     title: "sujet",
-    votes: votes
+    votes: votes,
+    type: "end"
   })
 }
 
@@ -360,7 +362,7 @@ controller.showinprogress = async (req, res) => {
   const votes = await Vote.find({
     status: inprogress
   }).populate('createdBy').exec()
-  console.log(votes)
+  // console.log(votes)
   res.render('./dashboard', {
     title: "sujet",
     votes: votes,
@@ -370,7 +372,7 @@ controller.showinprogress = async (req, res) => {
 
 controller.showmine = async (req, res) => {
   const created = 'created';
-  console.log(req.session.user)
+  // console.log(req.session.user)
   const votes = await Vote.find({
     createdBy: req.session.user._id,
     status: created
@@ -407,7 +409,7 @@ controller.showmine = async (req, res) => {
 controller.encours = async (req, res) => {
   const votes = await Vote.find({status: 'inprogress'}).populate('createdBy').exec()
   
-  console.log(votes)
+  // console.log(votes)
  res.render("encours",{title:'encours',votes : votes })
 }
 
