@@ -166,6 +166,12 @@ router.get('/ajout', indexController.ajout);
 router.get('/dashboard/showend', indexController.showend);
 
 /**
+ * 
+ * @memberof module:routers/index
+ */
+router.get('/dashboard/part', indexController.part);
+
+/**
  * Retourne la vue pour afficher les sujets crée par l'utilisateur
  * @name liste_create GET
  * @function
