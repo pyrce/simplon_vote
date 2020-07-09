@@ -42,7 +42,7 @@ const voteSchema = mongoose.Schema({
     },
     createdBy: {
         type: ObjectId,
-        ref: "users"
+        ref: "user"
     },
     participants: {
         type: Array,
