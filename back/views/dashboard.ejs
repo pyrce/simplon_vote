@@ -11,7 +11,7 @@
 
   <main>
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-12"> <div class="msg"></div>
         <div class="card">
           <div class="card-header">
             <ul class="nav nav-tabs card-header-tabs">
@@ -34,12 +34,12 @@
               </li>
             </ul>
           </div>
-          <div class="card-body">
+          <div class="card-body" id="votes">
             <% votes.forEach(function(vote) { %>
             <p class="text-center"><b><%= vote.subject %></b> <br /> <small>By <% if (vote.createdBy != null) { %>
                 <%= vote.createdBy.login %>
                 <% } %></small></p>
-            <p class="text-right"> <%= vote.participants.length %> / <%= vote.quota %> Participants ▶️</p>
+            <p class="text-right"> <%= vote.participants.length %> / <%= vote.quota %> Participants <%if(vote.participants.indexOf(user._id)==-1){%> <button onclick="participer('<%=vote._id%>')" class="btn btn-info"><i class="fas fa-arrow-circle-right"></i> </button><%}%>
             <div class="progress">
               <% var vot= vote.participants.length/vote.quota*100 %>
               <div class="progress-bar bg-warning" role="progressbar" style="width: <%= vot %>%;"
@@ -50,6 +50,7 @@
         </div>
       </div>
 <script>
+  function participer(id){
 $.ajax({
   url:"/votes/"+id,
   type:"PUT",

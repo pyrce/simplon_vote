@@ -30,7 +30,7 @@ var controller = {}
  */
 controller.list = async (req, res) => {
   var votes=await Vote.find({}).populate("createdBy")
-var user=await User.findOne({_id:"5f03355d220832635062c9f1"});
+var user=req.session.user
   try {
     res.render("dashboard", {
       votes: votes,
@@ -142,12 +142,13 @@ controller.dashboard = async (req, res) => {
   })
 }
 controller.showall = async (req, res) => {
-  const votes = await Vote.find({})
-    .populate("createdBy")
+  const votes = await Vote.find({}) .populate("createdBy")
+    var user=req.session.user
   // console.log(votes)
   res.render('./dashboard.ejs', {
     title: "sujet",
     votes,
+    user:user,
     type: "all"
   })
 }
@@ -295,7 +296,7 @@ controller.update =  (req,res) => {
     Vote.findOne({_id:id}).then(vote=>{
      var p= vote.participants;
    
-     p.push(ObjectId("5f03355d220832635062c9f1"));
+     p.push(req.session.user._id);
      if(p.length==vote.quota)vote.status="inprogress"
      vote.participants=p;
       vote.save();
@@ -381,6 +382,7 @@ controller.showinprogress = async (req, res) => {
 
 controller.showmine = async (req, res) => {
   const created = 'created';
+  var user=req.session.user;
   // console.log(req.session.user)
   const votes = await Vote.find({
     createdBy: req.session.user._id,
@@ -389,6 +391,7 @@ controller.showmine = async (req, res) => {
   res.render('./dashboard', {
     title: "sujet",
     votes: votes,
+    user:user,
     type: "mine"
   })
 }
