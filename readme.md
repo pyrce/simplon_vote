@@ -13,6 +13,20 @@ Se placer dans le répertoire 'back'
 3. Ne pas push l'adresse de la base de donnée dans le fichier **.env.example** 😅
 4. Les informations de la base de donnée sont dans le fichier config/database.js.
 
+### Migration
+1. Copier le fichier **back/migrations/migrate-mongo-config-example.js** et renommer le fichier copié en **back/migrations/migrate-mongo-config.js**
+2. Remplacer le contenu des paramètres **url** et **databaseName** avec celui fournis de la base de donnée
+3. Ne pas push l'adresse de la base de donnée dans le fichier **back/migrations/migrate-mongo-config-example.js** 😅
+
+Exécuter toutes les migrations de base de données non appliquées
+> migrate-mongo up
+
+Annuler la dernière migration de base de données appliquées
+> migrate-mongo down
+
+Aficher le journal des modifications de la base de données
+> migrate-mongo status
+
 ### Pour windows seulement
 Dans le fichier packages.json 
 ajouter "SET " dans le script dev
