@@ -19,7 +19,7 @@ var ObjectId = mongoose.Types.ObjectId;
 // });
 
 var controller = {}
-
+var perPage=2;
 /** 
  * Liste tout les sujets de vote et retourne un vue
  * @name list
@@ -32,13 +32,20 @@ controller.list = async (req, res) => {
   if (!req.session.user) {
     return res.redirect('/inscription')
   } 
-  var votes=await Vote.find({}).populate("createdBy")
-var user=req.session.user
+  var currentpage=(typeof req.param('page')!="undefined" || req.param('page')>0) ? req.param('page') : 0
+
+  var page = Math.max(0, currentpage);
+console.log("paginate")
+  const votes = await Vote.find({}).limit(perPage)
+
+  .skip(perPage * page).populate("createdBy")
+  const count=votes.length;
+
   try {
     res.render("dashboard", {
       votes: votes,
       title: "application votes",
-      user: user,
+      pages: count/perPage,
       type: "all"
     })
   } catch (error) {
@@ -149,13 +156,22 @@ controller.showall = async (req, res) => {
   if (!req.session.user) {
     return res.redirect('/inscription')
   }
-  const votes = await Vote.find({}) .populate("createdBy")
+  var currentpage=(typeof req.param('page')!="undefined" || req.param('page')>0) ? req.param('page') : 0
+
+  var page = Math.max(0, currentpage);
+
+  const votes = await Vote.find({}).limit(perPage)
+
+  .skip(perPage * page).populate("createdBy")
+  const count=votes.length;
+
     var user=req.session.user
   // console.log(votes)
   res.render('./dashboard.ejs', {
     title: "sujet",
     votes:votes,
     user:user,
+    pages:count/perPage,
     type: "all"
   })
 }
@@ -392,13 +408,19 @@ controller.showend = async (req, res) => {
     return res.redirect('/inscription')
   } 
   const terminer = 'finished';
-  const votes = await Vote.find({
-    status: terminer
-  }).populate('createdBy').exec()
+  var currentpage=(typeof req.param('page')!="undefined" || req.param('page')>0) ? req.param('page') : 0
+
+  var page = Math.max(0, currentpage);
+
+  const votes = await Vote.find({status:terminer}).limit(perPage)
+
+  .skip(perPage * page).populate("createdBy")
+  const count=votes.length;
   // console.log(votes)
   res.render('./dashboard', {
     title: "sujet",
     votes: votes,
+    pages:count/perPage,
     type: "end"
   })
 }
@@ -428,13 +450,19 @@ controller.showinprogress = async (req, res) => {
     return res.redirect('/inscription')
   } 
   const inprogress = 'inprogress';
-  const votes = await Vote.find({
-    status: inprogress
-  }).populate('createdBy').exec()
+  var currentpage=(typeof req.param('page')!="undefined" || req.param('page')>0) ? req.param('page') : 0
+
+  var page = Math.max(0, currentpage);
+console.log("paginate")
+  const votes = await Vote.find({status:inprogress}).limit(perPage)
+
+  .skip(perPage * page).populate("createdBy")
+  const count=votes.length;
   // console.log(votes)
   res.render('./dashboard', {
     title: "sujet",
     votes: votes,
+    pages:count/perPage,
     type: "progress"
   })
 }
@@ -446,56 +474,54 @@ controller.showmine = async (req, res) => {
   const created = 'created';
   var user=req.session.user;
   // console.log(req.session.user)
-  const votes = await Vote.find({
-    createdBy: req.session.user._id,
-    status: created
-  }).populate('createdBy').exec()
+  var currentpage=(typeof req.param('page')!="undefined" || req.param('page')>0) ? req.param('page') : 0
+
+  
+    var page = Math.max(0, currentpage);
+console.log("paginate")
+  const votes = await Vote.find({status:created,createdBy:user._id}).limit(perPage)
+
+  .skip(perPage * page).populate("createdBy")
+  const count=votes.length;
   res.render('./dashboard', {
     title: "sujet",
     votes: votes,
     user:user,
+    pages:count/perPage,
     type: "mine"
   })
 }
 
 controller.part = async (req, res) => {
+  var currentpage=(typeof req.param('page')!="undefined" || req.param('page')>0) ? req.param('page') : 0
+  var  page = Math.max(0, currentpage);
+  
   const votes = await UserVote.find({
     user: req.session.user._id
-  }).populate({
+  }).limit(perPage)
+
+  .skip(perPage * page).populate({
     path: 'vote',
     populate: {
       path: 'createdBy',
       model: 'users'
     }
   }).exec()
+  const count=votes.length;
+
   var result =[];
   votes.forEach(function(element){
     result.push(element.vote)
   })
-  console.log(result)
+ 
   res.render('dashboard', {
     title: "sujet",
     votes: result,
+    pages:count/perPage,
     user: req.session.user,
     type: "part"
   })
 }
-
-// controller.addvote = (req,res)=>{
-
-// }
-// controller.detailvote=(req,res)=>{
-
-// }
-
-
-// controller.updatevote=(req,res)=>{
-
-// }
-
-// controller.deletevote=(req,res)=>{
-
-// }
 
 /** show inprogress sujet
  * @name show
@@ -504,13 +530,17 @@ controller.part = async (req, res) => {
  * @returns {VIEW} "encours"
  */
 controller.encours = async (req, res) => {
-  const votes = await Vote.find({
-    status: 'inprogress'
-  }).populate('createdBy').exec()
+  var currentpage=(typeof req.param('page')!="undefined" || req.param('page')>0) ? req.param('page') : 0
+  var  page = Math.max(0, currentpage);
 
+  const votes = await Vote.find({status:'inprogress'}).limit(perPage)
+
+  .skip(perPage * page).populate("createdBy")
+  const count=await Vote.count();
   // console.log(votes)
   res.render("encours", {
     title: 'encours',
+    pages:count/perPage,
     votes: votes
   })
 }
