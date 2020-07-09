@@ -436,6 +436,29 @@ controller.showmine = async (req, res) => {
   })
 }
 
+controller.part = async (req, res) => {
+  const votes = await UserVote.find({
+    user: req.session.user._id
+  }).populate({
+    path: 'vote',
+    populate: {
+      path: 'createdBy',
+      model: 'users'
+    }
+  }).exec()
+  var result =[];
+  votes.forEach(function(element){
+    result.push(element.vote)
+  })
+  console.log(result)
+  res.render('dashboard', {
+    title: "sujet",
+    votes: result,
+    user: req.session.user,
+    type: "part"
+  })
+}
+
 // controller.addvote = (req,res)=>{
 
 // }
