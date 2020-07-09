@@ -19,8 +19,8 @@
                     <div class="card-body">
                       <p class="text-center">
                         <b>
-                        <%=v.subject%>
-                        <%if(v.status=="finished"){%><a href="/votes/<%=v._id%>"> résultat </a><%}%>
+                        <%=v.subject%> <%if(v.status=="inprogress"){%><a href="/votes/<%=v._id%>"> voir </a><%}%>
+                        <%if(v.status=="finished"){%><a href="/votes/resultats/<%=v._id%>"> résultat </a><%}%>
                         </b> <br/> <small> By <%=v.createdBy.login%></small>
                       </p>
                       <p class="text-right"> <%=v.participants.length%> / <%=v.quota%> Participants 

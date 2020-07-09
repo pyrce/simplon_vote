@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <% include ../partials/head %>
+    <% include ./partials/head %>
 </head>
 <body class="container">
 
 <header>
-    <% include ../partials/header %>
+    <% include ./partials/header %>
 </header>
 
 <main>
@@ -16,33 +16,35 @@
             <div class="form-group">
                     <label><h5>Sujet</h5></label>
                     <div>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae ex molestiae obcaecati, perspiciatis ipsum doloribus placeat in. Recusandae voluptas earum quo, consequuntur molestiae optio ea, minima tempore enim inventore saepe.
+                        <%=vote.subject%>
                         <br>
                     </div>
             </div> 
-            <form  id="form_vote" class="form" action="post">
+            <form  id="form_vote" class="form" method="post" action="/votes/vote/<%=vote._id%>">
+                <input type="hidden" name="voteid" value="<%=vote._id%>"/>
             <div class="form-group">
                     <label><h5>Choix</h5></label>
+                    <%for(c of vote.choices){ var i=vote.choices.indexOf(c)%>
+              
                     <div>
-                        <input type="radio" id="choix1" name="choix" value="choix1">
-                        <label for="choix1">choix1</label>
+                        <input type="radio" class="choix" value="<%=c%>" name="choix" <% if(monchoix.choix==i){ %> selected <%}%> <%if(monchoix.length!=0){%> disabled <%}%>  >
+                        <label for="choix"><%=c%></label>
                     </div>
-                    <div>
-                        <input type="radio" id="choix2" name="choix" value="choix2">
-                        <label for="choix2">choix2</label>
-                    </div>
+                   <%}%>
             </div> 
-            
-           </form>
+            <%if( monchoix.length==0){%>
+              <button for="form_vote" type="submit" class="btn btn-primary"  >Voter</button>
+           <%}%>
+            </form>
            
         
-            <button for="form_vote" class="btn btn-primary">Voter</button>
+          
         
     </div>
 </main>
 
 <footer>
-    <% include ../partials/footer %>
+    <% include ./partials/footer %>
 </footer>
 
 </body>

@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var indexController=require('../controllers/votesController.js');
+var indexController=require('../controllers/indexController.js');
 var usersController=require('../controllers/userController.js');
 /* GET home page. */
 /**
@@ -51,7 +51,17 @@ router.post('/votes', indexController.add);
  * @param {string} '/votes/:id'
  * @param {function} indexController.delete
  */
-router.delete('/votes/:id', indexController.delete);
+router.delete('/votes/vote/:id', indexController.delete);
+
+/**
+ * vote un sujet de vote par rapport à son identifiant
+ * @name  POST POST
+ * @function
+ * @memberof module:routers/index
+ * @param {string} '/votes/:id'
+ * @param {function} indexController.vote
+ */
+router.post('/votes/vote/:id', indexController.vote);
 
 /**
  * List all votes

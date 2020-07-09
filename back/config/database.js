@@ -1,9 +1,10 @@
-//let dbUrl = 'mongodb://localhost:27017/simplonvote'
-
+let dbUrl = ''
+console.log("process.env")
+console.log(process.env.DB_URL)
 if (process.env.DB_URL) {
      dbUrl = process.env.DB_URL
 }else{
-  db='mongodb://localhost:27017/simplonvote';
+  dbUrl='mongodb://localhost:27017/simplonvote';
 }
 
 module.exports = {

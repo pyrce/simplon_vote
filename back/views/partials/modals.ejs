@@ -7,21 +7,26 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form action="/votes/add" method="post"> 
+    
             <div class="modal-body">
-              <input type="text" value="5f03355d220832635062c9ef" name="createdBy" hidden/>  
+              <input type="text" value="5f03355d220832635062c9ef" id="createdBy" hidden/>  
                 <div class="form-group">
                         <label for="sujet">Sujet</label>
-                        <input type="text" class="form-control" name="subject" id="sujet" aria-describedby="sujet">
+                        <input type="text" class="form-control" name="subject" id="subject" aria-describedby="sujet">
                     </div>
                     <div class="form-group">
                         <label for="sujet">Nombre de participant</label>
-                        <input type="number" name="quota" class="form-control" min="2" value="2">
+                        <input type="number" name="quota" id="quota" class="form-control" min="2" value="2">
                     </div>
                     <div class="form-group">
                         <div class="form-group">
                             <label for="exampleFormControlSelect1">Choix</label>
-                            <textarea class="form-control" placeholder="entrez les choix séparés par ;" row="10" name="choices"></textarea>
+<div class="row">
+                            <input class="form-control" id="choix" placeholder="entrez les choix séparés par ;" style="width:90%;"/> <i class="fas fa-plus-circle" id="ajout"></i>
+                            </div>
+                            <ul name="choices"  id="choices">
+
+                            </ul>
                           </div>                    
                     </div>
 
@@ -29,9 +34,42 @@
 
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Création</button>
+                <button onclick="envoie()" class="btn btn-primary">Création</button>
             </div>
-        </form>
+   
       </div>
     </div>
   </div>
+
+  <script>
+  $("#ajout").click(()=>{
+  
+    $("#choices").append("<li>"+  $("#choix").val()+"</li>")
+      $("#choix").val('');
+  })
+  function envoie(){
+    var choix=$("#choices li");
+   var total=choix.length;
+   var liste_choix=[];
+   for(let i=0;i<total;i++){
+     liste_choix.push($("#choices li")[i].innerHTML);
+   }
+   console.log(liste_choix)
+data={}
+data["subject"]=$("#subject").val()
+data["createdBy"]=$("#createdBy").val()
+data["quota"]=$("#quota").val()
+data["choices"]=liste_choix
+console.log(data)
+   $.ajax({
+     url:"/votes",
+     type:"POST",
+     data:data,
+     success:(msg)=>{
+      if(msg=="OK"){
+        location.reload()
+      }
+     }
+   })
+  }
+  </script>
