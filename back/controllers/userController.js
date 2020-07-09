@@ -17,7 +17,8 @@ mongoose.connect(mongoDB, {
 
 var controller = {}
 
-/** List all users
+/** 
+ * Liste tout les utilisateurs
  * @name list
  * @memberof module:controllers/user
  * @function
@@ -36,7 +37,8 @@ controller.list = async (req, res) => {
   }
 }
 
-/** Add one user
+/** 
+ * Ajoute un nouvel utilisateur
  * @name add
  * @memberof module:controllers/user
  * @param {string} login
@@ -66,7 +68,8 @@ controller.add = async (req, res) => {
   }
 }
 
-/** Show one user
+/** 
+ * Affiche le détail d'un utilisateur
  * @name show
  * @memberof module:controllers/user
  * @function
@@ -93,7 +96,8 @@ controller.show = async (req, res) => {
   }
 }
 
-/** Update one user
+/** 
+ * Modifie un utilisateur
  * @name update
  * @memberof module:controllers/user
  * @function
@@ -131,7 +135,8 @@ controller.update = async (req, res) => {
   }
 }
 
-/** Delete one user
+/** 
+ * Supprime un utilisateur
  * @name delete
  * @memberof module:controllers/user
  * @function
@@ -155,6 +160,7 @@ controller.delete = async (req, res) => {
 }
 
 /**
+ * Connexion
  * @name login
  * @verb POST
  * @memberof module:controllers/user
@@ -198,7 +204,12 @@ controller.login = async (req, res) => {
     }
   }
 }
+
+/**
+ * 
+ */
 controller.signup = (req, res) => {
 
 }
+
 module.exports = controller;

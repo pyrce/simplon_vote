@@ -17,7 +17,7 @@ const Vote = require("../models/vote");
 var controller={}
 
 /** 
- * List all votes
+ * Liste tout les sujets de vote
  * @name list
  * @memberof module:controllers/vote
  * @function
@@ -32,7 +32,8 @@ controller.list = async (req,res) => {
   }
 }
 
-/** Add one vote
+/** 
+ * Ajoute un nouveau sujet de vote
  * @name add
  * @memberof module:controllers/vote
  * @function
@@ -63,7 +64,8 @@ controller.add = async (req,res) => {
   }
 }
 
-/** Show one vote
+/** 
+ * Affiche le détail d'un sujet de vote
  * @name show
  * @memberof module:controllers/vote
  * @function
@@ -80,7 +82,8 @@ controller.show = async (req,res) => {
   }
 }
 
-/** Update one vote
+/** 
+ * Modifie un sujet de vote
  * @name update
  * @memberof module:controllers/vote
  * @function
@@ -115,7 +118,8 @@ controller.update = async (req,res) => {
   }
 }
 
-/** delete one vote
+/** 
+ * Supprime un sujet de vote
  * @name delete
  * @memberof module:controllers/vote
  */
@@ -129,8 +133,6 @@ controller.delete = async (req, res) => {
     res.status(400).json({result:"error"})
   }
 }
-
-
 
 
 // controller.list = async (req,res) => {
