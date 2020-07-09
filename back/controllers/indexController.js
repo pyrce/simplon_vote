@@ -29,6 +29,9 @@ var controller = {}
  * @throws {JSON} - Renvoie un JSON en cas d'erreur
  */
 controller.list = async (req, res) => {
+  if (!req.session.user) {
+    return res.redirect('/inscription')
+  } 
   var votes=await Vote.find({}).populate("createdBy")
 var user=req.session.user
   try {
@@ -143,6 +146,9 @@ controller.dashboard = async (req, res) => {
   })
 }
 controller.showall = async (req, res) => {
+  if (!req.session.user) {
+    return res.redirect('/inscription')
+  }
   const votes = await Vote.find({}) .populate("createdBy")
     var user=req.session.user
   // console.log(votes)
@@ -382,6 +388,9 @@ controller.ajout = async (req, res) => {
  * @memberof module:controllers/index
  */
 controller.showend = async (req, res) => {
+  if (!req.session.user) {
+    return res.redirect('/inscription')
+  } 
   const terminer = 'finished';
   const votes = await Vote.find({
     status: terminer
@@ -408,6 +417,9 @@ controller.choix = async (req, res) => {
 }
 
 controller.showinprogress = async (req, res) => {
+  if (!req.session.user) {
+    return res.redirect('/inscription')
+  } 
   const inprogress = 'inprogress';
   const votes = await Vote.find({
     status: inprogress
@@ -421,6 +433,9 @@ controller.showinprogress = async (req, res) => {
 }
 
 controller.showmine = async (req, res) => {
+  if (!req.session.user) {
+    return res.redirect('/inscription')
+  } 
   const created = 'created';
   var user=req.session.user;
   // console.log(req.session.user)
