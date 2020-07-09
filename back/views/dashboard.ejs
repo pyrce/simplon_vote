@@ -36,15 +36,29 @@
           </div>
       <% votes.forEach(function(vote) { %>
       <% if (vote.status == 'inprogress') { %>
-      <div class="card" onclick="location.assign('/choix/<%= vote._id %>')" id="votes">
+      <div class="card" id="votes">
         <% }else{ %>
-          <div class="card" id="votes" >
+          <div class="card" id="votes">
           <% } %>
           <div class="card-body">
-            <p class="text-center"><b><%= vote.subject %></b> <br /> <small>By <% if (vote.createdBy != null) { %>
+            <p class="text-center"><b><%= vote.subject %></b> <br /> 
+              <small>By <% if (vote.createdBy != null) { %>
                 <%= vote.createdBy.login %>
-                <% } %></small></p>
-            <p class="text-right"> <%= vote.participants.length %> / <%= vote.quota %> Participants <%if (!vote.participants.includes(locals.currentUser.id)){%> <button onclick="participer('<%=vote._id%>')" class="btn btn-info"><i class="fas fa-arrow-circle-right"></i> </button><%}%></p>
+                <% } %>
+              </small>
+              <% if (vote.participants.includes(locals.currentUser.id) && vote.participants.length >= vote.quota){ %>
+                <p class="text-center">
+                  <a class="btn btn-success" href="/choix/<%= vote._id %>">Voter <i class="fas fa-vote-yea"></i></a>
+                </p>
+              <% } %>
+            </p>
+            <p class="text-right"> <%= vote.participants.length %> / <%= vote.quota %> Participants <%if (!vote.participants.includes(locals.currentUser.id)){%> 
+              <% if (vote.participants.length < vote.quota ) { %>
+                <button onclick="participer('<%=vote._id%>')" class="btn btn-info"><i class="fas fa-arrow-circle-right"></i> 
+                </button>
+                <% } %>
+              <% } %>
+            </p>
             <div class="progress">
               <% var vot= vote.participants.length/vote.quota*100 %>
               <div class="progress-bar bg-warning" role="progressbar" style="width: <%= vot %>%;"
