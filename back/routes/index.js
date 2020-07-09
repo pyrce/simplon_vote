@@ -56,7 +56,17 @@ router.post('/votes', indexController.add);
  * @param {string} '/votes/:id' - uri
  * @param {function} indexController.delete
  */
-router.delete('/votes/:id', indexController.delete);
+router.delete('/votes/vote/:id', indexController.delete);
+
+/**
+ * vote un sujet de vote par rapport à son identifiant
+ * @name  POST POST
+ * @function
+ * @memberof module:routers/index
+ * @param {string} '/votes/:id'
+ * @param {function} indexController.vote
+ */
+router.post('/votes/vote/:id', indexController.vote);
 
 /**
  * Modifie un sujet de vote par rapport à son identifiant

@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <% include partials/head %>
+    <% include ./partials/head %>
 </head>
-
 <body class="container">
 
   <header>
@@ -51,17 +49,25 @@
           </div>
         </div>
       </div>
+<script>
+$.ajax({
+  url:"/votes/"+id,
+  type:"PUT",
+  headers: {"X-HTTP-Method-Override": "PUT"}
+,success:function(msg){
 
-    </div>
-  </main>
+if(msg=="OK"){
+  $(".msg").show(100,"swing");
+  $(".msg").html('<button type="button" id="validationpanier" class="btn btn-success">vous êtes bien inscris</button>');
+  $(".msg").delay(4000).hide(50,"swing");
+  $("#votes").load(" #votes > *")
+}
+}
 
-  <footer>
-    <% include partials/footer %>
-  </footer>
+})
 
-  <% include partials/modals %>
-
+}
+</script>
 
 </body>
-
 </html>

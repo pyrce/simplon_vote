@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
-
+var ObjectId=mongoose.Schema.Types.ObjectId;
 const userSchema = mongoose.Schema({
+    _id:{ type: ObjectId},
     login: {
         type: String,
         required: true,
@@ -15,6 +16,6 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true
     }
-})
+},{collection:"users"})
 
-module.exports = mongoose.model('user', userSchema)
+module.exports = mongoose.model('users', userSchema)

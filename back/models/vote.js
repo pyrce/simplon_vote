@@ -3,6 +3,7 @@ var ObjectId = mongoose.Types.ObjectId;
 const Schema = mongoose.Schema;
 
 const voteSchema = mongoose.Schema({
+    _id:{ type: ObjectId},
     subject: {
         type: String,
         required: true
@@ -18,10 +19,8 @@ const voteSchema = mongoose.Schema({
         type: Number
     },
     createdBy: {
-        
-        type: Schema.Types.ObjectId,
-        ref : 'user'
-
+        type: ObjectId,
+        ref:"users"
     },
     participants: {
         type: Array,
