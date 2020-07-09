@@ -143,12 +143,12 @@ controller.dashboard = async (req, res) => {
   })
 }
 controller.showall = async (req, res) => {
-  const votes = await Vote.find({}) .populate("createdBy")
+  const votes = await Vote.find({}).populate("createdBy").exec()
     var user=req.session.user
   // console.log(votes)
   res.render('./dashboard.ejs', {
     title: "sujet",
-    votes,
+    votes:votes,
     user:user,
     type: "all"
   })
