@@ -16,27 +16,29 @@
             <div class="form-group">
                     <label><h5>Sujet</h5></label>
                     <div>
-                        <p><%= vote.subject %></p>
-                        
+                        <%=vote.subject%>
+                        <br>
                     </div>
             </div> 
-            <form  id="form_vote" class="form" action="post">
+            <form  id="form_vote" class="form" method="post" action="/votes/vote/<%=vote._id%>">
+                <input type="hidden" name="voteid" value="<%=vote._id%>"/>
             <div class="form-group">
                     <label><h5>Choix</h5></label>
-                    <% vote.choices.forEach(function(choix) { %>
+                    <%for(c of vote.choices){ var i=vote.choices.indexOf(c)%>
+              
                     <div>
-                        <input type="radio" name="choix" value="<%= vote.choices.indexOf(choix) %>">
-                        <label ><%= choix %></label>
+                        <input type="radio" class="choix" value="<%=c%>" name="choix" <% if(monchoix.choix==i){ %> selected <%}%> <%if(monchoix.length!=0){%> disabled <%}%>  >
+                        <label for="choix"><%=c%></label>
                     </div>
-                    
-      <% }); %>
-                   
+                   <%}%>
             </div> 
-            
-           </form>
+            <%if( monchoix.length==0){%>
+              <button for="form_vote" type="submit" class="btn btn-primary"  >Voter</button>
+           <%}%>
+            </form>
            
         
-            <button for="form_vote" class="btn btn-primary">Voter</button>
+          
         
     </div>
 </main>

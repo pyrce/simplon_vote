@@ -56,7 +56,17 @@ router.post('/votes', indexController.add);
  * @param {string} '/votes/:id' - uri
  * @param {function} indexController.delete
  */
-router.delete('/votes/:id', indexController.delete);
+router.delete('/votes/vote/:id', indexController.delete);
+
+/**
+ * vote un sujet de vote par rapport à son identifiant
+ * @name  POST POST
+ * @function
+ * @memberof module:routers/index
+ * @param {string} '/votes/:id'
+ * @param {function} indexController.vote
+ */
+router.post('/votes/vote/:id', indexController.vote);
 
 /**
  * Modifie un sujet de vote par rapport à son identifiant
@@ -88,11 +98,19 @@ router.post('/login', indexController.login)
 router.get('/login', indexController.visulogin)
 router.get('/dashboard/showall', indexController.showall)
 router.get('/dashboard/showmine', indexController.showmine)
-// router.get('/dashboard/showend', indexController.showend)
+
 router.get('/dashboard/progress', indexController.showinprogress)
 // router.get('/dashboard/showpart', indexController.showpart)
 router.get('/ajout', indexController.ajout);
 router.get('/dashboard/showend', indexController.showend);
+/**
+ * Retourne la vue pour afficher les sujets crée par utilisateur
+ * @name Show GET
+ * @function
+ * @memberof module:routers/index
+ * @param {function} indexController.liste_create
+ */
+router.get('/liste_create', indexController.liste_create)
 
 
 module.exports = router;
