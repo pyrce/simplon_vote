@@ -150,7 +150,7 @@ controller.visulogin = async (req, res) => {
  */
 controller.dashboard = async (req, res) => {
   const votes = await Vote.find().populate('createdBy').exec()
-  console.log(votes)
+  // console.log(votes)
   res.render('./dashboard.ejs', {
     title: "sujet",
     votes: votes
@@ -174,7 +174,7 @@ controller.showall = async (req, res) => {
   const count= await Vote.find({}).populate("createdBy").count();
 
     var user=req.session.user
-   console.log(count)
+  //  console.log(count)
   res.render('./dashboard.ejs', {
     title: "sujet",
     votes:votes,
@@ -216,7 +216,7 @@ controller.login = async (req, res) => {
         res.redirect('/login')
       } else {
         req.session.user = user // use session for user connected
-        console.log(req.session)
+        // console.log(req.session)
         req.session.msgFlash = {
           type: "success",
           message: "Bienvenu " + user.login
@@ -401,7 +401,7 @@ controller.delete = async (req, res) => {
  */
 controller.liste_create = async (req, res) => {
   //req.session.user = user // use session for user connected
-  console.log(req.session.user._id)
+  // console.log(req.session.user._id)
   var userId = req.session.user._id
   const votes = await Vote.find({
     createdBy: userId
@@ -479,7 +479,7 @@ controller.choix = async (req, res) => {
       user: new ObjectId(req.session.user._id)
     }
   }]);
-  console.log(votes)
+  // console.log(votes)
   res.render('./choix.ejs', {
     title: "sujet",
     vote: votes,
@@ -500,7 +500,7 @@ controller.showinprogress = async (req, res) => {
   var currentpage=(typeof req.params.page!="undefined" || req.params.page>0) ? req.params.page : 0
 
   var page = Math.max(0, currentpage);
-console.log("paginate")
+// console.log("paginate")
   const votes = await Vote.find({status:inprogress}).limit(perPage)
 
   .skip(perPage * page).populate("createdBy")
@@ -531,7 +531,7 @@ controller.showmine = async (req, res) => {
 
   
   var page =Math.max(0, currentpage);
-console.log("paginate")
+// console.log("paginate")
   const votes = await Vote.find({status:created,createdBy:user._id}).limit(perPage)
 
   .skip(perPage * page).populate("createdBy")
@@ -555,7 +555,7 @@ console.log("paginate")
 controller.part = async (req, res) => {
   var currentpage=(typeof req.params.page!="undefined" || req.params.page>0) ? req.params.page : 0
   var page = Math.max(0, currentpage);
-  console.log(req.session.user._id)
+  // console.log(req.session.user._id)
   const votes = await UserVote.find({
     user: req.session.user._id
   }).limit(perPage)
@@ -571,7 +571,7 @@ controller.part = async (req, res) => {
   const count=await UserVote.find({
     user: req.session.user._id
   }).count();
-console.log(votes)
+// console.log(votes)
   var result =[];
   votes.forEach(function(element){
     result.push(element.vote)
