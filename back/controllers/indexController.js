@@ -109,7 +109,8 @@ controller.add = async (req, res) => {
     participants,
     status
   } = req.body
-
+  quota=parseInt(quota)
+  nbVote=0;
   try {
     Vote.create({
       _id: new ObjectId(),
@@ -179,6 +180,7 @@ controller.showall = async (req, res) => {
     title: "sujet",
     votes:votes,
     user:user,
+    currentPage:currentpage,
     pages:count/perPage,
     type: "all"
   })
@@ -455,6 +457,7 @@ controller.showend = async (req, res) => {
   res.render('./dashboard', {
     title: "sujet",
     votes: votes,
+    currentPage:currentpage,
     pages:count/perPage,
     type: "end"
   })
@@ -500,7 +503,7 @@ controller.showinprogress = async (req, res) => {
   var currentpage=(typeof req.params.page!="undefined" || req.params.page>0) ? req.params.page : 0
 
   var page = Math.max(0, currentpage);
-console.log("paginate")
+
   const votes = await Vote.find({status:inprogress}).limit(perPage)
 
   .skip(perPage * page).populate("createdBy")
@@ -509,6 +512,7 @@ console.log("paginate")
   res.render('./dashboard', {
     title: "sujet",
     votes: votes,
+    currentPage:currentpage,
     pages:count/perPage,
     type: "progress"
   })
@@ -531,7 +535,7 @@ controller.showmine = async (req, res) => {
 
   
   var page =Math.max(0, currentpage);
-console.log("paginate")
+
   const votes = await Vote.find({status:created,createdBy:user._id}).limit(perPage)
 
   .skip(perPage * page).populate("createdBy")
@@ -540,6 +544,7 @@ console.log("paginate")
     title: "sujet",
     votes: votes,
     user:user,
+    currentPage:currentpage,
     pages:count/perPage,
     type: "mine"
   })
@@ -564,7 +569,7 @@ controller.part = async (req, res) => {
     path: 'vote',
     populate: {
       path: 'createdBy',
-      model: 'users'
+      model: 'user'
     }
   }).exec();
 
@@ -603,6 +608,7 @@ controller.encours = async (req, res) => {
   // console.log(votes)
   res.render("encours", {
     title: 'encours',
+    currentPage:currentpage,
     pages:count/perPage,
     votes: votes
   })

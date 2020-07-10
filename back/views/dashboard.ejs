@@ -2,13 +2,13 @@
 <html lang="en">
 
 <head>
-  <% include ./partials/head %>
+  <%- include('./partials/head') %>
 </head>
 
 <body class="container">
 
   <header>
-    <% include partials/header %>
+    <%- include('partials/header') %>
   </header>
 
   <main>
@@ -80,18 +80,33 @@
       <div class="row" data-pages="<%=pages%>" data-type="<%=type%>" id="pages">
      <%   for(p=1;p<=pages;p++){ %>
         <%if(type=='part'){%>
-          <a href="/dashboard/part/<%=p%>" class="btn btn-primary mr-2"><%=p%></a> 
+          <a href="/dashboard/part/<%=p%>" class="mr-2 <%= p==currentPage? 'active':'page'%>"><%=p%></a> 
           <%}else{%>
-            <a href="/dashboard/show<%=type%>/<%=p%>" class="btn btn-primary mr-2"><%=p%></a> 
+            <a href="/dashboard/show<%=type%>/<%=p%>" class="mr-2 <%= p==currentPage? 'active':'page'%>"><%=p%></a> 
             <%}%>
      <%}%>
       </div>
   
   </div>
 </main>
+<style>
+  .page{
+background-color: #007bff;
+color:white;
+padding:.375rem .75rem;
+border-radius: .25rem;
+border: 1px solid transparent;
+  }
+
+  .active{
+    color: #007bff;
+background-color:white;
+padding:.375rem .75rem;
+border-radius: .25rem;
+border: 1px solid #007bff;
+  }
+</style>
 <script>
-
-
   function participer(id){ 
 $.ajax({
   url:"/votes/"+id,
