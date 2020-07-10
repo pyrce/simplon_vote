@@ -72,29 +72,30 @@
               </div>
             </div>
             <%})%>
-
           </div>
-
-
         </div>
+
       <div class="row" data-pages="<%=pages%>" data-type="<%=type%>" id="pages">
-     <%   for(p=1;p<=pages;p++){ %>
-        <%if(type=='part'){%>
-          <a href="/dashboard/part/<%=p%>" class="btn btn-primary mr-2"><%=p%></a> 
+        <%   for(p=1;p<=pages;p++){ %>
+          <%if(type=='part'){%>
+            <a href="/dashboard/part/<%=p%>" class="btn btn-primary mr-2"><%=p%></a>
           <%} else if (type=='all'){%>
-            <a href="/dashboard/showall/<%=p%>" class="btn btn-primary mr-2"><%=p%></a> 
-            <%} else {%>
+            <a href="/dashboard/showall/<%=p%>" class="btn btn-primary mr-2"><%=p%></a>
+          <%} else if (type == 'mine') {%>
+            <a href="/dashboard/showmine/<%=p%>" class="btn btn-primary mr-2"><%=p%></a>
+          <%} else if (type == 'end') {%>
+            <a href="/dashboard/showend/<%=p%>" class="btn btn-primary mr-2"><%=p%></a>
+          <%} else {%>
             <a href="/dashboard/<%=type%>/<%=p%>" class="btn btn-primary mr-2"><%=p%></a>
-            <%} %> 
-     <%}%>
+          <%}%>
+        <%}%>
       </div>
-  
   </div>
 </main>
 <script>
 
 
-  function participer(id){ 
+  function participer(id){
 $.ajax({
   url:"/votes/"+id,
   type:"PUT",
