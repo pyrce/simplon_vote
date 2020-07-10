@@ -14,9 +14,7 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
  * @param {array} - Propriétés de mon schéma
  */
 const userSchema = mongoose.Schema({
-    _id: {
-        type: ObjectId
-    },
+ 
     login: {
         type: String,
         required: true,
