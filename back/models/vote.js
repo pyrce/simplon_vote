@@ -15,9 +15,7 @@ const Schema = mongoose.Schema;
  * @param {array} - Propriétés de mon schéma
  */
 const voteSchema = mongoose.Schema({
-    _id: {
-        type: ObjectId
-    },
+   
     subject: {
         type: String,
         required: true
