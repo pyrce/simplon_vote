@@ -33,15 +33,7 @@ router.get('/inscription', indexController.inscription);
  */
 router.get('/', indexController.list);
 
-/**
- * Retourne la vue de la liste des sujets de vote
- * @name List GET
- * @function
- * @memberof module:routers/index
- * @param {string} '/' - uri
- * @param {function} indexController.list
- */
-router.get('/:page', indexController.list);
+
 /**
  * Retourne la vue pour l'ajout d'un sujet de vote  
  * @name add POST
@@ -195,6 +187,18 @@ router.get('/dashboard/part/:page', indexController.part);
  * @param {function} indexController.liste_create
  */
 router.get('/liste_create', indexController.liste_create)
+
+// Il faut mettre les routes dinamique (avec une variable) apres les routes dinamique, sans variable
+// la route /:page sera utiliser pour toutes les pages, a laisser en dernier
+/**
+ * Retourne la vue de la liste des sujets de vote
+ * @name List GET
+ * @function
+ * @memberof module:routers/index
+ * @param {string} '/' - uri
+ * @param {function} indexController.list
+ */
+router.get('/:page', indexController.list);
 
 
 module.exports = router;

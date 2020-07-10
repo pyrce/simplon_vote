@@ -9,7 +9,9 @@
         </div>
     
             <div class="modal-body">
-              <input type="text" value="<%=locals.currentUser.id%>" id="createdBy" hidden/>  
+              <% if( locals.currentUser.id) { %>
+                <input type="text" value="<%= currentUser.id %>" id="createdBy" hidden/>  
+              <% } %>
                 <div class="form-group">
                         <label for="sujet">Sujet</label>
                         <input type="text" class="form-control" name="subject" id="subject" aria-describedby="sujet">
