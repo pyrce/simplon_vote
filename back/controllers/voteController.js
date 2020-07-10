@@ -24,7 +24,7 @@ var controller={}
  * @returns {json} votes
  */
 controller.list = async (req,res) => {
-  const votes = await Vote.find({})
+  const votes = await Vote.find({}).sort({'created': -1})
   try {
     res.status(200).json({votes})
   } catch (error) {

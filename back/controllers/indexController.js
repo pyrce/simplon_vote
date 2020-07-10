@@ -172,7 +172,7 @@ controller.showall = async (req, res) => {
 
   var page= Math.max(0, currentpage-1);
 
-  const votes = await Vote.find({}).limit(perPage).skip(perPage * page).populate("createdBy")
+  const votes = await Vote.find({}).limit(perPage).skip(perPage * page).populate("createdBy").sort({'created': -1})
   const count= await Vote.find({}).populate("createdBy").count();
 
     var user=req.session.user
@@ -452,7 +452,7 @@ controller.showend = async (req, res) => {
 
   var page = Math.max(0, currentpage);
 
-  const votes = await Vote.find({status:terminer}).limit(perPage).skip(perPage * page).populate("createdBy")
+  const votes = await Vote.find({status:terminer}).limit(perPage).skip(perPage * page).populate("createdBy").sort({'created': -1})
   const count= await Vote.find({status:terminer}).count();
   // console.log(votes)
   res.render('./dashboard', {
@@ -504,7 +504,7 @@ controller.showinprogress = async (req, res) => {
   var currentpage=(typeof req.params.page!="undefined" || req.params.page>0) ? req.params.page : 0
 
   var page = Math.max(0, currentpage);
-  const votes = await Vote.find({status:inprogress}).limit(perPage)
+  const votes = await Vote.find({status:inprogress}).limit(perPage).sort({'created': -1})
 
   .skip(perPage * page).populate("createdBy")
   const count=await Vote.find({status:inprogress}).count();
@@ -535,7 +535,7 @@ controller.showmine = async (req, res) => {
 
   
   var page =Math.max(0, currentpage);
-  const votes = await Vote.find({status:created,createdBy:user._id}).limit(perPage)
+  const votes = await Vote.find({status:created,createdBy:user._id}).limit(perPage).sort({'created': -1})
 
   .skip(perPage * page).populate("createdBy")
   const count=await Vote.find({status:created,createdBy:user._id}).count();
