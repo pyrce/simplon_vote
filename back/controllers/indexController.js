@@ -45,6 +45,7 @@ controller.list = async (req, res) => {
     res.render("dashboard", {
       votes: votes,
       title: "application votes",
+      currentPage:currentpage,
       pages: count/perPage,
       type: "all"
     })
